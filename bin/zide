@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+if [ -z "$BASH_VERSION" ]; then
+  echo "Not Bash, exiting."
+  exit 1
+fi
+
 # Figure out where zide is installed based on where the script lives
 if command -v readlink >/dev/null 2>&1; then
   script_dir=$(dirname "$(readlink -f "$0")")
@@ -8,6 +13,14 @@ else
 fi
 
 export ZIDE_DIR=$(dirname "$script_dir")
+
+if [ -z "${EDITOR}" ]; then
+  export EDITOR="hx"
+fi
+
+source "${ZIDE_DIR}/bin/lib/getEditorCommand.sh" hx
+
+getEditorCommand hx open
 
 read -r -d '' HELP_TEXT << EOF
 Usage: $(basename "$0") [OPTIONS] <working_dir> <layout>
@@ -123,10 +136,19 @@ export ZIDE_TAB_NAME="${name}"
 export ZIDE_LAYOUT_DIR="${ZIDE_LAYOUT_DIR:-${ZIDE_DIR}/layouts}"
 
 layout_path="${ZIDE_LAYOUT_DIR}/${layout}"
-if [ -n "$ZELLIJ" ]; then
-  zellij action new-tab --cwd $cwd --layout "${layout_path}"
+if [ -n "$ZIDE_SESSION" ]; then
+  zellij -s "$ZIDE_SESSION" action new-tab --cwd $cwd --layout "${layout_path}"
+  zide-rename
+# Check if inside a Zellij session using ZELLIJ env var (set to 0 inside session)
+elif [ -n "$ZELLIJ" ]; then
+  # Inside new session: create new session tab without -s flag, as actions target current session
+  ZIDE_SESSION="c$(pwd | md5sum | cut -d ' ' -f 1 )"
+  export ZIDE_SESSION
+  zellij attach --create ${ZIDE_SESSION:0:6}
+  zellij -s "$ZIDE_SESSION" action new-tab --cwd $cwd --layout "${layout_path}"
   zide-rename
 else
+  # Outside session: start new session
   # There's a bug when using zellij options --default-cwd where the CWD isn't working for floating
   # panes defined in the layout, so instead we'll use pushd to change the working dir before
   # starting zellij, and change it back when we exit

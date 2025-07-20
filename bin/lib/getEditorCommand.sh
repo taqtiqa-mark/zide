@@ -6,7 +6,7 @@
 #   Where <editor> is the name of your text editor (defaults to $EDITOR) and
 #   <command> is the command to perform (open, hsplit, vsplit).
 
-source "${ZIDE_DIR}/tmp/env"
+[ -f "${ZIDE_DIR}/tmp/env" ] && source "${ZIDE_DIR}/tmp/env"
 
 # Mapping of common editors and their commands
 declare -A commands=(
@@ -37,6 +37,11 @@ declare -A commands=(
 )
   
 getEditorCommand() {
+
+  if [[ -z "${EDITOR}" && -n "$1" && -x "$(command -v "$1")" ]]; then
+    export EDITOR="$1"
+  fi
+
   local editor="${1:-$EDITOR}"
   local command="${2:-open}"
 
