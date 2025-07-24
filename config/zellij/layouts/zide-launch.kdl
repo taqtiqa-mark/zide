@@ -1,0 +1,17 @@
+layout {
+    tab name="ZHIDE Project Manager" split_direction="vertical" {
+        pane split_direction="vertical" {
+            start_suspended true
+            name "Start/Resume a Project"
+            command "inlyne"
+            args "${HOME}/.config/zide/zide-launch.md"
+            focus false
+        }
+        pane {
+            plugin location="zellij:session-manager"
+            name "Project Manager"
+            focus true
+        }
+    }
+}
+

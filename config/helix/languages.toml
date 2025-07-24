@@ -1,0 +1,21 @@
+[language-server.codebook]
+command = "codebook-lsp"
+args = ["serve"]
+
+[language-server.harper-ls]
+command = "harper-ls"
+args = ["--stdio"]
+
+[[language]]
+name = "markdown"
+soft-wrap.enable = true
+text-width = 80
+soft-wrap.wrap-at-text-width = true
+# Spellcheck markdown code:
+language-servers = [
+    "marksman",
+    "harper-ls",
+    "codebook"
+]
+# List items to continue when you press Enter
+comment-tokens = ["-", "+", "*", "- [ ]", ">"]

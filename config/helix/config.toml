@@ -1,0 +1,93 @@
+[keys.insert]
+C-end = "goto_file_end"
+C-home = "goto_file_start"
+C-S-end = "extend_to_file_end"
+C-S-home = "extend_to_file_start"
+C-S-right = "extend_next_word_end"
+C-S-left = "extend_prev_word_start"
+C-S-down = "extend_line_down"
+C-S-up  = "extend_line_up"
+S-right = "extend_char_right"
+S-left = "extend_char_left"
+S-down = "copy_selection_on_next_line"
+S-up = "copy_selection_on_prev_line"
+A-s = ":write"
+
+[keys.normal]
+C-end = "goto_file_end"
+C-home = "goto_file_start"
+C-S-end = "extend_to_file_end"
+C-S-home = "extend_to_file_start"
+C-S-right = "extend_next_word_end"
+C-S-left = "extend_prev_word_start"
+C-S-down = "extend_line_down"
+C-S-up  = "extend_line_up"
+S-right = "extend_char_right"
+S-left = "extend_char_left"
+S-down = "copy_selection_on_next_line"
+S-up = "copy_selection_on_prev_line"
+A-s = ":write-all"
+# Copy the entire word under the cursor into the search register
+"*" = ["move_prev_word_start", "move_next_word_end", "search_selection", "global_search"]
+
+[keys.select]
+C-end = "goto_file_end"
+C-home = "goto_file_start"
+C-S-end = "extend_to_file_end"
+C-S-home = "extend_to_file_start"
+C-S-right = "extend_next_word_end"
+C-S-left = "extend_prev_word_start"
+C-S-down = "extend_line_down"
+C-S-up  = "extend_line_up"
+S-right = "extend_char_right"
+S-left = "extend_char_left"
+S-down = "copy_selection_on_next_line"
+S-up = "copy_selection_on_prev_line"
+A-s = ":write-all"
+
+[keys.normal.ret]
+# Reserved keys for final selection:
+# s = Settings submenu (AI, etc.)
+# t = Toggles submenu (word-wrap, SLP hists etc.)
+# g = VCS/Git Submenu
+# f = Yazi file picker TUI
+# h = find then replace
+# c = AI chat TUI
+#
+# Find and replace TUI using serpl
+h = [":write-all", ":insert-output scooter >/dev/tty", ":redraw", ":reload-all"]
+H = ":sh zellij run -c -f -x 10%% -y 10%% --width 80%% --height 80%% -- bash $HOME/.config/zide/bin/lib/serpl.sh %{buffer_name}"
+# GitUI integration (C-g/G conflicts with zellij lock, required to prvent hx & zellij keymap conflicts)
+m = [":write-all", ":new", ":insert-output gitui >/dev/tty", ":buffer-close!", ":redraw", ":reload-all"]
+# GitU integration, a Magit like TUI written in Rust.
+M = [":write-all", ":new", ":insert-output gitu >/dev/tty", ":buffer-close!", ":redraw", ":reload-all"]
+
+[keys.normal.ret.f]
+# Open the file(s) in the current window/buffer
+o = ":sh zellij run -n Yazi -c -f -x 10%% -y 10%% --width 80%% --height 80%% -- bash $HOME/.config/zide/bin/zide-pick open %{buffer_name}"
+# Open the file(s) in a vertical split
+v = ":sh zellij run -n Yazi -c -f -x 10%% -y 10%% --width 80%% --height 80%% -- bash $HOME/.config/zide/bin/zide-pick vsplit %{buffer_name}"
+# Open the file(s) in a horizontal split
+h = ":sh zellij run -n Yazi -c -f -x 10%% -y 10%% --width 80%% --height 80%% -- bash $HOME/.config/zide/bin/zide-pick hsplit %{buffer_name}"
+
+[keys.normal.ret.t]
+s = [":toggle soft-wrap.enable"]
+h = [":toggle lsp.display-inline-hints"]
+
+[editor.auto-save]
+focus-lost = true
+after.delay.enable = true
+after.delay.timeout = 300
+
+[editor.lsp]
+display-inlay-hints = true
+display-messages = true
+
+[editor.inline-diagnostics]
+cursor-line = "error"
+
+[editor.soft-wrap]
+enable = true
+
+[editor.statusline]
+left = ["mode", "spinner", "version-control", "file-name"]

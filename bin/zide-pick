@@ -1,100 +1,78 @@
 #!/usr/bin/env bash
 
-source "${ZIDE_DIR}/bin/lib/findLayoutConfig.sh"
+# If no paths are selected but CWD has changed, issue :cd to the new CWD.
+# If a single directory is selected, :cd to it.
+# Otherwise, :open the paths (suitable for files or multiple items).
 
-read -r -d '' HELP_TEXT << EOF
-Usage: $(basename "$0") [OPTIONS] <working_dir>
+export YAZI_CONFIG_HOME="${ZIDE_CONFIG_DIR}/yazi"
 
-Optional Parameters:
-	<working_dir>         Optionally specify a working directory to open the file
-	                      picker into.
+# Ensure PATH includes Snap binaries and clear command hash for fresh resolution.
+export PATH="$PATH:/snap/bin"
+hash -r
 
-Options:
-  -h, --help            Show this help message and exit.
-  -c, --command         Command used to open files in \`$EDITOR\`
-  -p, --picker          File picker to use. Available file pickers are listed in
-                        bin/lib. Setting this will override the ZIDE_FILE_PICKER
-                        env var.
+# Input directory from argument (e.g., "$1" as starting dir).
+input_dir="${1:-${HOME}}"
 
-Environment Variables:
-  ZIDE_FILE_PICKER      File picker to use, needs to be declared in your \$PATH.
-  ZIDE_USE_YAZI_CONFIG  By default (empty), will use the yazi.toml file in this
-                        project when using yazi as your picker. The config file
-                        in this project automatically puts yazi into a
-                        single-pane mode. To disable this behavior, set this to
-                        false. If you with to point to a custom config directory
-                        location, set this to that value.
+# Create temporary files for Yazi outputs to avoid stdout conflicts.
+chooser_file=$(mktemp /tmp/yazi-chooser.XXXXXX) || { echo "Error: Failed to create temp chooser file." >&2; exit 1; }
+cwd_file=$(mktemp /tmp/yazi-cwd.XXXXXX) || { echo "Error: Failed to create temp cwd file." >&2; exit 1; }
 
-Description:
-  Wrapper around file pickers that sets \`zide-edit\` as the \`$EDITOR\` so that
-  files open in the editor pane.
-EOF
+# Run Yazi, capturing selected paths and final CWD separately.
+yazi "$input_dir" --chooser-file="$chooser_file" --cwd-file="$cwd_file"
+yazi_exit_code=$?
 
-# Function to display the help text
-show_help() {
-  echo "$HELP_TEXT"
-}
+# Clean up temp files on exit.
+trap 'rm -f "$chooser_file" "$cwd_file"' EXIT
 
-# Program to use as a picker
-picker=""
-# Command to perform on the paths, available commands will be based on your editor
-command=""
+# Check for Yazi execution failure.
+if [ $yazi_exit_code -ne 0 ]; then
+    echo "Error: Yazi exited with code $yazi_exit_code." >&2
+    zellij action toggle-floating-panes
+    exit 1
+fi
 
-# Parse command-line options
-while [[ $# -gt 0 ]]; do
-  case "$1" in
-    -h|--help)
-      show_help
-      exit 0
-      ;;
-    -c|--command)
-      if [[ -n "$2" && "$2" != -* ]]; then
-        command="$2"
-        shift 2
-      else
-        echo "Error: --command requires a non-empty value."
-        exit 1
-      fi
-      ;;
-    -p|--picker)
-      if [[ -n "$2" && "$2" != -* ]]; then
-        picker="$2"
-        shift 2
-      else
-        echo "Error: --picker requires a non-empty value."
-        exit 1
-      fi
-      ;;
-    -*)
-      echo "Unknown option: $1"
-      echo "Use --help or -h for usage information."
-      exit 1
-      ;;
-    *)
-      # Stop processing options when a positional parameter is encountered
-      break
-      ;;
-  esac
+# Read selected paths into an array (unescaped for checks).
+mapfile -t paths < "$chooser_file"
+
+# Read final CWD (unescaped).
+new_cwd=$(cat "$cwd_file" | xargs)  # Trim any whitespace.
+
+# Escape paths for safe insertion into Helix commands.
+escaped_paths=()
+for path in "${paths[@]}"; do
+    escaped_paths+=("$(printf "%q" "$path")")
 done
 
-# Read picker defaults from env var or hard-coded default if a flag not passed
-picker=${picker:-${ZIDE_FILE_PICKER:-"yazi"}}
-working_dir=${1}
+# Toggle floating panes regardless (as in original).
+zellij action move-focus down
 
-if ! command -v ${picker} &> /dev/null; then
-  echo "Error: '${picker}' is not installed or not in your PATH." >&2
-  exit 1
+# Case 1: No selections, but CWD changed -> :cd to new CWD.
+if [ ${#paths[@]} -eq 0 ] && [ "$new_cwd" != "$input_dir" ] && [ -d "$new_cwd" ]; then
+    escaped_cwd=$(printf "%q" "$new_cwd")
+    zellij action write 27  # Send <Escape> to enter normal mode.
+    zellij action write-chars ":cd $escaped_cwd"
+    zellij action write 13  # Send <Enter>.
+    sleep 0.1s  # Brief delay for command processing.
+    exit 0
 fi
 
-envs="EDITOR='zide-edit'"
-if [[ "${picker}" == "yazi" && "${ZIDE_USE_YAZI_CONFIG}" != "false" ]]; then
-  yaziConfigDir="${ZIDE_USE_YAZI_CONFIG:-${ZIDE_DIR}/yazi}"
-  envs="${envs} YAZI_CONFIG_HOME=${yaziConfigDir}"
+# Case 2: Single path and it's a directory -> :cd to it.
+if [ ${#paths[@]} -eq 1 ] && [ -d "${paths[0]}" ]; then
+    zellij action write 27  # Send <Escape>.
+    zellij action write-chars ":cd ${escaped_paths[0]}"
+    zellij action write 13  # Send <Enter>.
+    sleep 0.1s
+    exit 0
 fi
 
-if [[ "${picker}" == "lf" && "${ZIDE_USE_LF_CONFIG}" != "false" ]]; then
-  lfConfigDir="${ZIDE_USE_LF_CONFIG:-${ZIDE_DIR}}"
-  envs="${envs} LF_CONFIG_HOME=${lfConfigDir}"
+# Case 3: Paths present (files or multiple) -> :open them.
+if [ ${#paths[@]} -gt 0 ]; then
+    zellij action write 27  # Send <Escape>.
+    zellij action write-chars ":open ${escaped_paths[*]}"
+    zellij action write 13  # Send <Enter>.
+    sleep 0.1s
+    exit 0
 fi
 
-env -S "${envs}" ${picker} ${working_dir}
+# Fallback: No action needed if empty and CWD unchanged.
+

@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
-
+hash -r
 if [ -z "$BASH_VERSION" ]; then
   echo "Not Bash, exiting."
   exit 1
 fi
+echo "$PATH"
 
 # Figure out where zide is installed based on where the script lives
 if command -v readlink >/dev/null 2>&1; then
@@ -19,8 +20,6 @@ if [ -z "${EDITOR}" ]; then
 fi
 
 source "${ZIDE_DIR}/bin/lib/getEditorCommand.sh" hx
-
-getEditorCommand hx open
 
 read -r -d '' HELP_TEXT << EOF
 Usage: $(basename "$0") [OPTIONS] <working_dir> <layout>
@@ -122,7 +121,7 @@ fi
 # Working directory to open in, defaults to pwd
 cwd="$(cd ${1:-$(pwd)} && pwd) "
 # Available layouts can be found in the zide layouts/ directory
-layout=${2:-${ZIDE_DEFAULT_LAYOUT:-"default"}} 
+layout=${2:-${ZIDE_DEFAULT_LAYOUT:-"zide-launch"}}
 # Default session/tab name to the basename of the provided dir if -N flag set
 if [[ "${name}" == "__basename__" ]]; then
   name="$(basename ${cwd})"
@@ -131,28 +130,44 @@ fi
 # Export location of the zide project files for further use
 export ZIDE_FILE_PICKER=${picker:-${ZIDE_FILE_PICKER}}
 export ZIDE_CURRENT_LAYOUT="${layout}"
-export ZIDE_ORIGINAL_EDITOR="${EDITOR}"
 export ZIDE_TAB_NAME="${name}"
-export ZIDE_LAYOUT_DIR="${ZIDE_LAYOUT_DIR:-${ZIDE_DIR}/layouts}"
+
+export ZIDE_BIN_DIR="${ZIDE_BIN_DIR:-${ZIDE_DIR}/bin/.}"
+export ZIDE_CONFIG_DIR="${ZIDE_CONFIG_DIR:-${ZIDE_DIR}/config/}"
+export ZIDE_LAYOUT_DIR="${ZIDE_LAYOUT_DIR:-${ZIDE_CONFIG_DIR}/zellij/layouts/}"
+export ZIDE_THEME_DIR="${ZIDE_THEME_DIR:-${ZIDE_CONFIG_DIR}/zellij/themes/}"
+
+export ZIDE_ORIGINAL_EDITOR="${EDITOR}"
+export EDITOR="hx"
+export ZIDE_EDITOR="${EDITOR}"
 
 layout_path="${ZIDE_LAYOUT_DIR}/${layout}"
-if [ -n "$ZIDE_SESSION" ]; then
-  zellij -s "$ZIDE_SESSION" action new-tab --cwd $cwd --layout "${layout_path}"
-  zide-rename
-# Check if inside a Zellij session using ZELLIJ env var (set to 0 inside session)
-elif [ -n "$ZELLIJ" ]; then
-  # Inside new session: create new session tab without -s flag, as actions target current session
-  ZIDE_SESSION="c$(pwd | md5sum | cut -d ' ' -f 1 )"
-  export ZIDE_SESSION
-  zellij attach --create ${ZIDE_SESSION:0:6}
-  zellij -s "$ZIDE_SESSION" action new-tab --cwd $cwd --layout "${layout_path}"
-  zide-rename
-else
-  # Outside session: start new session
-  # There's a bug when using zellij options --default-cwd where the CWD isn't working for floating
-  # panes defined in the layout, so instead we'll use pushd to change the working dir before
-  # starting zellij, and change it back when we exit
-  pushd $cwd > /dev/null
-    zellij --layout "${layout_path}"
-  popd > /dev/null
-fi
+
+export YAZI_CONFIG_HOME="${ZIDE_CONFIG_DIR}/yazi"
+export ZELLIJ_CONFIG_DIR="${ZIDE_CONFIG_DIR}/zellij"
+
+source "${ZIDE_DIR}/bin/lib/zide-launch.sh"
+sleep 1s
+
+#if [ -n "$ZIDE_SESSION" ]; then
+#  zellij --session "$ZIDE_SESSION" action new-tab --cwd $cwd --layout "${layout_path}" --config-dir "${ZIDE_CONFIG_DIR}/zellij/"
+#  zide-rename
+#  # Check if inside a Zellij session using ZELLIJ env var (set to 0 inside session)
+#elif [ -n "$ZELLIJ" ]; then
+#  # Inside new session: create new session tab without -s flag, as actions target current session
+#  ZIDE_SESSION="c$(pwd | md5sum | cut -d ' ' -f 1 )"
+#  export ZIDE_SESSION
+#  #zellij --layout welcome --cwd $cwd --config-dir "${ZIDE_CONFIG_DIR}/zellij/"
+#  #zellij attach --create ${ZIDE_SESSION:0:6}
+#  #zellij --session "$ZIDE_SESSION" action new-tab --cwd $cwd --layout "${layout_path}" --config-dir "${ZIDE_CONFIG_DIR}/zellij/"
+#  #zide-rename
+#else
+#  # Outside session: start new session
+#  # There's a bug when using zellij options --default-cwd where the CWD isn't working for floating
+#  # panes defined in the layout, so instead we'll use pushd to change the working dir before
+#  # starting zellij, and change it back when we exit
+#  pushd $cwd > /dev/null
+#    source zide-launch.sh
+#  popd > /dev/null
+#fi
+
