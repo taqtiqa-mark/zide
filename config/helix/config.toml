@@ -1,4 +1,8 @@
+theme = "catppuccin_mocha"
+
 [keys.insert]
+C-tab = "goto_next_buffer"
+C-S-tab = "goto_previous_buffer"
 C-end = "goto_file_end"
 C-home = "goto_file_start"
 C-S-end = "extend_to_file_end"
@@ -14,6 +18,8 @@ S-up = "copy_selection_on_prev_line"
 A-s = ":write"
 
 [keys.normal]
+C-tab = "goto_next_buffer"
+C-S-tab = "goto_previous_buffer"
 C-end = "goto_file_end"
 C-home = "goto_file_start"
 C-S-end = "extend_to_file_end"
@@ -74,14 +80,26 @@ h = ":sh zellij run -n Yazi -c -f -x 10%% -y 10%% --width 80%% --height 80%% -- 
 s = [":toggle soft-wrap.enable"]
 h = [":toggle lsp.display-inline-hints"]
 
+[editor]
+true-color = true
+# Show a list of open buffers. Active is highlighted.
+bufferline = "multiple"
+
 [editor.auto-save]
 focus-lost = true
 after.delay.enable = true
 after.delay.timeout = 300
 
 [editor.lsp]
+enable=true
+auto-signature-help=true
 display-inlay-hints = true
 display-messages = true
+
+[editor.indent-guides]
+render = true
+character = "┊"
+skip-levels = 1
 
 [editor.inline-diagnostics]
 cursor-line = "error"
@@ -90,4 +108,7 @@ cursor-line = "error"
 enable = true
 
 [editor.statusline]
-left = ["mode", "spinner", "version-control", "file-name"]
+left = ["mode", "spinner", "version-control", "file-modification-indicator", "read-only-indicator"]
+center = ["file-name"]
+right = ["diagnostics", "register", "selections", "position", "file-encoding", "file-line-ending", "file-type"]
+

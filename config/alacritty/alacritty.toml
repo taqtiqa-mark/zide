@@ -79,13 +79,13 @@ blur = false  # Default: false
 startup_mode = "Windowed"  # Default: "Windowed"
 
 # Window title
-title = "Alacritty"  # Default: "Alacritty"
+#title = "AZHIDE"  # Default: "Alacritty"
 
 # Dynamic title
 dynamic_title = true  # Default: true
 
 # Window class (Linux/BSD only)
-class = { instance = "Alacritty", general = "Alacritty" }  # Default: instance = "Alacritty", general = "Alacritty"
+class = { instance = "AZHIDE", general = "IDE" }  # Default: instance = "Alacritty", general = "Alacritty"
 
 # Decorations theme variant
 decorations_theme_variant = "None"  # Default: "None"

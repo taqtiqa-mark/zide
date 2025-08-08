@@ -1,4 +1,5 @@
 layout {
+    cwd "./"
     default_tab_template {
         pane size=1 borderless=true {
             plugin location="zellij:tab-bar"
@@ -16,7 +17,7 @@ layout {
             }
         }
     }
-    tab_template name="strider_tab" {
+    tab_template name="hstack_tab" {
         pane size=1 borderless=true {
             plugin location="zellij:tab-bar"
         }
@@ -27,58 +28,123 @@ layout {
             plugin location="zellij:status-bar"
         }
     }
-    strider_tab name="AI" cwd="./" {
-        chat_under_files split_direction="vertical" {
-            pane command="hx" args="./" name="Helix" close_on_exit=false focus=false
-            pane command="hx" args="./" name="Helix" close_on_exit=false focus=false
+    hstack_tab name="AI" cwd="./" focus=false {
+        pane split_direction="vertical" {
+            pane split_direction="horizontal" stacked=true {
+                pane name="Files" {
+                    // Currently do not support sending CWD to plugins.
+                    command "bash"
+                    args "-c" "exec \"~/.config/zide/bin/zide-pick\" \"./\""
+                    cwd "./" 
+                    start_suspended true
+                    focus false
+                    size "15%"
+                    close_on_exit false
+                }
+                pane name="Helix" {
+                    command "bash" 
+                    args "-c" "hx --config ~/.config/zide/config/helix/config.toml -v --log ./.zide/helix-ai.log --working-dir ./" 
+                    cwd "./"
+                    start_suspended false
+                    close_on_exit false 
+                    focus true 
+                    expanded true
+                }
+                pane name="Aider Watch" {
+                    command "./aider"
+                    args "--watch-files" "--subtree-only" "./" 
+                    cwd "./" 
+                    start_suspended true 
+                    close_on_exit false 
+                    focus false 
+                    size "10%"
+                }
+                pane name="Goose Session" {
+                    command "bash" 
+                    args "-c" "./goose session --name ${ZELLIJ_SESSION_NAME}_rust"
+                    cwd "./" 
+                    start_suspended true
+                    close_on_exit false
+                    focus false
+                    size "20%"
+                }
+            }
+            pane split_direction="horizontal" stacked=true {
+                pane name="Aider Chat" {
+                    command "./aider"
+                    args "--chat-mode" "ask"
+                    cwd "./" 
+                    start_suspended true 
+                    close_on_exit false
+                    focus false
+                }
+                pane command="./goose" args="session" cwd="./" name="Goose Chat" start_suspended=true close_on_exit=false focus=false size="10%"
+            }
         }
     }
-    strider_tab name="Edit" cwd="./" focus=true {
+    hstack_tab name="Edit" cwd="./" focus=true {
         pane split_direction="horizontal" stacked=true {
             pane name="Files" {
-                // TODO: when we support sending CWD to plugins, this should start in ./zellij-server
+                // Currently do not support sending CWD to plugins.
                 command "bash"
-                args "-c" "exec \"${HOME}/.config/zide/bin/zide-pick\" \"${HOME}\""
+                args "-c" "exec \"~/.config/zide/bin/zide-pick\" \"./\""
+                cwd "./" 
                 start_suspended true
                 focus false
                 size "15%"
                 close_on_exit false
             }
-            pane command="hx" args="./" name="Helix" close_on_exit=false focus=true expanded=true
-            pane command="scooter" args="./" name="Search & Replace" close_on_exit=false focus=false
+            pane name="Helix" {
+                command "bash" 
+                args "-c" "hx --config ~/.config/zide/config/helix/config.toml -v --log ./.zide/helix-edit.log --working-dir ./" 
+                cwd "./"
+                start_suspended false
+                close_on_exit false 
+                focus true 
+                expanded true
+            }
+            pane command="scooter" args="./" cwd="./" name="Search & Replace" close_on_exit=false focus=false
         }
     }
-    strider_tab name="Git" cwd="./" focus=true {
+    hstack_tab name="Git" cwd="./" focus=false {
         pane split_direction="horizontal" stacked=true {
             pane name="Files" {
-                // TODO: when we support sending CWD to plugins, this should start in ./zellij-server
+                // Currently do not support sending CWD to plugins
                 command "bash"
-                args "-c" "exec \"${HOME}/.config/zide/bin/zide-pick\" \"${HOME}\""
+                args "-c" "exec \"~/.config/zide/bin/zide-pick\" \"./\""
+                cwd "./" 
                 start_suspended true
+                close_on_exit false
                 focus false
                 size "15%"
-                close_on_exit false
             }
-            pane command="hx" args="./" name="Helix" close_on_exit=false focus=true expanded=true
-            pane command="scooter" args="./" name="Search & Replace" close_on_exit=false focus=false
+            pane name="GitUI" {
+                command "gitui" 
+                args "--watcher" "--directory" "./" 
+                cwd "./" 
+                start_suspended true
+                close_on_exit false 
+                focus true
+                expanded true
+            }
         }
     }
-    tab name="Test/Bench: Unit" cwd="./zellij-client" {
+    tab name="Test/Bench: Unit" cwd="./" {
         chat_under_files split_direction="vertical" {
             pane edit="./src/lib.rs"
             pane edit="./src/input_handler.rs"
         }
     }
-    tab name="Test/Bench: Integrated" split_direction="vertical" cwd="./zellij-server/src" {
+    tab name="Test/Bench: Integrated" split_direction="vertical" cwd="./src" {
         pane edit="./screen.rs" name="SCREEN"
         pane edit="./tab/mod.rs" name="TAB"
         pane edit="./panes/terminal_pane.rs" name="TERMINAL PANE"
     }
-    tab name="Release/Deploy" split_direction="vertical" cwd="./zellij-server/src" {
+    tab name="Release/Deploy" split_direction="vertical" cwd="./src" {
         pane edit="./pty.rs" name="PTY"
         pane edit="./os_input_output.rs" name="OS_INPUT_OUTPUT"
     }
-    tab name="Web" split_direction="horizontal" cwd="./zellij-server/src/panes" {
+    tab name="Web" split_direction="horizontal" cwd="./src" {
         pane split_direction="vertical" {
             pane edit="./terminal_pane.rs" name="TERMINAL PANE"
             pane edit="./grid.rs" name="GRID (ANSI PARSER)"
@@ -88,7 +154,7 @@ layout {
             pane edit="./sixel.rs" name="SIXEL"
         }
     }
-    tab name="Embedded" split_direction="horizontal" cwd="./zellij-server/src/panes" {
+    tab name="Embedded" split_direction="horizontal" cwd="./src" {
         pane split_direction="vertical" {
             pane edit="./terminal_pane.rs" name="TERMINAL PANE"
             pane edit="./grid.rs" name="GRID (ANSI PARSER)"
@@ -98,7 +164,7 @@ layout {
             pane edit="./sixel.rs" name="SIXEL"
         }
     }
-    tab name="Debug" split_direction="horizontal" cwd="./zellij-server/src/panes" {
+    tab name="Debug" split_direction="horizontal" cwd="./src" {
         pane split_direction="vertical" {
             pane edit="./tiled_panes/mod.rs" name="TILED PANES"
             pane edit="./tiled_panes/tiled_pane_grid.rs" name="TILED PANES - GRID"

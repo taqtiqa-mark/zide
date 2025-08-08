@@ -1,0 +1,15 @@
+#!/bin/bash
+
+## Wait until the window appears:
+until xdotool search --onlyvisible --pid $PPID &> /dev/null; do sleep 0.01; done
+
+## Change the window name:
+xdotool \
+         search \
+                --onlyvisible \
+                --pid $PPID \
+         set_window \
+                --name "AZHIDE ($ZELLIJ_SESSION_NAME)"
+
+## Comment this line to run the app in background:
+#wait $PPID

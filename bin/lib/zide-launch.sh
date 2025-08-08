@@ -8,8 +8,11 @@ alacritty --title ZHIDE --config-file "${ZIDE_CONFIG_DIR}/alacritty/alacritty.to
 #    alacritty --title ZHIDE --config-file "${ZIDE_CONFIG_DIR}/alacritty/alacritty.toml" --command zellij attach ZHIDE-Launch
 #else
     # We don't have a ZHIDE-Launch session yet
-    alacritty --title ZHIDE --config-file "${ZIDE_CONFIG_DIR}/alacritty/alacritty.toml" --command /usr/local/bin/zellij --session ZHIDE-Launch --new-session-with-layout zide-launch --config-dir "${ZIDE_CONFIG_DIR}/zellij"
-    sleep 2s
+    alacritty --title ZHIDE --config-file "${ZIDE_CONFIG_DIR}/alacritty/alacritty.toml" --command /usr/local/bin/zellij --session ZHIDE-Launch --new-session-with-layout zide-launch --config-dir "${ZIDE_CONFIG_DIR}/zellij" &> ${ZIDE_DIR}/log/zhide-launch.log
+    
+    printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "AZHIDE"
+
+    #sleep 2s
     # Start session-manager plugin
     #sleep 3s
     #zellij --session ZHIDE-Launch action launch-or-focus-plugin zellij:session-manager

@@ -147,8 +147,7 @@ export YAZI_CONFIG_HOME="${ZIDE_CONFIG_DIR}/yazi"
 export ZELLIJ_CONFIG_DIR="${ZIDE_CONFIG_DIR}/zellij"
 
 source "${ZIDE_DIR}/bin/lib/zide-launch.sh"
-sleep 1s
-
+ 
 #if [ -n "$ZIDE_SESSION" ]; then
 #  zellij --session "$ZIDE_SESSION" action new-tab --cwd $cwd --layout "${layout_path}" --config-dir "${ZIDE_CONFIG_DIR}/zellij/"
 #  zide-rename
