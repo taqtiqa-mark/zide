@@ -1,0 +1,476 @@
+{
+  // JSON schema reference for configuration validation
+  "$schema": "https://opencode.ai/config.json",
+
+  // Theme name to use for the interface
+  "theme": "opencode", // Example: "opencode" or any valid theme name
+
+  // Custom keybind configurations
+  "keybinds": {
+    // Leader key for keybind combinations (default: `ctrl+x`)
+    "leader": "ctrl+x",
+
+    // Show help dialog (default: `<leader>h`)
+    "app_help": "<leader>h",
+
+    // Exit the application (default: `ctrl+c,<leader>q`)
+    "app_exit": "ctrl+c,<leader>q",
+
+    // Open external editor (default: `<leader>e`)
+    "editor_open": "<leader>e",
+
+    // List available themes (default: `<leader>t`)
+    "theme_list": "<leader>t",
+
+    // Create/update AGENTS.md (default: `<leader>i`)
+    "project_init": "<leader>i",
+
+    // Toggle tool details (default: `<leader>d`)
+    "tool_details": "<leader>d",
+
+    // Toggle thinking blocks (default: `<leader>b`)
+    "thinking_blocks": "<leader>b",
+
+    // Export session to editor (default: `<leader>x`)
+    "session_export": "<leader>x",
+
+    // Create a new session (default: `<leader>n`)
+    "session_new": "<leader>n",
+
+    // List all sessions (default: `<leader>l`)
+    "session_list": "<leader>l",
+
+    // Show session timeline (default: `<leader>g`)
+    "session_timeline": "<leader>g",
+
+    // Share current session (default: `<leader>s`)
+    "session_share": "<leader>s",
+
+    // Unshare current session (default: `none`)
+    "session_unshare": "none",
+
+    // Interrupt current session (default: `esc`)
+    "session_interrupt": "esc",
+
+    // Compact the session (default: `<leader>c`)
+    "session_compact": "<leader>c",
+
+    // Cycle to next child session (default: `ctrl+right`)
+    "session_child_cycle": "ctrl+right",
+
+    // Cycle to previous child session (default: `ctrl+left`)
+    "session_child_cycle_reverse": "ctrl+left",
+
+    // Scroll messages up by one page (default: `pgup`)
+    "messages_page_up": "pgup",
+
+    // Scroll messages down by one page (default: `pgdown`)
+    "messages_page_down": "pgdown",
+
+    // Scroll messages up by half page (default: `ctrl+alt+u`)
+    "messages_half_page_up": "ctrl+alt+u",
+
+    // Scroll messages down by half page (default: `ctrl+alt+d`)
+    "messages_half_page_down": "ctrl+alt+d",
+
+    // Navigate to first message (default: `ctrl+g`)
+    "messages_first": "ctrl+g",
+
+    // Navigate to last message (default: `ctrl+alt+g`)
+    "messages_last": "ctrl+alt+g",
+
+    // Copy message (default: `<leader>y`)
+    "messages_copy": "<leader>y",
+
+    // Undo message (default: `<leader>u`)
+    "messages_undo": "<leader>u",
+
+    // Redo message (default: `<leader>r`)
+    "messages_redo": "<leader>r",
+
+    // List available models (default: `<leader>m`)
+    "model_list": "<leader>m",
+
+    // Next recent model (default: `f2`)
+    "model_cycle_recent": "f2",
+
+    // Previous recent model (default: `shift+f2`)
+    "model_cycle_recent_reverse": "shift+f2",
+
+    // List agents (default: `<leader>a`)
+    "agent_list": "<leader>a",
+
+    // Next agent (default: `tab`)
+    "agent_cycle": "tab",
+
+    // Previous agent (default: `shift+tab`)
+    "agent_cycle_reverse": "shift+tab",
+
+    // Clear input field (default: `ctrl+c`)
+    "input_clear": "ctrl+c",
+
+    // Paste from clipboard (default: `ctrl+v`)
+    "input_paste": "ctrl+v",
+
+    // Submit input (default: `enter`)
+    "input_submit": "enter",
+
+    // Insert newline in input (default: `shift+enter,ctrl+j`)
+    "input_newline": "shift+enter,ctrl+j",
+
+    // @deprecated use agent_cycle. Next mode (default: `none`)
+    "switch_mode": "none",
+
+    // @deprecated use agent_cycle_reverse. Previous mode (default: `none`)
+    "switch_mode_reverse": "none",
+
+    // @deprecated use agent_cycle. Next agent (default: `tab`)
+    "switch_agent": "tab",
+
+    // @deprecated use agent_cycle_reverse. Previous agent (default: `shift+tab`)
+    "switch_agent_reverse": "shift+tab",
+
+    // @deprecated Currently not available. List files (default: `none`)
+    "file_list": "none",
+
+    // @deprecated Close file (default: `none`)
+    "file_close": "none",
+
+    // @deprecated Search file (default: `none`)
+    "file_search": "none",
+
+    // @deprecated Split/unified diff (default: `none`)
+    "file_diff_toggle": "none",
+
+    // @deprecated Navigate to previous message (default: `none`)
+    "messages_previous": "none",
+
+    // @deprecated Navigate to next message (default: `none`)
+    "messages_next": "none",
+
+    // @deprecated Toggle layout (default: `none`)
+    "messages_layout_toggle": "none",
+
+    // @deprecated use messages_undo. Revert message (default: `none`)
+    "messages_revert": "none"
+  },
+
+  // TUI specific settings
+  "tui": {
+    // TUI scroll speed
+    "scroll_speed": 2 // Default: 2, minimum: 1
+  },
+
+  // Command configuration, see https://opencode.ai/docs/commands
+  "command": {
+    // Example custom command
+    "example": {
+      // Required: Template string for the command
+      "template": "Example template",
+      // Optional: Description of the command
+      "description": "Example description",
+      // Optional: Agent to use
+      "agent": "example-agent",
+      // Optional: Model to use
+      "model": "example/model",
+      // Optional: Whether this is a subtask
+      "subtask": false
+    }
+  },
+
+  // Watcher configuration
+  "watcher": {
+    // Array of patterns to ignore
+    "ignore": [] // e.g., ["node_modules/**", ".git/**"]
+  },
+
+  // Array of plugin paths or names
+  "plugin": [], // e.g., ["plugin1", "plugin2"]
+
+  // Enable snapshot mode
+  "snapshot": false,
+
+  // Control sharing behavior: 'manual' allows manual sharing via commands, 'auto' enables automatic sharing, 'disabled' disables all sharing
+  "share": "manual", // Enum: "manual", "auto", "disabled"
+
+  // @deprecated Use 'share' field instead. Share newly created sessions automatically
+  "autoshare": false,
+
+  // Automatically update to the latest version
+  "autoupdate": true,
+
+  // Disable providers that are loaded automatically
+  "disabled_providers": [], // e.g., ["openai", "gemini"]
+
+  // Model to use in the format of provider/model, eg anthropic/claude-2
+  "model": "anthropic/claude-sonnet-4-20250514", // Example
+
+  // Small model to use for tasks like title generation in the format of provider/model
+  "small_model": "anthropic/claude-3-5-haiku-20241022", // Example
+
+  // Custom username to display in conversations instead of system username
+  "username": "custom-user", // Example
+
+  // @deprecated Use `agent` field instead.
+  //"mode": {
+  //  // Example mode (deprecated)
+  //  "build": {
+  //   // Model for this mode
+  //    "model": "example/model",
+  //    // Temperature setting
+  //    "temperature": 0.7,
+  //    // Top-p sampling
+  //    "top_p": 0.9,
+  //    // Prompt for the mode
+  //    "prompt": "Build prompt",
+  //    // Tools enabled/disabled
+  //    "tools": {
+  //      "example-tool": true
+  //    },
+  //    // Disable this mode
+  //    "disable": false,
+  //    // Description of when to use the agent
+  //    "description": "Build mode description",
+  //    // Mode type: "subagent", "primary", or "all"
+  //    "mode": "all",
+  //    // Permissions for this mode
+  //    "permission": {
+  //      // Edit permission: "ask", "allow", "deny"
+  //      "edit": "ask",
+  //      // Bash permission: "ask", "allow", "deny" or pattern map
+  //      "bash": "ask",
+  //      // Webfetch permission: "ask", "allow", "deny"
+  //      "webfetch": "ask"
+  //    }
+  //  },
+  //  // Additional modes follow the same structure
+  //  "plan": {} // Placeholder for plan mode
+  //},
+
+  // Agent configuration, see https://opencode.ai/docs/agent
+  "agent": {
+    // Example agent: plan
+    "plan": {
+      // Model for this agent
+      "model": "example/model",
+      // Temperature setting
+      "temperature": 0.7,
+      // Top-p sampling
+      "top_p": 0.9,
+      // Prompt for the agent
+      "prompt": "Plan prompt",
+      // Tools enabled/disabled
+      "tools": {
+        "example-tool": true
+      },
+      // Disable this agent
+      "disable": false,
+      // Description of when to use the agent
+      "description": "Plan agent description",
+      // Mode type: "subagent", "primary", or "all"
+      "mode": "subagent",
+      // Permissions for this agent
+      "permission": {
+        // Edit permission: "ask", "allow", "deny"
+        "edit": "ask",
+        // Bash permission: "ask", "allow", "deny" or pattern map
+        "bash": "ask",
+        // Webfetch permission: "ask", "allow", "deny"
+        "webfetch": "ask"
+      }
+    },
+    // Additional agents like "build" and "general" follow the same structure
+    "build": {},
+    "general": {}
+  },
+
+  // Custom provider configurations and model overrides
+  "provider": {
+    // Example provider
+    "example": {
+      // API endpoint
+      "api": "https://api.example.com",
+      // Provider name
+      "name": "Example Provider",
+      // Environment variables
+      "env": ["EXAMPLE_VAR"],
+      // Provider ID
+      "id": "example",
+      // NPM package
+      "npm": "example-package",
+      // Model configurations
+      "models": {
+        "model1": {
+          // Model ID
+          "id": "model1",
+          // Model name
+          "name": "Model 1",
+          // Release date
+          "release_date": "2023-01-01",
+          // Supports attachments
+          "attachment": true,
+          // Supports reasoning
+          "reasoning": true,
+          // Supports temperature
+          "temperature": true,
+          // Supports tool calls
+          "tool_call": true,
+          // Cost structure
+          "cost": {
+            "input": 0.01,
+            "output": 0.02,
+            "cache_read": 0.005,
+            "cache_write": 0.005
+          },
+          // Limits
+          "limit": {
+            "context": 100000,
+            "output": 4096
+          },
+          // Experimental flag
+          "experimental": false,
+          // Additional options
+          "options": {},
+          // Provider-specific details
+          "provider": {
+            "npm": "provider-package"
+          }
+        }
+      },
+      // Provider options
+      "options": {
+        "apiKey": "your-api-key",
+        "baseURL": "https://api.example.com/v1",
+        // Timeout in milliseconds for requests to this provider. Default is 300000 (5 minutes). Set to false to disable timeout.
+        "timeout": 300000 // or false to disable
+      }
+    }
+  },
+
+  // MCP (Model Context Protocol) server configurations
+  "mcp": {
+    // Example local MCP
+    "local-example": {
+      // Type of MCP server connection
+      "type": "local",
+      // Command and arguments to run the MCP server
+      "command": ["example-command", "--arg"],
+      // Environment variables to set when running the MCP server
+      "environment": {
+        "VAR": "value"
+      },
+      // Enable or disable the MCP server on startup
+      "enabled": true
+    },
+    // Example remote MCP
+    "remote-example": {
+      // Type of MCP server connection
+      "type": "remote",
+      // URL of the remote MCP server
+      "url": "http://example.com/mcp",
+      // Enable or disable the MCP server on startup
+      "enabled": true,
+      // Headers to send with the request
+      "headers": {
+        "Authorization": "Bearer token"
+      }
+    }
+  },
+
+  // Formatter configurations
+  "formatter": {
+    // Example formatter
+    "prettier": {
+      // Disable this formatter
+      "disabled": false,
+      // Command to run
+      "command": ["prettier", "--write"],
+      // Environment variables
+      "environment": {
+        "NODE_ENV": "development"
+      },
+      // File extensions this applies to
+      "extensions": [".js", ".ts"]
+    }
+  },
+
+  // LSP configurations
+  "lsp": {
+    // Example LSP disabled
+    "example-disabled": {
+      // Disable this LSP
+      "disabled": true
+    },
+    // Example LSP enabled
+    "example-enabled": {
+      // Command to run the LSP server
+      "command": ["example-lsp", "--stdio"],
+      // File extensions this LSP handles
+      "extensions": [".example"],
+      // Disable flag (optional)
+      "disabled": false,
+      // Environment variables
+      "env": {
+        "VAR": "value"
+      },
+      // Initialization options
+      "initialization": {
+        "option": "value"
+      }
+    }
+  },
+
+  // Additional instruction files or patterns to include
+  "instructions": [], // e.g., ["./custom-instructions.md", ".opencode/rules/*.md"]
+
+  // @deprecated Always uses stretch layout.
+  "layout": "stretch", // Enum: "auto", "stretch"
+
+  // Permission configurations
+  "permission": {
+    // Edit permission: "ask", "allow", "deny"
+    "edit": "ask",
+    // Bash permission: "ask", "allow", "deny" or pattern map
+    "bash": "ask",
+    // Webfetch permission: "ask", "allow", "deny"
+    "webfetch": "ask"
+  },
+
+  // Tools enabled/disabled
+  "tools": {
+    "example-tool": true
+  },
+
+  // Experimental features
+  "experimental": {
+    // Hooks for events
+    "hook": {
+      // Hooks for file edited event, by extension
+      "file_edited": {
+        ".js": [
+          {
+            // Command to run
+            "command": ["lint", "--fix"],
+            // Environment variables
+            "environment": {
+              "VAR": "value"
+            }
+          }
+        ]
+      },
+      // Hooks for session completed event
+      "session_completed": [
+        {
+          // Command to run
+          "command": ["notify", "Session done"],
+          // Environment variables
+          "environment": {
+            "VAR": "value"
+          }
+        }
+      ]
+    },
+    // Disable paste summary
+    "disable_paste_summary": false
+  }
+}

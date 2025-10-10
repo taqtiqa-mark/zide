@@ -12,8 +12,13 @@ layout {
     pane_template name="chat_under_files" {
         pane split_direction="horizontal" {
             children
-            pane command="cargo" size="30%" {
-                args "test"
+            pane size="20%" {
+                command "./aider"
+                args "--chat-mode" "ask"
+                cwd "./" 
+                start_suspended true
+                focus false
+                close_on_exit false
             }
         }
     }
@@ -28,57 +33,89 @@ layout {
             plugin location="zellij:status-bar"
         }
     }
-    hstack_tab name="AI" cwd="./" focus=false {
-        pane split_direction="vertical" {
-            pane split_direction="horizontal" stacked=true {
-                pane name="Files" {
-                    // Currently do not support sending CWD to plugins.
-                    command "bash"
-                    args "-c" "exec \"~/.config/zide/bin/zide-pick\" \"./\""
-                    cwd "./" 
-                    start_suspended true
-                    focus false
-                    size "15%"
-                    close_on_exit false
+    hstack_tab name="Explore" cwd="./" focus=false {
+        pane split_direction="horizontal" stacked=false {
+            pane split_direction="vertical" stacked=false size="85%" {
+                pane split_direction="horizontal" stacked=true {
+                    pane name="Files" {
+                        // Currently do not support sending CWD to plugins.
+                        command "bash"
+                        args "-c" "exec \"~/.config/zide/bin/zide-pick\" \"./\""
+                        cwd "./" 
+                        start_suspended true
+                        focus false
+                        size "15%"
+                        close_on_exit false
+                    }
+                    pane name="Helix" {
+                        command "bash" 
+                        args "-c" "hx --config ~/.config/zide/config/helix/config.toml -v --log ./.zide/helix-ai.log --working-dir ./" 
+                        cwd "./"
+                        start_suspended false
+                        close_on_exit false 
+                        focus true 
+                        expanded true
+                    }
+                    pane name="Aider Watch" {
+                        command "./aider"
+                        args "--watch-files" "\\" "./"
+                        cwd "./"
+                        start_suspended true 
+                        close_on_exit false 
+                        focus false 
+                        size "10%"
+                    }
+                    pane name="AI Chat" {
+                        command "bash"
+                        args "-c" "mkdir -p ~/.config/zide/share/opencode/${ZELLIJ_SESSION_NAME}; SHARE=~/.config/zide/share/opencode/${ZELLIJ_SESSION_NAME} OPENCODE_CONFIG=~/.config/zide/config/opencode/explore.jsonc EDITOR='hx --config ~/.config/zide/config/helix/config.toml -v --log ./.zide/helix-opencode.log --working-dir ./' ./opencode"
+                        cwd "./" 
+                        start_suspended true
+                        close_on_exit false
+                        focus false
+                        size "20%"
+                    }
                 }
-                pane name="Helix" {
-                    command "bash" 
-                    args "-c" "hx --config ~/.config/zide/config/helix/config.toml -v --log ./.zide/helix-ai.log --working-dir ./" 
-                    cwd "./"
-                    start_suspended false
-                    close_on_exit false 
-                    focus true 
-                    expanded true
-                }
-                pane name="Aider Watch" {
-                    command "./aider"
-                    args "--watch-files" "--subtree-only" "./" 
-                    cwd "./" 
-                    start_suspended true 
-                    close_on_exit false 
-                    focus false 
-                    size "10%"
-                }
-                pane name="Goose Session" {
-                    command "bash" 
-                    args "-c" "./goose session --name ${ZELLIJ_SESSION_NAME}_rust"
-                    cwd "./" 
-                    start_suspended true
-                    close_on_exit false
-                    focus false
-                    size "20%"
+                pane split_direction="horizontal" stacked=true {
+                    pane name="Git" {
+                        command "gitu"
+                        args "--keys" "?"
+                        cwd "./" 
+                        start_suspended true
+                        close_on_exit false
+                        focus false
+                        size "10%"
+                    }
+                    pane name="Helix" {
+                        command "bash" 
+                        args "-c" "hx --config ~/.config/zide/config/helix/config.toml -v --log ./.zide/helix-ai.log --working-dir ./" 
+                        cwd "./"
+                        start_suspended false
+                        close_on_exit false 
+                        focus true 
+                        expanded true
+                    }
+                    pane name="Aider Chat" {
+                        command "./aider"
+                        args "--chat-mode" "ask"
+                        cwd "./" 
+                        start_suspended true 
+                        close_on_exit false
+                        focus false
+                    }
+                    pane name="AI Chat" {
+                        command "bash"
+                        args "-c" "mkdir -p ~/.config/zide/share/goose/${ZELLIJ_SESSION_NAME}; SHARE=~/.config/zide/share/goose/${ZELLIJ_SESSION_NAME} ./goose --config=~/.config/zide/config/goose/explore.yaml session --name ${ZELLIJ_SESSION_NAME}_explore"
+                        cwd "./" 
+                        start_suspended true
+                        close_on_exit false
+                        focus false
+                        size "20%"
+                    }
                 }
             }
-            pane split_direction="horizontal" stacked=true {
-                pane name="Aider Chat" {
-                    command "./aider"
-                    args "--chat-mode" "ask"
-                    cwd "./" 
-                    start_suspended true 
-                    close_on_exit false
-                    focus false
-                }
-                pane command="./goose" args="session" cwd="./" name="Goose Chat" start_suspended=true close_on_exit=false focus=false size="10%"
+            pane split_direction="vertical" stacked=false size="15%" {
+                pane name="Shell #1" 
+                pane name="Shell #2"
             }
         }
     }

@@ -12,4 +12,13 @@ layouts/*.kdl
 !layouts/tall_lazygit.kdl
 !layouts/wide.kdl
 !layouts/wide_lazygit.kdl
+!layouts/zide-rust.kdl
+!layouts/zide-launch.kdl
+
+log/opencode/log
+log/opencode/storage 
+
+.serena/
+
 tmp/
+.aider*

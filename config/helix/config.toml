@@ -15,7 +15,7 @@ S-right = "extend_char_right"
 S-left = "extend_char_left"
 S-down = "copy_selection_on_next_line"
 S-up = "copy_selection_on_prev_line"
-A-s = ":write"
+C-s = ":write"
 
 [keys.normal]
 C-tab = "goto_next_buffer"
@@ -32,7 +32,7 @@ S-right = "extend_char_right"
 S-left = "extend_char_left"
 S-down = "copy_selection_on_next_line"
 S-up = "copy_selection_on_prev_line"
-A-s = ":write-all"
+C-s = ":write-all"
 # Copy the entire word under the cursor into the search register
 "*" = ["move_prev_word_start", "move_next_word_end", "search_selection", "global_search"]
 
@@ -49,7 +49,7 @@ S-right = "extend_char_right"
 S-left = "extend_char_left"
 S-down = "copy_selection_on_next_line"
 S-up = "copy_selection_on_prev_line"
-A-s = ":write-all"
+C-s = ":write-all"
 
 [keys.normal.ret]
 # Reserved keys for final selection:
@@ -81,6 +81,7 @@ s = [":toggle soft-wrap.enable"]
 h = [":toggle lsp.display-inline-hints"]
 
 [editor]
+mouse = false
 true-color = true
 # Show a list of open buffers. Active is highlighted.
 bufferline = "multiple"
