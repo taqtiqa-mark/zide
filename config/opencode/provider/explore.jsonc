@@ -1,0 +1,220 @@
+// Provider for x.ai (Grok)
+"xai": {
+  // Provider options
+  "options": {
+    "apiKey": "{file:./keys/xai.key}",
+    // Timeout in milliseconds for requests to this provider.
+    // Default is 300000 (5 minutes). Set to false to disable timeout.
+    "timeout": 150000
+  },
+  // Model configurations
+  "models": {
+  
+    // Stanza for grok-4-fast-non-reasoning.toml
+    "grok-4-fast-non-reasoning": {
+      // Model ID
+      "id": "grok-4-fast-non-reasoning",
+      // Model name
+      "name": "Grok 4 Fast (Non-Reasoning)",
+      // Release date
+      "release_date": "2025-09-19",
+      // Supports attachments
+      "attachment": true,
+      // Supports reasoning
+      "reasoning": false,
+      // Supports temperature
+      "temperature": true,
+      // Tool call support
+      "tool_call": true,
+      // Cost structure
+      "cost": {
+        "input": 0.20,
+        "output": 0.50,
+        "cache_read": 0.05
+      },
+      // Limits
+      "limit": {
+        "context": 2000000,
+        "output": 30000
+      },
+      // Modalities
+      "modalities": {
+        "input": ["text", "image"],
+        "output": ["text"]
+      }
+    },
+
+    // Stanza for grok-4-fast.toml
+    "grok-4-fast": {
+      // Model ID
+      "id": "grok-4-fast",
+      // Model name
+      "name": "Grok 4 Fast",
+      // Release date
+      "release_date": "2025-09-19",
+      // Supports attachments
+      "attachment": true,
+      // Supports reasoning
+      "reasoning": true,
+      // Supports temperature
+      "temperature": true,
+      // Tool call support
+      "tool_call": true,
+      // Cost structure
+      "cost": {
+        "input": 0.20,
+        "output": 0.50,
+        "cache_read": 0.05
+      },
+      // Limits
+      "limit": {
+        "context": 2000000,
+        "output": 30000
+      },
+      // Modalities
+      "modalities": {
+        "input": ["text", "image"],
+        "output": ["text"]
+      }
+    },
+
+    // Stanza for grok-4.toml
+    "grok-4": {
+      // Model ID
+      "id": "grok-4",
+      // Model name
+      "name": "Grok 4",
+      // Release date
+      "release_date": "2025-07-09",
+      // Supports attachments
+      "attachment": false,
+      // Supports reasoning
+      "reasoning": true,
+      // Supports temperature
+      "temperature": true,
+      // Tool call support
+      "tool_call": true,
+      // Cost structure
+      "cost": {
+        "input": 3.00,
+        "output": 15.00,
+        "reasoning": 15.00,
+        "cache_read": 0.75
+      },
+      // Limits
+      "limit": {
+        "context": 256000,
+        "output": 64000
+      },
+      // Modalities
+      "modalities": {
+        "input": ["text"],
+        "output": ["text"]
+      }
+    },
+    
+    // Stanza for grok-beta.toml
+    "grok-beta": {
+      // Model ID
+      "id": "grok-beta",
+      // Model name
+      "name": "Grok Beta",
+      // Release date
+      "release_date": "2024-11-01",
+      // Supports attachments
+      "attachment": false,
+      // Supports reasoning
+      "reasoning": false,
+      // Supports temperature
+      "temperature": true,
+      // Tool call support
+      "tool_call": true,
+      // Cost structure
+      "cost": {
+        "input": 5.00,
+        "output": 15.00,
+        "cache_read": 5.00
+      },
+      // Limits
+      "limit": {
+        "context": 131072,
+        "output": 4096
+      },
+      // Modalities
+      "modalities": {
+        "input": ["text"],
+        "output": ["text"]
+      }
+    },
+
+    // Stanza for grok-code-fast-1.toml
+    "grok-code-fast-1": {
+      // Model ID
+      "id": "grok-code-fast-1",
+      // Model name
+      "name": "Grok Code Fast 1",
+      // Release date
+      "release_date": "2025-08-28",
+      // Supports attachments
+      "attachment": false,
+      // Supports reasoning
+      "reasoning": true,
+      // Supports temperature
+      "temperature": true,
+      // Tool call support
+      "tool_call": true,
+      // Cost structure
+      "cost": {
+        "input": 0.20,
+        "output": 1.50,
+        "cache_read": 0.02
+      },
+      // Limits
+      "limit": {
+        "context": 256000,
+        "output": 10000
+      },
+      // Modalities
+      "modalities": {
+        "input": ["text"],
+        "output": ["text"]
+      }
+    },
+    
+      // Stanza for grok-3-mini.toml
+    "grok-3-mini": {
+      // Model ID (derived from file name)
+      "id": "grok-3-mini",
+      // Model name
+      "name": "Grok 3 Mini",
+      // Release date
+      "release_date": "2025-02-17",
+      // Supports attachments
+      "attachment": false,
+      // Supports reasoning
+      "reasoning": true,
+      // Supports temperature
+      "temperature": true,
+      // Tool call support
+      "tool_call": true,
+      // Cost structure
+      "cost": {
+        "input": 0.30,
+        "output": 0.50,
+        "reasoning": 0.50,
+        "cache_read": 0.075,
+        "cache_write": 0 // Assumed default since not specified
+      },
+      // Limits
+      "limit": {
+        "context": 131072,
+        "output": 8192
+      },
+      // Modalities
+      "modalities": {
+        "input": ["text"],
+        "output": ["text"]
+      }
+    },
+    
+}
