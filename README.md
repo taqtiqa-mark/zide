@@ -6,6 +6,15 @@ Zide is a combination of [Zellij](https://zellij.dev) layouts and convenience `b
 
 The project was inspired by the [`yazelix`](https://github.com/luccahuguet/yazelix) project, but simplifies it down to work in most shells (instead of requiring `nushell`), more editors (vs just Helix), and essentailly any file picker, with less required configuration.
 
+## Table of Contents
+- [Features](#features)
+- [Why?](#why)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Available Layouts](#available-layouts)
+- [Configuration](#configuration)
+- [How it works](#how-it-works)
+
 ## Features
 
 1. Start a `zellij` layout with a filepicker on the left and your editor on the right
@@ -113,6 +122,375 @@ Each default layout also includes a `_lazygit` variant that includes a floating 
 
  Any additional layouts you add or configure in the zide `layouts/` directory will be available to use from the `zide` command, and will be git ignored.
 
+## Contributing
+
+We welcome contributions to zide! Whether you're fixing bugs, adding features, improving documentation, or suggesting enhancements, your help is appreciated. Please follow these guidelines to ensure a smooth contribution process.
+
+### Reporting Issues
+
+If you encounter a bug, have a feature request, or need help, please [open an issue](https://github.com/josephschmitt/zide/issues) on GitHub. When reporting issues:
+
+- **Check existing issues**: Search for similar issues before creating a new one.
+- **Provide details**: Include your operating system, shell version, zellij version, editor, and file picker you're using.
+- **Steps to reproduce**: Describe the steps that led to the issue, including any error messages.
+- **Expected vs. actual behavior**: Clearly explain what you expected to happen and what actually happened.
+- **Logs**: If applicable, include relevant log output (e.g., from `zellij` or the file picker).
+
+### Submitting Pull Requests
+
+1. **Fork the repository**: Create your own fork of the project.
+2. **Create a feature branch**: Use a descriptive name for your branch (e.g., `fix-bash-syntax-error` or `add-vim-support`).
+3. **Make your changes**: Ensure your code follows the project's coding standards (see below).
+4. **Test your changes**: Run the scripts manually and verify they work as expected.
+5. **Update documentation**: If your changes affect usage or configuration, update the README.md accordingly.
+6. **Commit your changes**: Write clear, concise commit messages.
+7. **Submit a pull request**: Provide a detailed description of your changes, including the problem solved and any relevant issue numbers.
+
+Pull requests will be reviewed, and feedback may be provided. Please be responsive to comments and make requested changes.
+
+### Coding Standards
+
+Since zide is primarily written in Bash, we follow these coding standards to maintain consistency and reliability:
+
+- **Use ShellCheck**: Run [ShellCheck](https://github.com/koalaman/shellcheck) on all Bash scripts to catch common issues. Aim for no warnings or errors.
+- **POSIX compliance**: Write scripts that are compatible with POSIX shell where possible, avoiding Bash-specific features unless necessary.
+- **Error handling**: Use `set -e` or check exit codes for critical operations. Provide meaningful error messages.
+- **Functions**: Break complex logic into functions for better readability and reusability.
+- **Variable naming**: Use descriptive, lowercase variable names with underscores (e.g., `working_directory`).
+- **Quoting**: Always quote variables to prevent word splitting and globbing issues.
+- **Comments**: Add comments for complex logic, but avoid obvious comments.
+- **Shebang**: Use `#!/usr/bin/env bash` for portability.
+- **Indentation**: Use 2 spaces for indentation (no tabs).
+- **Line length**: Keep lines under 80 characters where possible.
+- **Command substitution**: Prefer `$()` over backticks for command substitution.
+
+Example of good Bash style:
+```bash
+#!/usr/bin/env bash
+
+# Function to validate input
+validate_input() {
+  local input="$1"
+  if [[ -z "$input" ]]; then
+    echo "Error: Input cannot be empty" >&2
+    return 1
+  fi
+  return 0
+}
+
+# Main script logic
+main() {
+  local working_dir="${1:-$(pwd)}"
+  if ! validate_input "$working_dir"; then
+    exit 1
+  fi
+  echo "Working directory: $working_dir"
+}
+
+main "$@"
+```
+
+### Development Setup
+
+To set up a development environment for contributing:
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/josephschmitt/zide.git
+   cd zide
+   ```
+
+2. **Install dependencies**:
+   - [Zellij](https://zellij.dev/) (terminal multiplexer)
+   - A supported editor (e.g., [Helix](https://helix-editor.com/), [Neovim](https://neovim.io/))
+   - A supported file picker (e.g., [Yazi](https://yazi-rs.github.io/), [lf](https://github.com/gokcehan/lf))
+   - [ShellCheck](https://github.com/koalaman/shellcheck) for linting
+
+3. **Add to PATH** (for testing):
+   ```bash
+   export PATH="$PATH:$(pwd)/bin"
+   ```
+
+4. **Test your changes**:
+   - Run scripts manually: `./bin/zide --help`
+   - Test different layouts and configurations
+   - Verify integration with various editors and pickers
+
+5. **Lint your code**:
+   ```bash
+   shellcheck bin/*.sh bin/lib/*.sh
+   ```
+
+6. **Run in development mode**:
+   - Make changes to scripts in `bin/` or configurations in `config/`
+   - Test by running `zide` commands and checking behavior
+
+If you have questions about the development setup or need help getting started, feel free to ask in an issue or discussion. Thank you for contributing to zide!
+
+## Troubleshooting
+
+### Installation Issues
+
+#### Command not found after installation
+If you get a "command not found" error when running `zide`, ensure the `bin/` directory is in your PATH:
+
+```bash
+# Check if zide is in PATH
+which zide
+
+# If not found, verify PATH includes the zide bin directory
+echo $PATH | grep -q "zide/bin" || echo "zide/bin not in PATH"
+
+# Add to your shell profile if missing
+echo 'export PATH="$PATH:$HOME/.config/zide/bin"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+#### Dependencies not installed
+Zide requires several dependencies. Check they're installed:
+
+```bash
+# Check zellij
+zellij --version
+
+# Check your editor (example for helix)
+hx --version
+
+# Check file picker (example for yazi)
+yazi --version
+
+# For lazygit layouts
+lazygit --version
+```
+
+Install missing dependencies:
+- **Zellij**: Follow [official installation](https://zellij.dev/documentation/installation.html)
+- **File pickers**: `yazi`, `lf`, `nnn`, etc. via your package manager
+- **Editors**: `hx`, `nvim`, `vim`, etc.
+
+#### Permission denied
+Ensure the zide scripts are executable:
+
+```bash
+chmod +x $HOME/.config/zide/bin/*
+```
+
+### Pane Focus Problems
+
+#### Files not opening in editor pane
+This usually happens when the editor pane is not immediately adjacent to the picker pane in the zellij layout.
+
+**Solution**: Ensure your layout has the editor pane next to the picker pane. The `zide-edit` script uses `zellij action focus-next-pane` to switch between panes.
+
+Check your layout file (in `config/zellij/layouts/`) - the editor and picker panes should be adjacent.
+
+#### Editor commands not working
+If files aren't opening but pane focus works:
+
+1. **Check editor compatibility**: Zide works with modal editors that support Helix-style commands (`:open`, `:cd`). Supported editors include Helix, Kakoune, Neovim, Vim.
+
+2. **Verify editor command mapping**: Some editors need different command syntax. Check `bin/lib/getEditorCommand.sh` for your editor.
+
+3. **Check for timing issues**: The script includes delays for zellij to process commands. If your system is slow, you might need longer delays.
+
+#### Layout not loading correctly
+If layouts aren't applying:
+
+```bash
+# Check layout directory
+echo $ZIDE_LAYOUT_DIR
+
+# List available layouts
+ls $ZIDE_LAYOUT_DIR
+
+# Try specifying layout explicitly
+zide /path/to/project --layout default
+```
+
+### File Picker Configuration Errors
+
+#### Yazi auto-layout not working
+The auto-layout plugin adjusts column ratios based on pane width.
+
+**Symptoms**: Yazi shows incorrect number of columns in narrow panes.
+
+**Solutions**:
+
+1. **Ensure plugin is installed**: The `yazi/plugins/auto-layout.yazi` plugin should be copied to your yazi config:
+   ```bash
+   mkdir -p ~/.config/yazi/plugins
+   cp $HOME/.config/zide/yazi/plugins/auto-layout.yazi ~/.config/yazi/plugins/
+   ```
+
+2. **Check yazi config**: Ensure `init.lua` loads the plugin:
+   ```lua
+   require("auto-layout")
+   ```
+
+3. **Disable custom config**: If using custom yazi config, set:
+   ```bash
+   export ZIDE_USE_YAZI_CONFIG=false
+   ```
+
+#### LF configuration issues
+LF auto-layout adjusts ratios based on pane width.
+
+**Symptoms**: LF doesn't adjust columns properly.
+
+**Solutions**:
+
+1. **Check LF config**: Ensure the `on-redraw` command is in your `lfrc`:
+   ```bash
+   cmd on-redraw %{{
+       if [ $lf_width -le 40 ]; then
+           lf -remote "send $id set ratios 1"
+       elif [ $lf_width -le 80 ]; then
+           lf -remote "send $id set ratios 1:1"
+       else
+           lf -remote "send $id set ratios 1:1:2"
+       fi
+   }}
+   ```
+
+2. **Disable custom config**: Use global LF config:
+   ```bash
+   export ZIDE_USE_LF_CONFIG=false
+   ```
+
+#### File picker not launching
+If your chosen file picker doesn't start:
+
+```bash
+# Check picker is set
+echo $ZIDE_FILE_PICKER
+
+# Test picker directly
+$ZIDE_FILE_PICKER --version
+
+# Set picker explicitly
+zide --picker yazi /path/to/project
+```
+
+### Environment Variable Issues
+
+#### Settings not taking effect
+Environment variables must be set before running `zide`:
+
+```bash
+# Set variables in current session
+export ZIDE_FILE_PICKER=yazi
+export ZIDE_DEFAULT_LAYOUT=tall
+
+# Or add to shell profile for persistence
+echo 'export ZIDE_FILE_PICKER=yazi' >> ~/.bashrc
+```
+
+#### Conflicting configurations
+If you have multiple zide installations or conflicting configs:
+
+```bash
+# Check which zide is being used
+which zide
+
+# Check config directories
+echo $ZIDE_DIR
+echo $ZIDE_CONFIG_DIR
+```
+
+### Session Management Issues
+
+#### Sessions not persisting
+Zellij sessions should persist across terminal restarts, but zide sessions are managed separately.
+
+#### Multiple sessions conflict
+If you have multiple zide sessions running:
+
+```bash
+# List zellij sessions
+zellij ls
+
+# Attach to specific session
+zellij attach <session-name>
+
+# Delete old sessions
+zellij delete-session <session-name> --force
+```
+
+### Performance Issues
+
+#### Slow file opening
+If there's a delay when opening files:
+
+1. **Check system performance**: Fast systems may need shorter delays in `zide-edit`
+2. **Reduce sleep times**: Edit the sleep commands in `bin/zide-edit` if your system is fast
+
+#### High CPU usage
+Some file pickers or layouts may cause high CPU. Try different pickers or layouts:
+
+```bash
+# Try different picker
+zide --picker lf /path/to/project
+
+# Try different layout
+zide --layout stacked /path/to/project
+```
+
+### Getting Help
+
+If these solutions don't resolve your issue:
+
+1. **Check logs**: Look at `log/zhide-launch.log` for startup errors
+2. **Test components individually**: Run zellij, your editor, and file picker separately
+3. **File an issue**: Include your OS, zellij version, editor, file picker, and error messages
+4. **Check zellij compatibility**: Ensure you're using a recent zellij version (≥0.39.0 recommended)
+
+## Examples
+
+### Custom Layouts
+
+Create custom layouts by duplicating existing ones in the `layouts/` directory and modifying them. For example, to create a layout with a wider file picker pane:
+
+```kdl
+layout {
+    pane split_direction="vertical" {
+        pane command="zide-pick" {
+            size = "40%"
+        }
+        pane command="hx" {
+            size = "60%"
+        }
+    }
+}
+```
+
+Save this as `wide.kdl` in the `layouts/` directory, then launch it with:
+
+```sh
+zide -l wide /path/to/project
+```
+
+### Multiple File Opening
+
+Zide supports opening multiple files simultaneously. In supported file pickers:
+
+- **Yazi**: Select multiple files with `Space`, then press `Enter` to open them all.
+- **lf**: Mark files with `m`, then open with `l`.
+- **broot**: Use multi-selection mode and open selected files.
+
+The `zide-edit` script will send all selected files to your editor's `:open` command.
+
+### Integration with Lazygit
+
+Use lazygit-enabled layouts for seamless git integration. These variants include a floating pane running `lazygit`:
+
+```sh
+zide default_lazygit /path/to/project
+```
+
+Available lazygit layouts: `default_lazygit`, `tall_lazygit`, `stacked_lazygit`, etc.
+
+Toggle the lazygit pane visibility using Zellij's pane commands (e.g., `Ctrl-p` to toggle floating panes).
+
 ## Configuration
 
 ```sh
@@ -195,6 +573,92 @@ cmd on-redraw %{{
     fi
 }}
 ```
+
+## Security
+
+We take security seriously in zide. For detailed security information, please see [SECURITY.md](SECURITY.md).
+
+## SEO and Multilingual Support
+
+### SEO Keywords
+
+To improve discoverability on search engines and GitHub's search, this project incorporates relevant keywords throughout the documentation. Key terms include:
+
+- **zide**: Terminal IDE, Zellij IDE, IDE layout, development environment
+- **zellij**: Terminal multiplexer, Zellij layouts, Zellij plugins, Zellij integration
+- **editors**: Helix editor, Neovim, Vim, Kakoune, modal editors, code editors
+- **file pickers**: Yazi, lf, broot, nnn, fff, felix, file managers, terminal file browsers
+- **features**: File picker integration, editor integration, pane management, layout switching, multi-file opening
+- **technical**: Bash scripts, environment variables, configuration, customization, automation
+
+### Language Support
+
+Zide is designed to work in multilingual environments, supporting international users and developers:
+
+- **Unicode Support**: Full handling of Unicode characters in file names, paths, and content across all supported file pickers (yazi, lf, etc.) and editors (Helix, Neovim).
+- **Locale Awareness**: Respects system locale settings for date/time formatting and character encoding in scripts and configurations.
+- **Documentation Translations**: Currently English-only, but we welcome contributions for translations. To add a translation:
+  1. Fork the repository
+  2. Create `README.<lang>.md` (e.g., README.es.md for Spanish).
+  3. Translate the content while maintaining structure.
+  4. Submit a pull request referencing the original README.
+- **Editor Language Support**: Integrated editors support syntax highlighting for 100+ programming languages. For non-Latin scripts, ensure your terminal supports Unicode.
+- **Internationalization in Scripts**: Bash scripts use locale-independent commands where possible. Set `LC_ALL=C` for consistent behavior if needed.
+
+If you'd like to contribute translations or have suggestions for better multilingual support, please open an issue or pull request!
+
+## Documentation Integrations
+
+Zide integrates with various terminal tools and editors to provide a seamless IDE-like experience. Below are links to the official documentation for each supported tool:
+
+### Core Components
+- **[Zellij Documentation](https://zellij.dev/documentation/)**: Comprehensive guide to Zellij's features, layouts, and configuration. Essential for understanding zide's layout system.
+  - Key sections: [Layouts](https://zellij.dev/documentation/layouts.html), [Keybindings](https://zellij.dev/documentation/keybindings.html)
+
+### Supported Editors
+- **[Helix Documentation](https://docs.helix-editor.com/)**: Full guide to Helix editor usage and configuration.
+- **[Kakoune Documentation](https://kakoune.readthedocs.io/en/latest/)**: Detailed docs for Kakoune's modal editing paradigm.
+- **[NeoVim Documentation](https://neovim.io/doc/)**: Extensive user manual and API docs for NeoVim.
+- **[Vim Documentation](https://www.vim.org/docs.php)**: Official Vim documentation and tutorials.
+
+### Supported File Pickers
+- **[Yazi Documentation](https://yazi-rs.github.io/docs/)**: Guide to Yazi's features, configuration, and plugins.
+- **[nnn Wiki](https://github.com/jarun/nnn/wiki)**: Usage guide and advanced tips for nnn file manager.
+- **[Broot Documentation](https://dystroy.org/broot/documentation/)**: Comprehensive guide to broot's tree navigation and features.
+- **[lf Documentation](https://pkg.go.dev/github.com/gokcehan/lf)**: GoDoc for lf's API and configuration (see README for usage).
+- **[fff README](https://github.com/dylanaraps/fff/blob/master/README.md)**: Simple usage guide in the project's README.
+- **[Felix Documentation](https://kyoheiu.dev/felix/)**: Guide to Felix's vim-like file management.
+
+### Optional Integrations
+- **[Lazygit Documentation](https://github.com/jesseduffield/lazygit/wiki)**: Guide to using lazygit for Git operations within zide layouts.
+
+These integrations allow zide to leverage the strengths of each tool while providing a unified IDE-like experience. If you have suggestions for additional documentation links or integrations, please open an issue!
+
+## Community
+
+Welcome to the zide community! We're a group of developers passionate about creating efficient terminal-based development environments. Whether you're a new user, contributor, or just curious, here's how you can get involved:
+
+#### Discussions and Support
+- **[GitHub Discussions](https://github.com/josephschmitt/zide/discussions)**: Join conversations about features, share your setups, ask questions, or discuss improvements. This is the primary place for community interaction.
+- **[GitHub Issues](https://github.com/josephschmitt/zide/issues)**: Report bugs, request features, or seek help with specific problems. Please search existing issues first.
+
+#### Chat and Real-Time Collaboration
+- **[Discord Server](https://discord.gg/example-zide-community)**: Join our Discord for real-time chat, voice discussions, and quick support. (Note: If no official server exists yet, consider creating one and updating this link.)
+- **[Matrix Room](https://matrix.to/#/#zide:matrix.org)**: For those preferring open protocols, join our Matrix room for discussions.
+
+#### Contributing
+We love contributions! From code to documentation, every help counts. Check the [Contributing](#contributing) section above for guidelines on submitting pull requests, reporting issues, and our code of conduct.
+
+#### Events and Meetups
+- Follow the project on GitHub for announcements about virtual meetups, hackathons, or contributor sprints.
+- Share your zide experiences on social media with #zideIDE or tag @zide-project (if applicable).
+
+#### Community Guidelines
+- Be respectful and inclusive – we follow the [Contributor Covenant Code of Conduct](https://www.contributor-covenant.org/).
+- Help newcomers and share knowledge freely.
+- If you have questions or ideas, don't hesitate to start a discussion!
+
+Thank you for being part of the zide community. Let's build better terminal workflows together! 🚀
 
 ## How it works
 

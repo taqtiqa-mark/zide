@@ -1,9 +1,11 @@
 ---
-description: Creates a structured ticket for bugs, features, or technical debt based on user input. Extracts keywords and patterns for research phase.
+description: Create a ticket for bugs, features, or debt. Prepares for research step.
 ---
 
 @create-ticket
 
-**user_request**
+**user_request**: """
 
 $ARGUMENTS
+
+"""

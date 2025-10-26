@@ -35,16 +35,13 @@
   
   // Agent configuration, see https://opencode.ai/docs/agent
   "agent": {
-      // Example agent: explore
+    // Example agent: explore
     "explore": {
       // Disable this agent
       "disable": false,
-      // Prompt for the agent
-      //"prompt": {file:./prompts/explore.md},
-      // Tools enabled/disabled
-      //"tools": {
-      //  "my-mcp-*": true
-      //},
+    }
+    "driven": {
+      "disable": false,
     }
 },  
   // Additional instruction files or patterns to include. Relative to the config file directory, or /, or ~
@@ -52,8 +49,8 @@
   "instructions": ["./instructions/explore/*.md", "./rules/explore/*.md"],
 
   // Array of plugin paths or names
-  //"plugin": [], // e.g., ["plugin1", "plugin2"]
-
+  "plugin": ["opencode-skills@0.0.3"]
+  
   // Custom provider configurations and model overrides
   "provider": {
   // Provider for x.ai (Grok)
@@ -281,6 +278,14 @@
   // MCP (Model Context Protocol) server configurations
   "mcp": {
     // Local MCP
+    "bead": {
+      "type": "local",
+      "command": [
+        "bead-mcp"
+        ],
+      // Prefer the CLI skill (instructions/bead/SKILL.md) for agent. For why see instructions/bead/README.md
+      "enabled": false
+    },
     "c4": {
       // Type of MCP server connection
       "type": "local",
@@ -300,6 +305,14 @@
         "--headless=true",
         "--isolated=true"
       ],
+      "enabled": false
+    },
+    "cipher": {
+      "type": "local",
+      "command": ["cipher", "--mode", "mcp"],
+      "env": {
+        "MCP_SERVER_MODE": "aggregator",
+      },
       "enabled": false
     },
     "playwright": {
@@ -329,6 +342,13 @@
         "/home/node/project"
       ],
       "enabled": true
+    },
+    "treesitter": {
+      "type": "local",
+      "command": ["uvx",
+                "--directory", "/home/node/project",
+                "mcp-server-tree-sitter"
+       ]
     }
     // Remote MCP
   },
