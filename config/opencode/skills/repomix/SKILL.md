@@ -27,7 +27,7 @@ For simple file reading without packing, use standard tools instead.
 ## Core Workflow
 
 To pack and/or analyze:
-1. Parse user intent to determine local/remote, options (e.g., compress, include patterns), and analysis focus. See [references/PACK_LOCAL.md](references/PACK_LOCAL.md) for local-specific option handling.
+1. Parse user intent to determine local/remote, options (e.g., compress, include patterns), and analysis focus. See [references/PACK_LOCAL.md](references/PACK_LOCAL.md) for local-specific option handling or [references/PACK_REMOTE.md](references/PACK_REMOTE.md) for remote-specific handling.
 2. Run `npx repomix@latest` with appropriate flags.
 3. If analysis requested, note output file and delegate to sub-agent (prefer repomix-explorer:explorer if available).
 4. Report findings with references to file paths, snippets, and metrics.

@@ -32,6 +32,7 @@ Pack a GitHub repository.
 Packing Remote Checklist:
 - [ ] Extract repo (owner/repo or URL format).
 - [ ] Handle branch/tag if specified.
+- [ ] If git history requested, add --include-diffs or --include-logs.
 - [ ] Run `npx repomix@latest --remote [repo] [options]`.
 - [ ] Note output file.
 - [ ] Proceed to analysis if requested.
