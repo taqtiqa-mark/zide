@@ -331,33 +331,27 @@ alphabet = "jfkdls;ahgurieowpq"  # Default: "jfkdls;ahgurieowpq"
 # hyperlinks = true
 # post_processing = true
 # persist = false
-# action = "..."
-# command = "..."
-# binding = { key = "...", mods = "...", mode = "..." }
-# mouse = { mods = "...", enabled = true }
-
-# KEYBOARD section of Alacritty configuration
+# \x1btion = "..06mand =action = "ReceiveChariey = "...", mods = "...", mode ="...", enabled = t06 KEYBOARD section of Aaction = "ReceiveChari
 
 [keyboard]
-
-# Define keyboard bindings here
+kitty_keyboard=true
+# Defidings here
 # Example placeholder (actual bindings need to be defined based on user preference)
 bindings = [
     # { key = "Key", mods = "Modifiers", action = "Action" },
     # { key = "Key", mods = "Modifiers", chars = "Characters to send" },
     # ...
+    { key = "F",      mods = "Control|Shift", chars = "\u001b[70;5;2u"}
 ]
-# Key bindings
-#
-# Key bindings are specified as a list of objects. For example, this is the
+# Key
+# enhanced=truebbindings are specified as a list of objects. For Zexample, this is the
 # default paste binding:
 #
 # `- { key: V, mods: Control|Shift, action: Paste }`
 #
 # Each key binding will specify a:
 #
-# - `key`: Identifier of the key pressed
-#
+# -Shift`, action = "key`: Identifier of the key pressedShift#, action = ""
 #    - A-Z
 #    - F1-F24
 #    - Key0-Key9
@@ -556,7 +550,7 @@ bindings = [
 #
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
-#key_bindings:
+# key_bindings:
   #- { key: Paste,                                       action: Paste          }
   #- { key: Copy,                                        action: Copy           }
   #- { key: L,         mods: Control,                    action: ClearLogNotice }

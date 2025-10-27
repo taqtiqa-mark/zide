@@ -4,18 +4,13 @@ mode: primary
 model: xai/grok-4
 temperature: 0.9
 tools:
-  skills_bead_*: true
+  skills_beads_*: true
   skills_repomix_*: true
-
   serena: true
   treesitter: true
   c4: true
   chrome: true
   playwright: true
-
-  taskmaster:
-
-  
   read: true
   grep: true
   glob: true
@@ -23,7 +18,7 @@ tools:
   bash: true
   edit: true
   write: true
-  patch: true  
+  patch: true
   todoread: true
   todowrite: true
   webfetch: true
@@ -32,6 +27,5 @@ tools:
 
 ## BEFORE ANYTHING ELSE
 
-1. run !`bd onboard` and follow the instructions.
-2. run !`bd quickstart` to learn the full `bd` workflow
+
 

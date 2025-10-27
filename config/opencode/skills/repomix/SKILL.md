@@ -1,16 +1,15 @@
 ---
-name: explore-code
+name: repomix
 description: Pack, explore, outline and analyze codebases into AI-friendly formats using the repomix CLI. Use when users request to pack code for AI consumption, explore repository structure, search for patterns, or generate metrics from local or remote GitHub repositories. Triggers on phrases like "Pack my code for AI", "Explore this repo", or "Outline this codebase".
 ---
 
 # Repomix Codebase Packer and Explorer
 
 ## Overview
-
-Pack repositories into single files optimized for AI analysis (XML, Markdown, JSON, plain) and explore their contents efficiently. Handle local directories or remote GitHub repos with options for compression, file filtering, and output customization.
+Pack repositories into single files optimized for AI analysis (XML, Markdown, JSON, plain) and explore their contents efficiently. Handle local directories or remote GitHub repos with options for compression, file filtering, and output customization. **Defaults to compressed packing of local files** using Tree-Sitter for AI-friendly formats (e.g., emulating Aider's /add).
 
 Apply this skill to:
-- Generate packed outputs for feeding into LLMs.
+- Generate packed outputs for feeding into LLMs (default: local compressed packs).
 - Analyze structure, patterns, and metrics without loading full content into context.
 - Delegate detailed analysis to sub-agents for token efficiency.
 
@@ -45,8 +44,9 @@ Common options:
 - `--ignore <patterns>`: Additional exclusions.
 - `--copy`: Copy output to clipboard.
 - `--include-diffs`, `--include-logs`: Add git history.
+- `--remote-branch <name>`: Specific branch/tag/commit for remote repos.
 
-For full reference, see [references/CLI_REFERENCE.md](references/CLI_REFERENCE.md).
+For full options including token counting and config, see [references/CLI_REFERENCE.md](references/CLI_REFERENCE.md).
 
 ## Analysis Guidelines
 
@@ -55,7 +55,7 @@ Avoid reading entire output files:
 - Use Read tool incrementally with offsets/limits.
 - Delegate to sub-agent with task: "Analyze [file] using Grep and Read. Provide overview of structure and [focus]. Do not read entire file."
 
-If repomix-explorer:explorer available, launch with Task tool and instructions template from [references/EXPLORE_LOCAL.md](references/EXPLORE_LOCAL.md) or [references/EXPLORE_REMOTE.md](references/EXPLORE_REMOTE.md).
+If repomix-explorer:explorer available, launch with Task tool and instructions template from [references/EXPLORE_LOCAL.md](references/EXPLORE_LOCAL.md) for local or [references/EXPLORE_REMOTE.md](references/EXPLORE_REMOTE.md) for remote analysis.
 
 ## Error Handling
 

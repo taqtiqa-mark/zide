@@ -1,46 +1,42 @@
----
-description: Explore and analyze a local codebase
----
+# Explore Local Codebase
 
-Analyze a local codebase using the repomix-explorer:explorer agent.
+Explore and analyze local directories using the repomix-explorer:explorer agent.
 
-When the user runs this command, they want to explore and understand a local project's code structure, patterns, and content.
+Handle user requests to explore local codebases by extracting path and launching the agent with clear instructions.
 
-**Note**: This command is part of the repomix-explorer plugin, so the repomix-explorer:explorer agent is guaranteed to be available.
+**Note**: The repomix-explorer:explorer agent is guaranteed available and optimized for this workflow.
 
-## Usage
+## User Intent Examples
 
-The user should provide a path to a local directory:
-- Absolute path (e.g., /Users/username/projects/my-app)
-- Relative path (e.g., ./src, ../other-project)
-- Current directory (use "." or omit)
+Process requests like:
+- "Explore the current directory"
+- "Analyze ./src"
+- "Outline /Users/username/projects/my-app and find authentication code"
 
-## Your Responsibilities
+## Responsibilities
 
-1. **Extract directory path** from the user's input (default to current directory if not specified)
-2. **Convert relative paths to absolute paths** if needed
-3. **Launch the repomix-explorer:explorer agent** to analyze the codebase
-4. **Provide the agent with clear instructions** about what to analyze
+To explore a local codebase:
+1. Parse input to extract directory path (default: current if omitted).
+2. Resolve relative paths to absolute if needed.
+3. Identify any specific focus areas or questions.
+4. Launch repomix-explorer:explorer with the Task tool and a clear task description.
 
-## Example Usage
+## Supported Path Formats
 
-```
-/explore-local
-/explore-local ./src
-/explore-local /Users/username/projects/my-app
-/explore-local . - find all authentication-related code
-```
+- Absolute: e.g., /Users/username/projects/my-app
+- Relative: e.g., ./src, ../other-project
+- Current: . or omitted
 
 ## What to Tell the Agent
 
-Provide the repomix-explorer:explorer agent with a task that includes:
-- The directory path to analyze (absolute path)
-- Any specific focus areas mentioned by the user
-- Clear instructions about what analysis is needed
+Provide a task including:
+- Directory path to analyze (absolute)
+- Specific focus if mentioned
+- Analysis instructions
 
-Default instruction template:
-```
-"Analyze this local directory: [absolute_path]
+Default template:
+```text
+Analyze this local directory: [absolute_path]
 
 Task: Provide an overview of the codebase structure, main components, and key patterns.
 
@@ -51,22 +47,24 @@ Steps:
 4. Report your findings
 
 [Add any specific focus areas if mentioned by user]
-"
 ```
 
 ## Command Flow
 
-1. Parse the directory path from user input (default to current directory if not specified)
-2. Resolve to absolute path
-3. Identify any specific questions or focus areas from the user's request
-4. Launch the repomix-explorer:explorer agent with:
-   - The Task tool
-   - A clear task description following the template above
-   - Any specific analysis requirements
+Exploring Local Checklist:
+- [ ] Parse path (default to current).
+- [ ] Resolve to absolute path.
+- [ ] Identify specific questions or focus.
+- [ ] Launch repomix-explorer:explorer with Task tool.
+- [ ] Use template above with any specific requirements.
 
 The agent will:
-- Run `npx repomix@latest [path]`
-- Analyze the generated output file efficiently using Grep and Read tools
-- Provide comprehensive findings based on the analysis
+- Pack with `npx repomix@latest [path]`
+- Analyze output efficiently using Grep and Read
+- Provide findings
 
-Remember: The repomix-explorer:explorer agent is optimized for this workflow. It will handle all the details of running repomix CLI, searching with grep, and reading specific sections. Your job is to launch it with clear context about which directory to analyze and what specific insights are needed.
+## Help and Troubleshooting
+
+For agent details, see [EXPLORER.md](EXPLORER.md).
+
+For workflows, see [WORKFLOWS.md](WORKFLOWS.md#exploring-local).

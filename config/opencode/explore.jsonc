@@ -39,7 +39,7 @@
     "explore": {
       // Disable this agent
       "disable": false,
-    }
+    },
     "driven": {
       "disable": false,
     }
@@ -49,7 +49,7 @@
   "instructions": ["./instructions/explore/*.md", "./rules/explore/*.md"],
 
   // Array of plugin paths or names
-  "plugin": ["opencode-skills@0.0.3"]
+  "plugin": ["opencode-skills@0.0.3"],
   
   // Custom provider configurations and model overrides
   "provider": {
@@ -310,7 +310,7 @@
     "cipher": {
       "type": "local",
       "command": ["cipher", "--mode", "mcp"],
-      "env": {
+      "environment": {
         "MCP_SERVER_MODE": "aggregator",
       },
       "enabled": false

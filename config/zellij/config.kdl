@@ -1,12 +1,13 @@
 // If you'd like to override the default keybindings completely, be sure to change "keybinds" to "keybinds clear-defaults=true"
 keybinds clear-defaults=true {
+    unbind "Ctrl Shift f"
     // Normal mode: Unbind keys that could allow unlocking or manipulation.
     normal {
         // uncomment this and adjust key if using copy_on_select=false
-        bind "Ctrl c" { Copy; }
+        // bind "Ctrl c" { Copy; }
         unbind "Esc"     // Prevents ESC from exiting to Normal mode or "dropping to shell" behavior.
         unbind "Ctrl c"  // Prevents Ctrl-C from quitting Zellij or killing panes.
-        unbind "Alt l"  // Unbinds the default toggle-lock key to prevent exiting locked mode.
+        unbind "Alt l"   // Unbinds the default toggle-lock key to prevent exiting locked mode.
         // Unbind other manipulation keys for completeness (e.g., no pane movement or closure).
         bind "Ctrl Alt q" { Quit; }  // Default for quitting.
         unbind "Ctrl z"  // Default for background?
@@ -71,8 +72,8 @@ keybinds clear-defaults=true {
     tab {
         bind "Alt t" { SwitchToMode "Normal"; }
         //bind "r" { SwitchToMode "RenameTab"; TabNameInput 0; }
-        bind "Left" "Up" { GoToPreviousTab; }
-        bind "Right" "Down" { GoToNextTab; }
+        bind "Left" { GoToPreviousTab; }
+        bind "Right" { GoToNextTab; }
         //bind "n" { NewTab; SwitchToMode "Normal"; }
         //bind "x" { CloseTab; SwitchToMode "Normal"; }
         //bind "s" { ToggleActiveSyncTab; SwitchToMode "Normal"; }
@@ -88,7 +89,8 @@ keybinds clear-defaults=true {
         //bind "7" { GoToTab 7; SwitchToMode "Normal"; }
         //bind "8" { GoToTab 8; SwitchToMode "Normal"; }
         //bind "9" { GoToTab 9; SwitchToMode "Normal"; }
-        bind "Tab" { ToggleTab; }
+        bind "Tab" { GoToNextTab; }
+        bind "Shift Tab" { GoToPreviousTab; }
     }
     scroll {
         bind "Alt s" { SwitchToMode "Normal"; }
@@ -103,11 +105,11 @@ keybinds clear-defaults=true {
         bind "Ctrl Down" { HalfPageScrollDown; }
         bind "Ctrl Up" { HalfPageScrollUp; }
         // uncomment this and adjust key if using copy_on_select=false
-        bind "Ctrl c" { Copy; }
+        // bind "Ctrl c" { Copy; }
     }
     search {
         bind "Alt f" { SwitchToMode "Normal"; }
-        bind "Ctrl c" { Copy; }
+        // bind "Ctrl c" { Copy; }
         bind "Home" { ScrollToTop; }
         bind "End" { ScrollToBottom; }
         bind "Down" { ScrollDown; }
@@ -201,16 +203,19 @@ keybinds clear-defaults=true {
         bind "Ctrl Alt p" { DumpScreen "./azhide-pane-dump.txt"; }
         unbind "Esc"     // Prevents ESC from exiting to Normal mode or "dropping to shell" behavior.
         unbind "Ctrl c"  // Prevents Ctrl-C from quitting Zellij or killing panes.
+        unbind "Ctrl Shift f"
     }
     shared_except "locked" {
         bind "Alt l" { SwitchToMode "Locked"; }
         bind "Ctrl Alt q" { Quit; }
         //bind "Alt f" { ToggleFloatingPanes; }
         //bind "Alt n" { NewPane; }
-        bind "Ctrl Left" { FocusPreviousPane; }
-        bind "Ctrl Right" { FocusNextPane; }
-        bind "Ctrl Down" { FocusPreviousPane; }
-        bind "Ctrl Up" { FocusNextPane; }
+        //bind "Tab" { FocusNextPane; }
+        //bind "Shift Tab" { FocusPreviousPane; } 
+        bind "Ctrl Left" { MoveFocus "Left"; }
+        bind "Ctrl Right" { MoveFocus "Right"; }
+        bind "Ctrl Down" { MoveFocus "Down"; }   
+        bind "Ctrl Up" { MoveFocus "Up"; }
         bind "Alt Left" { Resize "Left"; }
         bind "Alt Right" { Resize "Right"; }
         bind "Alt Down" { Resize "Down"; }

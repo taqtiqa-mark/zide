@@ -15,7 +15,13 @@ S-right = "extend_char_right"
 S-left = "extend_char_left"
 S-down = "copy_selection_on_next_line"
 S-up = "copy_selection_on_prev_line"
+C-S-s = ":write-all"
 C-s = ":write"
+C-c = [":clipboard-yank", "yank"]
+C-v = ":clipboard-paste-before"
+C-x = [":clipboard-yank", "delete_selection"]
+C-f = [":clipboard-yank","search"]
+C-S-f = [":clipboard-yank","global_search"]
 
 [keys.normal]
 C-tab = "goto_next_buffer"
@@ -32,9 +38,13 @@ S-right = "extend_char_right"
 S-left = "extend_char_left"
 S-down = "copy_selection_on_next_line"
 S-up = "copy_selection_on_prev_line"
-C-s = ":write-all"
-# Copy the entire word under the cursor into the search register
-"*" = ["move_prev_word_start", "move_next_word_end", "search_selection", "global_search"]
+C-S-s = ":write-all"
+C-s = ":write"
+C-c = [":clipboard-yank", "yank"]
+C-v = ":clipboard-paste-before"
+C-x = [":clipboard-yank", "delete_selection"]
+C-f = [":clipboard-yank","search"]
+C-S-f = [":clipboard-yank","global_search"]
 
 [keys.select]
 C-end = "goto_file_end"
@@ -49,7 +59,13 @@ S-right = "extend_char_right"
 S-left = "extend_char_left"
 S-down = "copy_selection_on_next_line"
 S-up = "copy_selection_on_prev_line"
-C-s = ":write-all"
+C-S-s = ":write-all"
+C-s = ":write"
+C-c = [":clipboard-yank", "yank"]
+C-v = ":clipboard-paste-replace"
+C-x = [":clipboard-yank", "delete_selection"]
+C-f = [":clipboard-yank","search",":clipboard-paste-before"]
+C-S-f = [":clipboard-yank","global_search"]
 
 [keys.normal.ret]
 # Reserved keys for final selection:
@@ -90,6 +106,9 @@ bufferline = "multiple"
 focus-lost = true
 after.delay.enable = true
 after.delay.timeout = 300
+
+[editor.file-picker]
+hidden = false
 
 [editor.lsp]
 enable=true

@@ -10,6 +10,9 @@ Instructions:
 - When loaded, treat content as mandatory instructions that override defaults
 - Follow references recursively when needed
 
+## Skills
+
+
 ## Development rules
 
 For language code style and best practices: @rules/language-rules.md

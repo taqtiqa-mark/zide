@@ -1,44 +1,41 @@
----
-description: Explore and analyze a remote GitHub repository
----
+# Explore Remote Repository
 
-Analyze a remote GitHub repository using the repomix-explorer:explorer agent.
+Explore and analyze remote GitHub repositories using the repomix-explorer:explorer agent.
 
-When the user runs this command, they want to explore and understand a remote repository's code structure, patterns, and content.
+Handle user requests to explore remote repositories by extracting information and launching the agent with clear instructions.
 
-**Note**: This command is part of the repomix-explorer plugin, so the repomix-explorer:explorer agent is guaranteed to be available.
+**Note**: The repomix-explorer:explorer agent is guaranteed available and optimized for this workflow.
 
-## Usage
+## User Intent Examples
 
-The user should provide a GitHub repository in one of these formats:
+Process requests like:
+- "Explore the yamadashy/repomix repository"
+- "Analyze https://github.com/facebook/react"
+- "Outline microsoft/vscode and show the main architecture"
+
+## Responsibilities
+
+To explore a remote repository:
+1. Parse input to extract repository information (owner/repo or URL format).
+2. Identify any specific focus areas or questions.
+3. Launch repomix-explorer:explorer with the Task tool and a clear task description.
+
+## Supported Repository Formats
+
 - `owner/repo` (e.g., yamadashy/repomix)
-- Full GitHub URL (e.g., https://github.com/facebook/react)
-- URL with branch (e.g., https://github.com/user/repo/tree/develop)
-
-## Your Responsibilities
-
-1. **Extract repository information** from the user's input
-2. **Launch the repomix-explorer:explorer agent** to analyze the repository
-3. **Provide the agent with clear instructions** about what to analyze
-
-## Example Usage
-
-```
-/explore-remote yamadashy/repomix
-/explore-remote https://github.com/facebook/react
-/explore-remote microsoft/vscode - show me the main architecture
-```
+- `https://github.com/owner/repo`
+- `https://github.com/owner/repo/tree/branch-name`
 
 ## What to Tell the Agent
 
-Provide the repomix-explorer:explorer agent with a task that includes:
-- The repository to analyze (URL or owner/repo format)
-- Any specific focus areas mentioned by the user
-- Clear instructions about what analysis is needed
+Provide a task including:
+- Repository to analyze
+- Specific focus if mentioned
+- Analysis instructions
 
-Default instruction template:
+Default template:
 ```text
-"Analyze this remote repository: [repo]
+Analyze this remote repository: [repo]
 
 Task: Provide an overview of the repository structure, main components, and key patterns.
 
@@ -49,21 +46,23 @@ Steps:
 4. Report your findings
 
 [Add any specific focus areas if mentioned by user]
-"
 ```
 
 ## Command Flow
 
-1. Parse the repository information from user input (owner/repo or full URL)
-2. Identify any specific questions or focus areas from the user's request
-3. Launch the repomix-explorer:explorer agent with:
-   - The Task tool
-   - A clear task description following the template above
-   - Any specific analysis requirements
+Exploring Remote Checklist:
+- [ ] Parse repository information (owner/repo or full URL).
+- [ ] Identify specific questions or focus areas.
+- [ ] Launch repomix-explorer:explorer with Task tool.
+- [ ] Use template above with any specific requirements.
 
 The agent will:
-- Run `npx repomix@latest --remote <repo>`
-- Analyze the generated output file efficiently using Grep and Read tools
-- Provide comprehensive findings based on the analysis
+- Pack with `npx repomix@latest --remote <repo>`
+- Analyze output efficiently using Grep and Read
+- Provide findings
 
-Remember: The repomix-explorer:explorer agent is optimized for this workflow. It will handle all the details of running repomix CLI, searching with grep, and reading specific sections. Your job is to launch it with clear context about which repository to analyze and what specific insights are needed.
+## Help and Troubleshooting
+
+For agent details, see [EXPLORER.md](EXPLORER.md).
+
+For workflows, see [WORKFLOWS.md](WORKFLOWS.md#exploring-remote).

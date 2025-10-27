@@ -43,6 +43,7 @@ Analyze a local directory's structure and content.
 
 Exploring Local Checklist:
 - [ ] Extract path and focus (e.g., "find authentication code").
+- [ ] Resolve relative to absolute path if needed.
 - [ ] Pack if not already: `npx repomix@latest [path]`.
 - [ ] Launch repomix-explorer:explorer with Task tool.
 - [ ] Provide template: "Analyze [path]. Task: Overview of structure. Steps: 1. Pack with repomix. 2. Grep/Read output. 3. Report. [focus]".
@@ -53,6 +54,7 @@ Analyze a GitHub repository.
 
 Exploring Remote Checklist:
 - [ ] Extract repo and focus.
+- [ ] Handle branch/tag if specified in URL.
 - [ ] Pack: `npx repomix@latest --remote [repo]`.
 - [ ] Launch repomix-explorer:explorer.
 - [ ] Provide template: "Analyze [repo]. Task: Overview. Steps: 1. Pack. 2. Analyze output. [focus]".
