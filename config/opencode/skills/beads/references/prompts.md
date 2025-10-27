@@ -1,0 +1,16 @@
+Provide these prompts sequentially to implement the division. Each prompt targets one file creation/update, ensuring completeness without truncation.
+
+Prompt 1 of 5: Create WORKFLOWS_CORE.md
+Create a new file references/WORKFLOWS_CORE.md containing only the core daily workflows from the revised WORKFLOWS.md: Contents (updated for split files), Session Start Workflow, Compaction Survival, Discovery and Issue Creation, Status Maintenance, Epic Planning, Side Quest Handling, Multi-Session Resume, Session Handoff Workflow, Unblocking Work, Git Workflow Patterns, and Integration with TodoWrite. Incorporate elements from pasted-text.txt as in previous revisions, maintain checklist structure and imperative language. Ensure COMPLETE examples, conciseness, evaluate against writing-skills.md (TDD mindset), persuasion-principles.md (authority/commitment), and anthropic-best-practices.md (concise <500 lines, high freedom, scenarios). Output the full file content. TAKE CARE TO PRODUCE ROBUST MARKDOWN CONTENT. SPECIFICALLY NESTED CODE BLOCKS.
+
+Prompt 2 of 5: Create WORKFLOWS_ADVANCED.md
+Create a new file references/WORKFLOWS_ADVANCED.md containing only the advanced patterns from the revised WORKFLOWS.md: Vibe Coding Protocol, Advanced Scripting Patterns, Multi-Project Management, and Common Workflow Patterns (all subpatterns). Incorporate elements from pasted-text.txt, maintain structure. Ensure COMPLETE examples, conciseness, evaluate against writing-skills.md, persuasion-principles.md, and anthropic-best-practices.md. Output the full file content. TAKE CARE TO PRODUCE ROBUST MARKDOWN CONTENT. SPECIFICALLY NESTED CODE BLOCKS.
+
+Prompt 3 of 5: Create WORKFLOWS_CHECKLISTS.md
+Create a new file references/WORKFLOWS_CHECKLISTS.md containing only the checklist templates and decisions from the revised WORKFLOWS.md: Checklist Templates (all subsections) and Decision Points. Maintain structure, ensure COMPLETE examples, conciseness, evaluate against writing-skills.md, persuasion-principles.md, and anthropic-best-practices.md. Output the full file content. TAKE CARE TO PRODUCE ROBUST MARKDOWN CONTENT. SPECIFICALLY NESTED CODE BLOCKS.
+
+Prompt 4 of 5: Create WORKFLOWS_TROUBLESHOOTING.md
+Create a new file references/WORKFLOWS_TROUBLESHOOTING.md containing only the troubleshooting sections from the revised WORKFLOWS.md: Troubleshooting Workflows, enhanced with all database-specific fixes from pasted-text.txt (locked, corrupted, reset). Maintain structure, ensure COMPLETE examples, conciseness, evaluate against writing-skills.md, persuasion-principles.md, and anthropic-best-practices.md. Output the full file content. TAKE CARE TO PRODUCE ROBUST MARKDOWN CONTENT. SPECIFICALLY NESTED CODE BLOCKS.
+
+Prompt 5 of 5: Update SKILL.md
+Update SKILL.md to reflect the split of WORKFLOWS.md into multiple files: Add references to WORKFLOWS_CORE.md for essential workflows, WORKFLOWS_ADVANCED.md for specialized patterns, WORKFLOWS_CHECKLISTS.md for templates/decisions, and WORKFLOWS_TROUBLESHOOTING.md for error-handling. Keep SKILL.md lean, using progressive disclosure. Ensure imperative language, evaluate against writing-skills.md (TDD for updates), persuasion-principles.md, and anthropic-best-practices.md. Output the full updated SKILL.md content. TAKE CARE TO PRODUCE ROBUST MARKDOWN CONTENT. SPECIFICALLY NESTED CODE BLOCKS.
