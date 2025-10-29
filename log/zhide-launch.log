@@ -1,0 +1,228 @@
+Created log file at "/tmp/Alacritty-12367.log"
+[38804.873023451s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 559, column 13
+                                                         |
+                                                     559 | key_bindings:
+                                                         |             ^
+                                                     expected `.`, `=`
+                                                     
+[21985.341981100s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 559, column 13
+                                                         |
+                                                     559 | key_bindings:
+                                                         |             ^
+                                                     expected `.`, `=`
+                                                     
+[38975.337643306s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 559, column 13
+                                                         |
+                                                     559 | key_bindings:
+                                                         |             ^
+                                                     expected `.`, `=`
+                                                     
+[38975.343604854s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 559, column 13
+                                                         |
+                                                     559 | key_bindings:
+                                                         |             ^
+                                                     expected `.`, `=`
+                                                     
+[39328.730372516s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 349, column 10
+                                                         |
+                                                     349 |     { key: f,      mods: Control|Shift, action: ReceiveChar          }
+                                                         |          ^
+                                                     expected `.`, `=`
+                                                     
+[22508.662253108s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 349, column 10
+                                                         |
+                                                     349 |     { key: f,      mods: Control|Shift, action: ReceiveChar          }
+                                                         |          ^
+                                                     expected `.`, `=`
+                                                     
+[22535.217525987s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 349, column 13
+                                                         |
+                                                     349 |     { key = f,      mods = Control|Shift, action = ReceiveChar          }
+                                                         |             ^
+                                                     invalid string
+                                                     expected `"`, `'`
+                                                     
+[22535.218012863s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 349, column 13
+                                                         |
+                                                     349 |     { key = f,      mods = Control|Shift, action = ReceiveChar          }
+                                                         |             ^
+                                                     invalid string
+                                                     expected `"`, `'`
+                                                     
+[25133.595500328s] [ERROR] [alacritty_config_derive] Config error: unknown keyboard action `RecieveChar`
+                                                     ; ignoring binding
+[25133.627556880s] [ERROR] [alacritty_config_derive] Config error: unknown keyboard action `RecieveChar`
+                                                     ; ignoring binding
+[27328.847711934s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 349, column 58
+                                                         |
+                                                     349 |     { key = "F",      mods = "Control|Shift", chars = "\x1b[70;6u"        }
+                                                         |                                                          ^
+                                                     invalid escape sequence
+                                                     expected `b`, `f[44149.000061908s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.co[27329.166188460s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 349, column 58
+                                                         |
+                                                     349 |     { key = "F",      mods = "Control|Shift", chars = "\x1b[70;6u"        }
+                                                         |                                                          ^
+                                                     invalid escape sequence
+                                                     expected `b`, `f`, `n`, `r`, `t`, `u`, `U`, `\`, `"`
+                                                     
+[27524.641171361s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 349, column 58
+                                                         |
+                                                     349 |     { key = "F",      mods = "Control|Shift", chars = "\x1b[70;6u"        }
+                                                         |                                                          ^
+                                                     invalid escape sequence
+                                                     expected `b`, `f[44344.810320619s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 349, column 58
+                                                         |
+                                                     349 |     { key = "F",      mods = "Control|Shift", chars = "\x1b[70;6u"        }
+                                                         |                                                          ^
+                                                     invalid escape sequence
+                                                     expected `b`, `f`, `n`, `r`, `t`, `u`, `U`, `\`, `"`
+                                                     
+[44344.810766244s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.co[28581.436439982s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 346, column 58
+                                                         |
+                                                     346 |     { key = "F",      mods = "Control|Shift", chars = "\x06"        }
+                                                         |                                                          ^
+                                                     invalid escape sequence
+                                                     expected `b`, `f`, `n`[45401.556987331s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hed[28581.515616226s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 346, column 58
+                                                         |
+                                                     346 |     { key = "F",      mods = "Control|Shift", chars = "\x06"        }
+                                                         |                                                          ^
+                                                     invalid escape sequence
+                                                     expected `b`, `f`, `n`, `r`, `t`, `u`, `U`, `\`, `"`
+                                                     
+[28649.778999103s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 346, column 58
+                                                         |
+                                                     346 |     { key = "F",      mods = "Control|Shift", chars = "\x06"        }
+                                                         |                                                          ^
+                                                     invalid escape sequence
+                                                     expected `b`, `f`, `n`[45469.898706142s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 346, column 58
+                                                         |
+                                                     346 |     { key = "F",      mods = "Control|Shift", chars = "\x06"        }
+                                                         |                                                          ^
+                                                     invalid escape sequence
+                                                     expected `b`, `f`, `n`, `r`, `t`, `u`, `U`, `\`, `"`
+                                                     
+[45469.899297325s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hed[28682.099885517s] [WARN ] [alacritty_config_derive] Unused config key: enhanced
+[28682.100015272s] [WARN ] [alacritty_config_derive] Unused config key: enhanced
+[28682.177040808s] [WARN ] [alacritty_config_derive] Unused config key: enhanced
+[28682.177152168s] [WARN ] [alacritty_config_derive] Unused config key: enhanced
+[28831.912830268s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 344, column 41
+                                                         |
+                                                     344 |     { key = "F",      mods = "Control| "ReceiveChar"}
+                                                         |                                         ^
+                                                     invalid inline table
+                                                     expected `}`
+                                             [45652.153208849s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 344, column 41
+                                                         |
+                                                     344 |     { key = "F",      mods = "Control| "ReceiveChar"}
+                                                         |                                         ^
+                                                     invalid inline table
+                                                     expected `}`
+                                                     
+[45652.15[28866.279394856s] [WARN ] [alacritty_config_derive] Unused config key: enhanced
+[28866.339082106s] [WARN ] [alacritty_config_derive] Unused config key: enhanced
+[29375.062746013s] [WARN ] [alacritty_config_derive] Unused config key: enhanced
+[29375.187077642s] [WARN ] [alacritty_config_derive] Unused config key: enhanced
+[30157.921555725s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 347, column 29
+                                                         |
+                                                     347 | enable_kitty_keyboarded=truebbindings are specified as a list of objects. For Zexample, this is the
+                                                         |                             ^
+                                                     expected newline, `#`
+                                                     
+[30158.196471561s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 347, column 29
+                                                         |
+                                                     347 | enable_kitty_keyboarded=truebbindings are specified as a list of objects. For Zexample, this is the
+                                                         |                             ^
+                                                     expected newline, `#`
+                                                     
+[30172.889371028s] [ER[46992.999819879s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 347, column 23
+                                                         |
+                                                     347 | enable_kitty_keyboard e d=truebbindings are specified as a list of objects. For Zexample, this is the
+                                                         |                       ^
+                                                     expected `.`, `=`
+                                [30172.951056017s] [ER[46993.055721263s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 347, column 23
+                                                         |
+                                                     347 | enable_kitty_keyboard e d=truebbindings are specified as a list of objects. For Zexample, this is the
+                                                         |                       ^
+                                                     expected `.`, `=`
+                                [30195.974885215s] [ER[47016.130472154s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 347, column 25
+                                                         |
+                                                     347 | enable_kitty_keyboard = d=truebbindings are specified as a list of objects. For Zexample, this is the
+                                                         |                         ^
+                                                     invalid string
+                                                     expected `"`, `'`
+                                                     
+[47016.131190281s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 347, column 25
+                                                         |
+                                                     347 | enable_kitty_keyboard = d=truebbindings are specified as a list of objects. For Zexample, this is the
+                                                         |                         ^
+                                                     invalid string
+                                                     expected `"`, `'`
+                                [30216.691182762s] [ER[47036.845086446s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 347, column 29
+                                                         |
+                                                     347 | enable_kitty_keyboard = trueuebbindings are specified as a list of objects. For Zexample, this is the
+                                                         |                             ^
+                                                     expected newline, `#`
+                                [30216.784822721s] [ER[47036.861287605s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 347, column 29
+                                                         |
+                                                     347 | enable_kitty_keyboard = trueuebbindings are specified as a list of objects. For Zexample, this is the
+                                                         |                             ^
+                                                     expected newline, `#`
+                                [30224.932910723s] [ER[47045.044642079s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 348, column 1
+                                                         |
+                                                     348 | enable_kitty_keyboard = true
+                                                         | ^
+                                                     duplicate key `enable_kitty_keyboard` in table `keyboard`
+                                                     
+[47045.045279627s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 348, column 1
+                                                         |
+                                                     348 | enable_kitty_keyboard = true
+                                                         | ^
+                                                     duplicate key `enable_kitty_keyboard` in table `keyboard`
+                                [30353.468697289s] [WA[47173.593613810s] [WARN ] [alacritty_config_derive] Unused[30353.605073895s] [WA[47173.688896834s] [WARN ] [alacritty_config_derive] Unused[30375.527427132s] [WA[47195.697653621s] [WARN ] [alacritty_config_derive] Unused config key: enable_kitty_keyboard
+[47336.776237601s] [WARN ] [alacritty_config_derive] Unused config key: kitty_keyboard
+[47336.795927650s] [WARN ] [alacritty_config_derive] Unused config key: kitty_keyboard
+[47467.946923370s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 344, column 58
+                                                         |
+                                                     344 |     { key = "F",      mods = "Control|Shift", chars = "\x1b\\[70;5;2u"}
+                                                         |                                                          ^
+                                                     invalid escape sequence
+                                                     expected `b`, `f`, `n`, `r`, `t`, `u`, `U`, `\`, `"`
+                                                     
+[47467.947583793s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 344, column 58
+                                                         |
+                                                     344 |     { key = "F",      mods = "Control|Shift", chars = "\x1b\\[70;5;2u"}
+                                                         |                                                          ^
+                                                     invalid escape sequence
+                                                     expected `b`, `f`, `n`, `r`, `t`, `u`, `U`, `\`, `"`
+                                                     
+[48700.130141114s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 344, column 58
+                                                         |
+                                                     344 |     { key = "F",      mods = "Control|Shift", chars = "\x1b\[70;5;2u"}
+                                                         |                                                          ^
+                                                     invalid escape sequence
+                                                     expected `b`, `f`, `n`, `r`, `t`, `u`, `U`, `\`, `"`
+                                                     
+[48700.130625065s] [ERROR] [alacritty_config_derive] Unable to load conf[31880.135509460s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 344, column 58
+                                                         |
+                                                     344 |     { key = "F",      mods = "Control|Shift", chars = "\x1b\[70;5;2u"}
+                                                         |                                                          ^
+                                                     invalid escape sequence
+                                                     expected `b`, `f`, `n`, `r`, `t`, `[48788.834192833s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 344, column 58
+                                                         |
+                                                     344 |     { key = "F",      mods = "Control|Shift", chars = "\x1b[70;5;2u"}
+                                                         |                                                          ^
+                                                     invalid escape sequence
+                                                     expected `b`, `f`, `n`, `r`, `t`, `u`, `U`, `\`, `"`
+                                                     
+[48789.086244134s] [ERROR] [alacritty_config_derive] Unable to load config "/home/hedge/.config/zide/config/alacritty/alacritty.toml": Config error: TOML parse error at line 344, column 58
+                                                         |
+                                                     344 |     { key = "F",      mods = "Control|Shift", chars = "\x1b[70;5;2u"}
+                                                         |                                                          ^
+                                                     invalid escape sequence
+                                                     expected `b`, `f`, `n`, `r`, `t`, `u`, `U`, `\`, `"`
+                                                     
+[48916.209954567s] [WARN ] [alacritty_config_derive] Unused config key: kitty_keyboard
+[48976.378204399s] [WARN ] [alacritty_config_derive] Unused config key: kitty_keyboard
+[48976.406008354s] [WARN ] [alacritty_config_derive] Unused config key: kitty_keyboard
+8s] [WARN ] [alacritty_config_derive] Unused config key: kitty_keyboard
+[32156.241250068s] [WARN ] [alacritty_config_derive] Unused config key: kitty_keyboard
