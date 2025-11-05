@@ -58,11 +58,12 @@ theme = "catppuccin_mocha"
 # Helix Insert mode
 # "esc" = "normal_mode" # Switch to normal mode
 #"esc" = "no_op"
-"esc" = ["keep_primary_selection", "collapse_selection"] # Emulate Esc to exit select from Word (approx) 
-# "C-s" = "commit_undo_checkpoint" # Commit undo checkpoint
+"S-esc" = ["keep_primary_selection", "collapse_selection"] # Emulate Esc to exit select from Word (approx) 
+"esc" = "normal_mode"
+#"C-s" = "commit_undo_checkpoint" # Commit undo checkpoint
 #"C-s" = "no_op"
-C-s = ":write"
-C-S-s = ":write-all"
+C-s = ["commit_undo_checkpoint", ":write"]
+C-S-s = ["commit_undo_checkpoint", ":write-all"]
 # "C-x" = "completion" # Autocomplete
 #"C-x" = "no_op" Now used to emulate Word Cut shortcut
 # "C-r" = "insert_register" # Insert a register content
@@ -81,9 +82,8 @@ C-S-s = ":write-all"
 "C-k" = "no_op"
 # "C-h" = "delete_char_backward" # Delete previous char
 #"C-h" = "no_op" Now used to emulate Workd Find-Replace shortcut
-# "backspace" = "delete_char_backward" # Delete previous char
+"backspace" = "delete_char_backward" # Delete previous char  # Emulate Backspace from Word
 #"backspace" = "no_op" 
-"backspace" = "delete_selection" # Emulate Backspace from Word
 # "S-backspace" = "delete_char_backward" # Delete previous char
 "S-backspace" = "no_op"
 # "C-d" = "delete_char_forward" # Delete next char
@@ -95,9 +95,9 @@ C-S-s = ":write-all"
 "C-j" = "no_op"
 "ret" = "insert_newline" # Insert new line
 #"ret" = "no_op"
-"tab" = "smart_tab" # Smart tab
+"tab" = "indent" # Smart tab
 #"tab" = "no_op" 
-"S-tab" = "insert_tab" # Insert tab
+"S-tab" = "unindent" # Insert tab
 #"S-tab" = "no_op"
 "up" = "move_visual_line_up" # Move to previous line (recommended to disable for modal editing)
 #"up" = "no_op"
@@ -118,6 +118,20 @@ S-down = "copy_selection_on_next_line" # Block mode. Esc to collapse.
 "end" = "goto_line_end" # Move to line end (recommended to disable for modal editing)
 #"end" = "no_op"
 
+# Functionality from NOR or SEL modes:
+"C-/" = "toggle_comments" # Emulate Ctrl+/ comment from Word
+#"c" = "change_selection" # Change selection (delete and enter insert mode)
+# Ctrl-h: Macro for Word-style Find & Replace (buffer/document)
+# Ctrl-Shift-h: Macro for Word-style Find & Replace (global/workspace)
+# Enter SEL mode (select_mode); Select text (C-a); regex-search (s);
+# Open [keys.insert.C-S-r]
+# - "S-F4" = "" # discard & get next selection (S-F4);
+# - "ret" = "" # keep & get next selection (ret, S-ret);
+# - "i" = "insert_mode" # Enter INS mode (i)
+# - "C-S-v" = "" # Change selection by paste (C-S-v) or manual (C-S-c)
+#"S-ret" = "rotate_selections_backward" # Rotate main selection backward. Keeps selection.
+#"ret" = "rotate_selections_forward" # Rotate main selection forward. Keeps selection.
+
 # Psuedo-Word shortcuts
 C-tab = "goto_next_buffer"
 C-S-tab = "goto_previous_buffer"
@@ -133,8 +147,8 @@ S-right = "extend_char_right"
 S-left = "extend_char_left"
 C-a = "select_all"
 C-c = ["yank_joined_to_primary_clipboard", "yank_joined_to_clipboard"]
-C-v = "paste_primary_clipboard_after"
-C-S-v = "paste_clipboard_after"
+C-v = "paste_primary_clipboard_before"
+C-S-v = "paste_clipboard_before"
 C-x = ["yank_joined_to_primary_clipboard", "yank_joined_to_clipboard", "delete_selection"]
 
 "C-z" = "undo" # Emulate Ctrl+Z undo in insert from Word
@@ -143,7 +157,7 @@ C-x = ["yank_joined_to_primary_clipboard", "yank_joined_to_clipboard", "delete_s
 "C-i" = "@s_" # Emulate Ctrl+I italic (MD _ surround macro) from Word
 "C-u" = "@s__" # Emulate Ctrl+U underline (MD __ approx macro) from Word
 
-"C-o" = ":open" # Emulate Ctrl+O open from Word
+"C-o" = "file_picker_in_current_buffer_directory" # Emulate Ctrl+O open from Word
 #"C-p" = ":print" # Emulate Ctrl+P print from Word (TUI approx)
 "C-n" = ":new" # Emulate Ctrl+N new doc from Word
 "C-f" = ["yank_joined_to_primary_clipboard", "yank_joined_to_clipboard", "move_prev_word_start", "move_next_word_end", "search_selection", "search"] # Emulate Ctrl+F find from Word
@@ -190,6 +204,9 @@ C-x = ["yank_joined_to_primary_clipboard", "yank_joined_to_clipboard", "delete_s
 [keys.normal]
 C-s = [":write", "save_selection"]
 C-S-s = [":write-all", "save_selection"]
+C-o = "file_picker_in_current_buffer_directory"
+C-S-v = "no_op"
+C-v = "no_op"
 
 # Movement
 C-tab = "goto_next_buffer"
@@ -273,7 +290,7 @@ S-up = "copy_selection_on_prev_line"
 # "tab" = "jump_forward" # Jump forward on the jumplist
 "tab" = "jump_forward"
 # "C-o" = "jump_backward" # Jump backward on the jumplist
-"C-o" = "no_op"
+#"C-o" = "no_op" Now used for Word File Open shortcut
 "S-tab" = "jump_backward"
 # "C-s" = "save_selection" # Save the current selection to the jumplist
 #"C-s" = "no_op" this is Word file save
@@ -319,8 +336,8 @@ S-up = "copy_selection_on_prev_line"
 "C-c" = ["yank_joined_to_primary_clipboard", "yank_joined_to_clipboard"] # Emulate Ctrl+C copy from Word
 # "p" = "paste_after" # Paste after selection
 "p" = "no_op"
-C-v = "paste_primary_clipboard_after"
-C-S-v = "paste_clipboard_after"
+#C-v = "paste_primary_clipboard_after"
+#C-S-v = "paste_clipboard_after"
 # "P" = "paste_before" # Paste before selection
 "P" = "no_op"
 #"S-C-v" = "paste_before" # Emulate Shift+Ctrl+V paste special approx from Word
@@ -350,7 +367,6 @@ C-S-v = "paste_clipboard_after"
 "q" = "replay_macro"
 # "C-c" = "toggle_comments" # Comment/uncomment the selections
 #"C-c" = "no_op" now used for Word Copy shortcut
-"C-/" = "toggle_comments" # Emulate Ctrl+/ comment from Word
 
 # Normal mode does not change text. Hence all the following are `no_op`
 # Shell (under Changes)
@@ -416,7 +432,7 @@ C-S-v = "paste_clipboard_after"
 "A-x" = "no_op"
 # "J" = "join_selections" # Join lines inside selection
 "J" = "no_op"
-"C-j" = "join_selections" # Emulate Ctrl+J join lines from Word
+#"C-j" = "join_selections" # Emulate Ctrl+J join lines from Word
 # "A-J" = "join_selections_space" # Join lines inside selection and select the inserted space
 "A-J" = "no_op"
 # "K" = "keep_selections" # Keep selections matching the regex
@@ -795,7 +811,6 @@ C-S-v = "paste_clipboard_after"
 # Space mode
 # "f" = "file_picker" # Open file picker
 "f" = "no_op"
-"C-o" = "file_picker_in_current_buffer_directory"
 # "F" = "file_picker_in_current_directory" # Open file picker in current directory
 "F" = "no_op"
 # "e" = "file_explorer" # Open file explorer
@@ -826,9 +841,7 @@ C-S-v = "paste_clipboard_after"
 # "Y" = "yank_main_selection_to_clipboard" # Yank main selection to clipboard
 "Y" = "no_op"
 # "p" = "paste_clipboard_after" # Paste system clipboard after selections
-"p" = "no_op"
-C-v = "paste_primary_clipboard_after"
-C-S-v = "paste_clipboard_after"
+"p" = "no_op" # No changes in NOR mode
 # "P" = "paste_clipboard_before" # Paste system clipboard before selections
 "P" = "no_op"
 # "R" = "replace_selections_with_clipboard" # Replace selections by clipboard contents
@@ -861,7 +874,8 @@ C-S-v = "paste_clipboard_after"
 "r" = "rotate_view" # Rotate view
 # "C-s" = "hsplit" # Horizontal split
 "C-s" = "no_op"
-# "s" = "hsplit" # Horizontal split
+# "s" = "hsplit" # Horizontal splitx
+"s" = "no_op"
 "h" = "hsplit"
 # "C-v" = "vsplit" # Vertical split
 "C-v" = "no_op"
@@ -879,6 +893,7 @@ C-S-v = "paste_clipboard_after"
 "C-q" = "no_op"
 # "q" = "wclose" # Close window
 "q" = "no_op"
+"esc" = "wclose"
 # "C-o" = "wonly" # Close windows except current
 "C-o" = "no_op"
 # "o" = "wonly" # Close windows except current
@@ -886,7 +901,7 @@ C-S-v = "paste_clipboard_after"
 # "C-h" = "jump_view_left" # Jump to left split
 "C-h" = "no_op"
 # "h" = "jump_view_left" # Jump to left split
-#"h" = "no_op" Now used for hsplit shortcut
+#"h" = "no_op" Now used for hsplit
 # "left" = "jump_view_left" # Jump to left split
 "left" = "jump_view_left"
 # "C-j" = "jump_view_down" # Jump to split below
@@ -908,12 +923,16 @@ C-S-v = "paste_clipboard_after"
 # "right" = "jump_view_right" # Jump to right split
 "right" = "jump_view_right"
 # "H" = "swap_view_left" # Swap with left split
+"H" = "no_op" 
 "S-left" = "swap_view_left"
 # "J" = "swap_view_down" # Swap with split below
+"J" = "no_op"
 "S-down" = "swap_view_down"
 # "K" = "swap_view_up" # Swap with split above
+"K" = "no_op"
 "S-up" = "swap_view_up"
 # "L" = "swap_view_right" # Swap with right split
+"L" = "no_op"
 "S-right" = "swap_view_right"
 
 [keys.normal.space.w.n]
@@ -992,8 +1011,8 @@ C-S-s = ":write-all"
 C-s = ":write"
 C-a = "select_all"
 C-c = ["yank_joined_to_primary_clipboard", "yank_joined_to_clipboard"]
-C-v = "paste_primary_clipboard_after"
-C-S-v = "paste_clipboard_after"
+C-v = "paste_primary_clipboard_before"
+C-S-v = "paste_clipboard_before"
 #C-x = ["yank_joined_to_primary_clipboard", "yank_joined_to_clipboard", "delete_selection"]
 C-f = ["yank_joined_to_primary_clipboard", "yank_joined_to_clipboard", "move_prev_word_start", "move_next_word_end", "search_selection", "search"] # Emulate Ctrl+F find from Word
 C-S-f = ["yank_joined_to_primary_clipboard", "yank_joined_to_clipboard", "move_prev_word_start", "move_next_word_end", "search_selection", "global_search"]
@@ -1065,6 +1084,8 @@ C-S-f = ["yank_joined_to_primary_clipboard", "yank_joined_to_clipboard", "move_p
 "v" = "no_op"
 "e" = "normal_mode"
 "i" = "insert_mode"
+
+"tab" = "align_selections" # Align selection in columns
 
 [keys.select.g]
 # Goto (extend versions)

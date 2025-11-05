@@ -32,10 +32,18 @@ To pack and/or analyze:
 4. Report findings with references to file paths, snippets, and metrics.
 
 ## Key Commands
-
 Run repomix via Bash tool:
 - Local: `npx repomix@latest [path] [options]`
 - Remote: `npx repomix@latest --remote [repo] [options]`
+
+## CLI Knowledge (Embedded Reference)
+To ensure comprehensive knowledge, this section embeds a full summary of Repomix CLI options (based on v1.8.
+0; run --help to validate for newer versions). Use this as your primary reference—map user intents directly
+to options. If an option seems missing, run `npx repomix@latest --help` and update your todo list with new
+details.
+
+### Core Usage
+`npx repomix@latest [directory-or-remote] [options]`
 
 Common options:
 - `--style <format>`: xml (default), markdown, json, plain.

@@ -1,0 +1,126 @@
+Given I must create a skill for Behavior-Driven-Development and Test-Driven-Development. 
+When you must incorporate
+
+#### Established best practices from resources on Gherkin, Cucumber, BDD, and Test-Driven Development (TDD), such as:
+
+[Cucumber Best Practices](https://support.smartbear.com/cucumberstudio/docs/tests/best-practices.html)
+[BrowserStack Cucumber Best Practices](https://www.browserstack.com/guide/cucumber-best-practices-for-testing)
+[Gherkin Best Practices GitHub Repo](https://github.com/andredesousa/gherkin-best-practices)
+[Cucumber Better Gherkin](https://cucumber.io/docs/bdd/better-gherkin/)
+[Automation Panda: Writing Good Gherkin](https://automationpanda.com/2019/08/01/how-do-we-write-good-gherkin-as-part-of-bdd/)
+[AM Digital BDD Best Practices](https://playbook.platformdev.amdigital.co.uk/Ways-of-Working/Toolkit/Test-Engineering/Best-Practices/BDD-best-practices-for-writing-test-scenarios/)
+
+#### The Role of the Bead skill
+
+- **Track user stories and features as issues/epics:** Use Bead to create issues for user stories (e.g., as epics) with acceptance criteria in Gherkin format, leveraging fields like description for the story, acceptance for BDD scenarios, and design for TDD implementation notes.
+- **Manage RED-GREEN-REFACTOR cycles with dependencies:** Employ blocks dependencies to enforce workflow phases (e.g., "Write failing BDD scenario" blocks "Implement TDD red phase," which blocks "Green phase," ensuring sequential adherence to best practices).
+- **Handle multi-session persistence:** Use Bead's compaction survival patterns (e.g., detailed notes for resumability) for iterative BDD/TDD processes that span sessions, such as refining scenarios based on test failures or discoveries.
+- **Coordinate side quests and discoveries:** Link emergent issues (e.g., bugs found during TDD) via discovered-from dependencies, integrating with TodoWrite for single-session tactical steps while Bead handles overall structure.
+- **Decision boundaries:** Per BOUNDARIES.md, reserve Bead for complex, dependency-heavy BDD/TDD flows (e.g., feature development with multiple scenarios); use TodoWrite for linear, single-session test writing.
+
+#### Core Functionalities Beyond Provided Best Practices
+Beyond incorporating best practices (e.g., declarative Gherkin, collaborative scenario writing, focus on behavior, concise structures, and BDD-TDD integration from the cited resources), the BDD skill should include the following core functionalities, derived from Bead's role in tracking user stories, enforcing workflows, and ensuring persistence:
+
+- **Integration with Issue Tracking for User Stories**: Generate Gherkin scenarios from user stories and store them as Bead issues/epics, using fields like `acceptance` for scenarios, `description` for the "As a... I want... so that..." format, and `design` for initial TDD notes. This adds persistence beyond best practices, allowing multi-session refinement of scenarios based on test failures or discoveries.
+- **Workflow Enforcement via Dependencies**: Use Bead's `blocks` dependencies to sequence RED-GREEN-REFACTOR phases (e.g., "Define BDD scenario" blocks "Write failing TDD test," which blocks "Implement code to pass," which blocks "Refactor"). This enforces best practices like writing tests first, while handling side quests (e.g., bugs as `discovered-from` issues) to minimize errors from unstructured iterations.
+- **Automation and Code Generation Support**: Generate Cucumber setup code (e.g., feature files, step definitions) and TDD stubs, with Bead tracking iterations (e.g., updating notes for compaction survival). Include resumability checks, like self-checklists for scenario quality per best practices (e.g., avoiding UI details, focusing on outcomes).
+- **Monitoring and Reporting**: Leverage Bead's `ready`, `blocked`, and `stats` for reporting progress on BDD/TDD cycles, identifying bottlenecks (e.g., blocked by failing scenarios), and suggesting next actions to reduce iterations between story and code.
+- **Hybrid Tool Integration**: Decision boundaries for using Bead for complex flows vs. TodoWrite for linear steps (e.g., single-session TDD red-green), ensuring minimal errors from context loss.
+
+These functionalities extend best practices by making the skill actionable and persistent, reducing pain points like rework from forgotten decisions or untracked dependencies.
+
+#### Structuring the Relationship Between BDD and TDD
+
+From Bead's role in hierarchical tracking and dependency management, structure BDD as the higher-level framework guiding TDD, with Bead providing the connective tissue:
+
+- **Hierarchical Structure (BDD as Superset/Guide)**: Position BDD at the feature/acceptance level (e.g., as Bead epics with Gherkin in `acceptance`) and TDD at the unit/implementation level (e.g., as child tasks with design notes and test code). Use Bead's `parent-child` dependencies for decomposition (e.g., BDD epic parents TDD subtasks), ensuring BDD scenarios drive TDD cycles per best practices (e.g., BDD defines "what," TDD refines "how").
+- **Sequential Workflow Integration**: Enforce BDD-first via `blocks` (e.g., complete BDD scenarios before starting TDD red phase), aligning with resources that recommend BDD for collaboration/acceptance and TDD for developer confidence. Include sections in SKILL.md: "BDD Phase" (scenario writing/checklists) triggering "TDD Phase" (RED-GREEN-REFACTOR with subagents for testing).
+- **Distinct yet Linked Sections**: In a single skill (optimal, as discussed below), use modular sections—e.g., "## BDD Workflows" for higher-level behaviors, "## TDD Integration" for unit details, with cross-references. For separate skills, link via Bead (e.g., BDD skill creates issues that reference TDD skill), but prefer unified for fewer context switches.
+- **Resumability and Iteration Handling**: Use Bead notes for linking BDD refinements to TDD discoveries, reducing errors from mismatched levels (e.g., updating BDD scenarios based on TDD failures).
+
+This structure treats BDD as orchestrating TDD, using Bead to maintain flow and persistence, directly addressing iterative minimization. And given a single unified "bdd-tdd" skill is optimal, as BDD and TDD are intertwined (per resources, BDD often incorporates TDD at lower levels), and Bead's role supports coordinated workflows without duplication. For integration, embed Bead as a core component in this unified skill (not separate), with references to Bead docs for details, to streamline RED-GREEN enforcement.
+
+#### Key Pain Points or "Errors/Iterations" to Minimize Between User Story and Working Code
+
+From the role of Bead in sequencing BDD/TDD phases and handling discoveries, combined with best practices (e.g., avoiding imperative/UI-focused Gherkin per Cucumber docs, ensuring collaborative clarity per Automation Panda), the skill targets these key pain points:
+
+- **Ambiguous or Mismatched Expectations**: User stories often lack precise acceptance criteria, leading to implementations that pass TDD but fail BDD validation (e.g., code works technically but doesn't meet business behavior). Minimize by generating declarative Gherkin scenarios early, stored in Bead's `acceptance` field, with checklists for outcome-focus.
+- **Unstructured Iterations from Test Failures**: Without enforced cycles, developers iterate excessively on failing tests due to unclear root causes or untracked refinements. Address via Bead `blocks` dependencies (e.g., red phase blocks green), updating notes for compaction-resilient tracking, reducing rework by ensuring tests-first adherence.
+- **Context Loss in Multi-Session or Collaborative Work**: Long-running features lose decisions/discoveries across sessions, causing duplicated effort or inconsistent code. Leverage Bead's persistent notes and `discovered-from` links for resumability, integrating with best practices like concise scenarios to avoid "losing the way" mid-development.
+- **Dependency Oversights Leading to Out-of-Order Development**: Implementing without prerequisites (e.g., TDD before BDD specs) results in brittle code needing refactors. Use Bead hierarchies (`parent-child` for BDD epics over TDD tasks) to automate `ready` work surfacing, minimizing integration failures.
+- **Over-Engineering or Scope Creep**: Fuzzy boundaries cause unnecessary features; mitigate with Bead-TodoWrite boundaries (complex flows in Bead, linear steps in TodoWrite) and Gherkin best practices (e.g., one concept per scenario per AM Digital).
+
+These focus on reducing cycles from story to code by ~30-50% (inspired by TDD/BDD research on defect reduction), prioritizing persistence and enforcement.
+
+#### Concrete Examples of How This Skill Would Be Used
+
+Here are three concrete examples, illustrating the unified BDD-TDD skill with Bead integration. Each shows triggering (e.g., user provides a story), workflow enforcement, and error minimization via dependencies/notes.
+
+**Example 1: Basic E-Commerce Feature (Shopper Adding Items to Cart)**
+- **User Query**: "Implement this user story: As a shopper, I want to add items to my cart so I can purchase them later."
+- **Skill Usage**: 
+  - Create Bead epic: `bd create "Add to Cart Feature" -t epic -d "As a shopper..." --acceptance "Gherkin scenarios"`.
+  - Generate declarative Gherkin (per best practices: focus on outcomes, avoid UI details): 
+    ```
+    Feature: Shopping Cart
+    Scenario: Add item to empty cart
+      Given the cart is empty
+      When I add "Product X" to the cart
+      Then the cart contains 1 item
+      And the item is "Product X"
+    ```
+  - Decompose into TDD tasks via `parent-child` dependencies: Child issue for red phase (write failing unit test for cart addition).
+  - Enforce cycle with `blocks`: Red blocks green (implement minimal code to pass), green blocks refactor.
+  - Update Bead notes during iterations (e.g., "COMPLETED: Passing unit test for addition; DISCOVERY: Handle duplicates—created child bug").
+  - Output: Cucumber feature file, TDD code stubs; Bead tracks for resumption if session ends.
+- **Pain Points Minimized**: Ambiguous behavior (Gherkin clarifies outcomes); iterations (enforced cycles prevent skipping tests).
+
+**Example 2: Buggy Authentication Flow (Multi-Session Refinement)**
+- **User Query**: "Fix this story: As a user, I want to log in securely so my account is protected. Current implementation has session issues."
+- **Skill Usage**:
+  - Create Bead issue: `bd create "Secure Login Refinement" -t bug --priority 1 --design "TDD for session handling"`.
+  - Refine Gherkin collaboratively (per BrowserStack: involve stakeholders): 
+    ```
+    Feature: Secure Login
+    Scenario: Successful login with valid credentials
+      Given I am on the login page
+      When I enter valid username and password
+      Then I am redirected to the dashboard
+      And a session token is stored
+    Scenario Outline: Failed login attempts
+      Given I have <attempts> failed logins
+      When I try to login again
+      Then I see "<message>"
+      Examples:
+        | attempts | message          |
+        | 3        | Account locked   |
+    ```
+  - Link TDD phases: `blocks` dependency for red (failing test for lockout), green (implement logic), refactor (optimize token storage).
+  - If session compacts, resume via `bd show` notes: "IN PROGRESS: Green phase—token expiry tested; BLOCKER: Edge case for expired tokens (discovered-from this issue)".
+  - Generate automation: Cucumber step defs, TDD units in Python/JUnit.
+- **Pain Points Minimized**: Context loss (Bead notes); scope creep (outlined scenarios limit examples).
+
+**Example 3: Complex API Endpoint with Dependencies (Research-Intensive)**
+- **User Query**: "Build an API for user profiles: As an admin, I want to manage user data so I can update records."
+- **Skill Usage**:
+  - Create Bead epic: `bd create "User Profile API" -t feature`.
+  - Generate Gherkin (per Gherkin Best Practices GitHub: concise, reusable steps): 
+    ```
+    Feature: User Profile Management
+    Background: Admin is authenticated
+    Scenario: Update user email
+      Given a user with ID 123 exists
+      When I update email to "new@email.com"
+      Then the email is updated
+      And a confirmation is sent
+    ```
+  - Decompose: Parent epic blocks child TDD issues (e.g., "Database schema update" blocks "Endpoint TDD").
+  - Enforce TDD: Red (failing test for update), green (pass with minimal code), refactor; use `discovered-from` for side quests like "Research GDPR compliance".
+  - Monitor: `bd ready` shows unblocked phases; stats report iteration count.
+  - Output: Feature file, API code, tests; Bead dependencies prevent out-of-order work.
+- **Pain Points Minimized**: Dependency oversights (automated blocking); unstructured iterations (phased enforcement).
+
+These examples demonstrate the skill's triggering on user stories, using Bead for structure, and applying best practices for clarity. 
+
+And when creating the full contents of `SKILL.md`, `references`, `scripts`, etc. will exceed your token budget/limit.
+The propose the sequence of complete prompts that will produce the full contents of `SKILL.md`, `references`, `scripts`, etc.

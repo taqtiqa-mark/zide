@@ -15,7 +15,8 @@ Detailed step-by-step workflows for essential daily bd usage patterns with check
 - [Unblocking Work](#unblocking) - Handling blocked issues
 - [Git Workflow Patterns](#git-workflow-patterns) - Version control integration
 - [Integration with TodoWrite](#integration-with-todowrite) - Using both tools together
-
+- [Summary Workflow](#summary-workflow) - High-level Summary Workflow
+ 
 For advanced patterns, see [WORKFLOWS_ADVANCED.md](WORKFLOWS_ADVANCED.md).
 For reusable templates, see [WORKFLOWS_CHECKLISTS.md](WORKFLOWS_CHECKLISTS.md).
 For error-handling, see [WORKFLOWS_TROUBLESHOOTING.md](WORKFLOWS_TROUBLESHOOTING.md).
@@ -95,7 +96,7 @@ Recover context after compaction events, where conversation history is deleted b
 
 **Post-compaction recovery checklist**:
 
-```
+```markdown
 After Compaction:
 - [ ] Run bd list --status in_progress to see active work
 - [ ] Run bd show <issue-id> for each in_progress issue
@@ -116,6 +117,7 @@ Write notes to enable full context recovery with zero conversation history.
 - KEY DECISIONS: Important context or user guidance
 
 **Good note (enables recovery)**:
+
 ```bash
 bd update issue-42 --notes "COMPLETED: User authentication - added JWT token generation with 1hr expiry, implemented refresh token endpoint using rotating tokens pattern. IN PROGRESS: Password reset flow. Email service integration working. NEXT: Need to add rate limiting to reset endpoint (currently unlimited requests). KEY DECISION: Using bcrypt with 12 rounds after reviewing OWASP recommendations, tech lead concerned about response time but benchmarks show <100ms."
 ```
@@ -141,7 +143,7 @@ Create issues proactively during work to capture emerging tasks.
 
 **Discovery checklist**:
 
-```
+```markdown
 During Work:
 - [ ] Notice new work (bug, feature, refactor)
 - [ ] Assess: Multi-session? Dependencies? Use bd (see BOUNDARIES.md)
@@ -171,7 +173,7 @@ Keep bd status current to reflect work progress accurately.
 
 **Status update checklist**:
 
-```
+```markdown
 During Session:
 - [ ] Start work: bd update <id> --status in_progress
 - [ ] Mid-session: Update notes with progress/decisions
@@ -183,6 +185,7 @@ During Session:
 Update status at start, significant changes, and end. This ensures `bd ready` always shows accurate available work.
 
 **Example: Mid-session update**:
+
 ```bash
 bd update bd-3 --notes "COMPLETED: JWT implementation. IN PROGRESS: Middleware. BLOCKER: Need clarification on token expiry."
 ```
@@ -195,7 +198,7 @@ Structure complex work with dependencies for large features or projects.
 
 **Epic planning checklist**:
 
-```
+```markdown
 Planning Epic:
 - [ ] Create epic: bd create "Epic: User Authentication" -t epic -p 1
 - [ ] Break down: Create child tasks/issues
@@ -206,6 +209,7 @@ Planning Epic:
 ```
 
 **Example: E-commerce project kickoff**:
+
 ```bash
 bd create "Set up Next.js project" -p 0 -t task
 bd create "Design database schema" -p 0 -t task
@@ -229,7 +233,7 @@ Handle discoveries during main task without losing context.
 
 **Side quest checklist**:
 
-```
+```markdown
 During Main Task:
 - [ ] Discover side quest (e.g., related bug)
 - [ ] Assess: Blocker or deferrable?
@@ -242,7 +246,9 @@ During Main Task:
 Pause main work only for true blockers.
 
 **Example: Discovering blocker**:
+
 During UI build (bd-5), discover API issue.
+
 ```bash
 bd create "Fix API rate limiting" -t bug -p 0
 bd dep add current-ui-id new-api-id --type discovered-from
@@ -259,7 +265,7 @@ Return to work after days/weeks with preserved context.
 
 **Resume checklist**:
 
-```
+```markdown
 Resuming Work:
 - [ ] Check session start (bd ready)
 - [ ] Review in_progress: bd list --status in_progress
@@ -272,6 +278,7 @@ Resuming Work:
 bd persists context indefinitely via git-backed database.
 
 **Example: After 2 weeks**:
+
 ```bash
 bd ready  # Shows unblocked issues
 bd show bd-3  # Review auth system notes
@@ -286,7 +293,7 @@ Hand off work between sessions or agents collaboratively.
 
 **Handoff checklist**:
 
-```
+```markdown
 End of Session:
 - [ ] Update notes: Current state, next steps
 - [ ] Set status: in_progress or blocked
@@ -301,6 +308,7 @@ Start of Next Session:
 Ensure notes enable seamless handoff.
 
 **Example: End session**:
+
 ```bash
 bd update bd-4 --notes "COMPLETED: Basic routes. NEXT: Add pagination."
 bd update bd-4 --status in_progress
@@ -316,7 +324,7 @@ Resolve blocked issues to enable progress.
 
 **Unblocking checklist**:
 
-```
+```markdown
 When Blocked:
 - [ ] Identify blockers: bd blocked
 - [ ] Prioritize: Work on highest priority blocker
@@ -328,6 +336,7 @@ When Blocked:
 Closing blockers automatically unblocks dependents.
 
 **Example: Schema blocks auth**:
+
 ```bash
 bd blocked  # Shows bd-3 blocked by bd-2
 # Work on bd-2...
@@ -343,7 +352,7 @@ Integrate bd with version control for persistent tracking.
 
 **Git integration checklist**:
 
-```
+```markdown
 Git Workflow:
 - [ ] Add .beads/ to repo: git add .beads/issues.jsonl
 - [ ] Ignore cache: Add .beads/*.db to .gitignore
@@ -355,7 +364,9 @@ Git Workflow:
 bd syncs automatically with git for collaboration.
 
 **Example: Auto-close from commits**:
+
 In `.git/hooks/commit-msg`:
+
 ```bash
 #!/bin/bash
 COMMIT_MSG=$(cat $1)
@@ -371,7 +382,7 @@ Use bd and TodoWrite together, each for its strengths.
 
 **Integration checklist**:
 
-```
+```markdown
 Combined Use:
 - [ ] Strategic: Use bd for multi-session/dependencies
 - [ ] Tactical: Use TodoWrite for single-session linear steps
@@ -383,15 +394,17 @@ Combined Use:
 bd provides structure; TodoWrite provides visible progress.
 
 **Example: Transition mid-session**:
+
 Start with TodoWrite for simple task. Discover complexity.
 - Create bd issue with current context
 - Note: "Discovered complexity during implementation"
 - Add dependencies as discovered
 - Continue with bd tracking
 
-## Summary Workflow
+## Summary Workflow {#summary-workflow}
 
 **The workflow:**
+
 1. Brain dump all tasks → `bd create`
 2. Map dependencies → `bd dep add`
 3. Find ready work → `bd ready`
@@ -401,6 +414,7 @@ Start with TodoWrite for simple task. Discover complexity.
 7. Repeat
 
 **The magic:**
+
 - Database knows what's ready
 - Git tracks your progress
 - AI can query and update

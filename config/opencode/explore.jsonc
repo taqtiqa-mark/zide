@@ -35,15 +35,11 @@
   
   // Agent configuration, see https://opencode.ai/docs/agent
   "agent": {
-    // Example agent: explore
-    "explore": {
-      // Disable this agent
-      "disable": false,
-    },
+    // Example agent:
     "driven": {
-      "disable": false,
+      "disable": false
     }
-},  
+  },  
   // Additional instruction files or patterns to include. Relative to the config file directory, or /, or ~
   // e.g., ["./instructions.md", ".opencode/rules/*.md"]
   "instructions": ["./instructions/explore/*.md", "./rules/explore/*.md"],
@@ -269,11 +265,11 @@
           "modalities": {
             "input": ["text"],
             "output": ["text"]
-          },
-        },
-      },
+          }
+        }
+      }
+    }
   },
-},
 
   // MCP (Model Context Protocol) server configurations
   "mcp": {
@@ -326,7 +322,7 @@
     "serena": {
       "type": "local",
       "command": [
-        "/opt/serena-venv/bin/serena",
+        "serena",
         "start-mcp-server",
         "--context",
         "ide-assistant",

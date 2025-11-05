@@ -7,12 +7,11 @@ description: Track complex, multi-session work with dependency graphs using bd (
 
 ## Overview
 
-The Tool `bd` is a graph-based issue tracker for persistent memory across sessions. Use for multi-session work with complex dependencies; use TodoWrite for simple single-session tasks.
+bd is a graph-based issue tracker for persistent memory across sessions. Use for multi-session work with complex dependencies; use TodoWrite for simple single-session tasks.
 
 ## When to Use bd vs TodoWrite
 
 ### Use bd when:
-
 - **Multi-session work** - Tasks spanning multiple compaction cycles or days
 - **Complex dependencies** - Work with blockers, prerequisites, or hierarchical structure
 - **Knowledge work** - Strategic documents, research, or tasks with fuzzy boundaries
@@ -20,7 +19,6 @@ The Tool `bd` is a graph-based issue tracker for persistent memory across sessio
 - **Project memory** - Need to resume work after weeks away with full context
 
 ### Use TodoWrite when:
-
 - **Single-session tasks** - Work that completes within current session
 - **Linear execution** - Straightforward step-by-step tasks with no branching
 - **Immediate context** - All information already in conversation
@@ -33,22 +31,19 @@ The Tool `bd` is a graph-based issue tracker for persistent memory across sessio
 Ask these questions to decide:
 
 **Choose bd if:**
-
 - ❓ "Will I need this context in 2 weeks?" → Yes = bd
 - ❓ "Could conversation history get compacted?" → Yes = bd
 - ❓ "Does this have blockers/dependencies?" → Yes = bd
 - ❓ "Is this fuzzy/exploratory work?" → Yes = bd
 
 **Choose TodoWrite if:**
-
 - ❓ "Will this be done in this session?" → Yes = TodoWrite
 - ❓ "Is this just a task list for me right now?" → Yes = TodoWrite
 - ❓ "Is this linear with no branching?" → Yes = TodoWrite
 
-**When in doubt**: Use bd. Better to have persistent memory you don't need than to lose context you needed.
+**When in doubt**: Use bd. Better to have persistent memory than lose context.
 
 For detailed decision criteria and integration patterns, see [references/BOUNDARIES.md](references/BOUNDARIES.md).
-
 
 ## Dependency Types (Quick Reference)
 
