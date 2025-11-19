@@ -16,7 +16,7 @@ Identify inconsistencies, duplications, ambiguities, and underspecified items ac
 
 ## Operating Constraints
 
-**STRICTLY READ-ONLY**: Do **not** modify any files. Output a structured analysis report. Offer an optional remediation plan (user must explicitly approve before any follow-up editing commands would be invoked manually).
+**EXISTING READ-ONLY**: Do **not** modify **any** existing project files (e.g., spec.md, plan.md, tasks.md). Output a structured analysis report. Offer an optional remediation plan (user must explicitly approve before any follow-up editing commands would be invoked manually). If the user approves a Git patch file for remediations, you MAY write it to a new file at FEATURE_DIR/NNN-analysis.patch (create if it doesn't exist; do not overwrite without confirmation). Show the git command to apply the patch.
 
 **Constitution Authority**: The project constitution (`.specify/memory/constitution.md`) is **non-negotiable** within this analysis scope. Constitution conflicts are automatically CRITICAL and require adjustment of the spec, plan, or tasks—not dilution, reinterpretation, or silent ignoring of the principle. If a principle itself needs to change, that must occur in a separate, explicit constitution update outside `/speckit.analyze`.
 
@@ -161,6 +161,21 @@ At end of report, output a concise Next Actions block:
 ### 8. Offer Remediation
 
 Ask the user: "Would you like me to suggest concrete remediation edits for the top N issues?" (Do NOT apply them automatically.)
+
+#### 8.1. Prepare Edits
+If approved, apply remediations by creating full edited versions of the files (e.g., spec.edited.md, tasks.edited.md, etc.) based on the analysis findings.
+
+### 9. Generate Patch (Optional, User-Requested)
+ 
+If the user approves the offer to create a Git patch file, confirm (e.g., "Confirm: Write patch to FEATURE_DIR/NNN-analysis.patch?"). If yes:
+- Use List to find next NNN (increment from existing *analysis.patch).
+- Run Bash: `.specify/scripts/bash/analyze-setup.sh --feature-dir <FEATURE_DIR> --nnn <NNN>`
+- Write full edited versions to `tmp/NNN-analysis` as `<file>.md.edit` (applying remediations to the entire content) and the copy the original file as `<file>.md.orig`.
+- Run Bash: `.specify/scripts/bash/analyze-draft.sh --nnn <NNN>`.  This shows the draft patch in output.
+- Ask user: "Approve this draft patch?" If yes, run Bash: `.specify/scripts/bash/analyze-finalize.sh --feature-dir <FEATURE_DIR> --nnn <NNN>`
+- Report final path: "Patch at <path>. To apply: git apply --check <patch> && git apply <patch>"
+- If diff shows full replacement (e.g., line ending issues), normalize with `dos2unix *.orig *.edited.md` before re-diffing.
+- Do NOT apply; only copy on approval. Use `tmp/NNN-analysis` for all staging. Clean up temps after finalization.
 
 ## Operating Principles
 

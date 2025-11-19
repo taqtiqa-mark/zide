@@ -17,6 +17,11 @@ layouts/*.kdl
 
 log/opencode/log
 log/opencode/storage 
+log/serena
+*.log
+*.bak
+**/*.log
+**/**/*.log
 
 .serena/
 

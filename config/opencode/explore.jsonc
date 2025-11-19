@@ -8,10 +8,10 @@
 
   // Control sharing behavior: 'manual' allows manual sharing via commands, 'auto' enables automatic sharing, 'disabled' disables all sharing
   // Enum: "manual", "auto", "disabled"
-  "share": "manual",
+  "share": "disabled",
 
   // Automatically update to the latest version
-  "autoupdate": true,
+  "autoupdate": false,
 
   // Disable providers that are loaded automatically
   "disabled_providers": [], // e.g., ["openai", "gemini"]
@@ -32,12 +32,30 @@
   //"autoshare": false,
   // @deprecated Always uses stretch layout.
   //"layout": "stretch", // Enum: "auto", "stretch"
-  
+  "command": {
+    // This becomes the name of the command
+    "driven/000-constitution": {
+      "template": "command/driven/000-constitution.md",
+      "model": "xai/grok-4"
+    }
+  },
   // Agent configuration, see https://opencode.ai/docs/agent
   "agent": {
     // Example agent:
     "driven": {
       "disable": false
+    },
+    "research": {
+      "disable": false
+    },
+     "plan": {
+      "disable": true
+    },
+    "build": {
+      "disable": true
+    },
+     "general": {
+      "disable": true
     }
   },  
   // Additional instruction files or patterns to include. Relative to the config file directory, or /, or ~
@@ -45,7 +63,7 @@
   "instructions": ["./instructions/explore/*.md", "./rules/explore/*.md"],
 
   // Array of plugin paths or names
-  "plugin": ["opencode-skills@0.0.3"],
+  "plugin": ["opencode-skills@latest"],
   
   // Custom provider configurations and model overrides
   "provider": {
@@ -56,7 +74,7 @@
         "apiKey": "{env:XAI_API_KEY}",
         // Timeout in milliseconds for requests to this provider.
         // Default is 300000 (5 minutes). Set to false to disable timeout.
-        "timeout": 150000
+        "timeout": 600000
       },
       // Model configurations
       "models": {
@@ -344,46 +362,50 @@
       "command": ["uvx",
                 "--directory", "/home/node/project",
                 "mcp-server-tree-sitter"
-       ]
+       ],
+       "enabled": false
     }
     // Remote MCP
   },
   "keybinds": {
     "leader": "ctrl+x",
-    "app_help": "<leader>h",
-    "app_exit": "<leader>q",
+    //"app_help": "<leader>h",
+    //"app_exit": "<leader>q",
     "editor_open": "<leader>e",
     "theme_list": "<leader>t",
-    "project_init": "<leader>i",
-    "tool_details": "<leader>d",
-    "thinking_blocks": "<leader>b",
+    //"project_init": "<leader>i",
+    //"tool_details": "<leader>d",
+    //"thinking_blocks": "<leader>b",
     "session_export": "<leader>x",
     "session_new": "<leader>n",
     "session_list": "<leader>l",
     "session_share": "<leader>s",
     "session_unshare": "none",
     "session_interrupt": "esc",
-    "session_compact": "<leader>c",
-    "session_child_cycle": "ctrl+right",
-    "session_child_cycle_reverse": "ctrl+left",
+    "session_compact": "<leader>z",
+    "session_child_cycle": "<leader>right",
+    "session_child_cycle_reverse": "<leader>left",
     "messages_page_up": "pgup",
     "messages_page_down": "pgdown",
-    "messages_half_page_up": "ctrl+alt+u",
-    "messages_half_page_down": "ctrl+alt+d",
-    "messages_first": "ctrl+g",
-    "messages_last": "ctrl+alt+g",
-    "messages_copy": "<leader>y",
+    "messages_half_page_up": "none",
+    "messages_half_page_down": "none",
+    "messages_first": "home",
+    "messages_last": "end",
+    "messages_copy": "<leader>c",
     "messages_undo": "<leader>u",
     "messages_redo": "<leader>r",
+    "messages_toggle_conceal": "<leader>h",
     "model_list": "<leader>m",
-    "model_cycle_recent": "f2",
-    "model_cycle_recent_reverse": "shift+f2",
+    "model_cycle_recent": "<leader>up",
+    "model_cycle_recent_reverse": "<leader>down",
     "agent_list": "<leader>a",
     "agent_cycle": "tab",
     "agent_cycle_reverse": "shift+tab",
-    "input_clear": "ctrl+c",
+    "input_clear": "<leader>del",
     "input_paste": "ctrl+v",
     "input_submit": "<leader>enter",
-    "input_newline": "enter"
+    "input_newline": "shift+enter",
+    "history_previous": "up",
+    "history_next": "down"
   }
 }

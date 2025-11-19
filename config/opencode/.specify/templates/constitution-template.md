@@ -3,7 +3,22 @@
 
 ## Core Principles
 
-### I. Clean Architecture **AND** Domain-Driven Design
+### I. Spec-Driven Development (SDD)
+
+- Adhere strictly to **Spec-Driven Development Principles**:
+  - **Specification as Source of Truth Rule**: Specs generate code; code serves specs.
+  - **Intent-Driven Rule**: Use natural language/assets for intent; Grok agents transform via refinement.
+  - **Bidirectional Feedback Rule**: Loop specs/plans/tasks/code; regenerate for 100% alignment/tests.
+  - **Agent Integration Mandate**: Prefer Grok agents for clarification/research/implementation/validation; resolve ambiguities via chat.
+  - **Tool-Enhanced Workflows Rule**: Use dynamic Grok tools (e.g., code_execution for tests, web_search for research) for enforcement.
+  - **Error-Free Assurance Rule**: Include feedback loops; regenerate until 100% test pass; track metrics.
+  - **Traceability Rule**: 100% spec-to-code links; use bd for graphs/resumability.
+- **Enforcement Guidelines** (Reference Beads SKILL.md for details):
+  - Validate via agents/tools; halt on unresolved ambiguities.
+  - Document interactions in bd issues (per ISSUE_CREATION.md).
+  - Prioritize purity/testability with code_execution.
+
+### II. Clean Architecture **AND** Domain-Driven Design
 
 - Adhere strictly to **Clean Architecture Principles** for every component:
   - **Separation of Concerns Rule**: Divide system into layers (domain, use cases, interface adapters, frameworks). Keep domain logic pure and framework-agnostic.
@@ -29,11 +44,14 @@
     - **Services Pattern**: Encapsulate logic not fitting single entities/value objects (e.g., domain services for cross-aggregate operations).
 - **Enforcement Guidelines**:
   - In all code generation: Validate adherence to these rules; refactor if violated.
+  - Use Agents and Tools/Skills for validation/refactor.
   - Use examples in reasoning: Map domain concepts to patterns before coding.
   - Prioritize purity: Ensure domain layer testable in isolation.
   - Document mappings: Comment code with principle/pattern references.
+  - Ensure isolation via Tools for code and test execution.
+  - Track progress via Tools for issue/task tracking.
 
-### II. SOLID, DRY, KISS, and YAGNI Principles
+### III. SOLID, DRY, KISS, and YAGNI Principles
 
 Adhere strictly to **SOLID Principles** across all layers:
 
@@ -65,42 +83,34 @@ Adhere strictly to **YAGNI (You Aren't Gonna Need It)**:
 - Prioritize simplicity: Ensure code readable and minimal.
 - Document: Comment adherence to principles.
 
-### III. Library-First Development
+### IV. Library-First Development
 
-Every feature begins as a standalone, independently deployable library. Libraries must be self-contained with clear interfaces, comprehensive documentation (including llms.txt for AI consumption), and isolated testing. Libraries expose functionality through well-defined contracts: REST APIs, gRPC services, or MCP protocols. No feature bypasses library abstraction to directly access infrastructure.
+Grok agents scan for reuse potential. Every feature begins as a standalone, independently deployable library. Libraries must be self-contained with clear interfaces, comprehensive documentation (including llms.txt for AI consumption), and isolated testing. Libraries expose functionality through well-defined contracts: REST APIs, gRPC services, or MCP protocols. No feature bypasses library abstraction to directly access infrastructure.
 
-### IV. AI Skills Integration
+### V. Use of AI Skills
 
-#### Purpose
-AI Skills are modular, self-contained extensions that provide specialized workflows, tools, and enforcement mechanisms for constitutional principles. Skills transform general AI assistants (e.g., Grok, Claude) into domain-specific agents without amending the core constitution.
+Adhere to modular AI Skills for extending capabilities in specialized domains, following the structure and principles from the Grok Skill Creator guidelines.
 
-#### Core Rules for Skills
-- **Compliance Requirement**: All skills MUST adhere to constitutional principles (e.g., Clean Architecture, SOLID). Non-compliant skills are invalid.
-- **Discovery and Usage**: Skills are discovered via metadata (name and description). Use when the task matches the skill's "Use when..." description.
-- **Structure**:
-  - Required: SKILL.md with YAML frontmatter (name, description <1024 chars).
-  - Optional: references/ (docs), scripts/ (tools), assets/ (templates).
-- **Progressive Disclosure**: Load metadata always; SKILL.md body when relevant; resources as needed.
-- **Testing and Validation**: Author skills using TDD for documentation—write pressure scenarios, baseline failures, then skill content. Evaluate against writing best practices (concise, imperative language).
-- **Persuasion for Compliance**: Use authority ("MUST", "No exceptions") and commitment (announce usage) for discipline-enforcing skills.
-- **Integration with Workflows**: Skills may reference tasks.md or CI/CD but cannot override them. Announce skill usage at start of relevant tasks.
-
-#### When to Create/Use Skills
-- **Use when**: Task requires specialized knowledge (e.g., TDD enforcement) or tools beyond core constitution.
-- **Do not use when**: Core principles suffice; avoid for one-off tasks.
+- **Definition and Structure**: Skills are self-contained packages with SKILL.md (metadata and instructions) and optional bundled resources (scripts/, references/, assets/). Use them for workflows not covered by core Constitution principles.
+  - Metadata: YAML frontmatter with name and description (third-person, trigger-focused: "Use when...").
+  - Progressive Disclosure: Load metadata always; full SKILL.md when triggered; resources as needed.
+- **When to Use Skills**:
+  - For domain-specific workflows (e.g., issue tracking, code generation).
+  - When work requires persistent context across sessions.
+  - Avoid for core principles already defined here (no duplication per DRY).
+- **Integration Rules**:
+  - Invoke Skills as Tools via convention: `skills_name1_name2` for <project>/.opencode/skills/name1/name2/SKILL.md.
+  - Validate Skills against Constitution: Ensure adherence to SOLID, Clean Architecture, and TDD.
+  - Enforce via CI: Check for incomplete Skill usage in commits (e.g., grep for unresolved Skill references).
 - **Examples**:
-  - TDD-Enforcement Skill: For verifying TDD cycles in code generation.
-  - Beads-Issue-Tracking Skill: For advanced task management (see below).
+  - Use skills_bd-issue-tracking for task management with dependencies.
+  - Use custom Skills for project-specific tools (e.g., migration automation).
+- **Enforcement Guidelines**:
+  - Document Skill usage in ADRs for significant integrations.
+  - Quarterly review Skills for YAGNI compliance; deprecate unused ones.
+  - Skills do not override Constitution; amend via governance if needed.
 
-#### Skill Authoring Checklist
-- [ ] YAML: Name (hyphens only), description starts with "Use when...".
-- [ ] Concise: SKILL.md <500 lines; details in references/.
-- [ ] Tested: Run baseline scenarios without skill, then with.
-- [ ] Ethical: Serves project integrity; no manipulation.
-
-Skills are stored in a skills/ directory and loaded as needed. For best practices, reference external guides on skill authoring.
-
-### V. Test-First Development (NON-NEGOTIABLE)
+### VI. Test-First Development (NON-NEGOTIABLE)
 
 Strict TDD enforcement following Rodrigo Manguinho's Clean Architecture methodology. Development must follow this exact sequence:
 
@@ -182,21 +192,70 @@ Strict TDD enforcement following Rodrigo Manguinho's Clean Architecture methodol
 - Test Doubles (mocks/stubs/spies) created AFTER domain, BEFORE data layer tests
 - Minimum coverage: 80% unit, 70% integration, 100% critical paths
 
-  ### VI. Model Context Protocol Integration
+### VII. Model Context Protocol Integration
 
 All AI capabilities exposed through standardized MCP servers. TypeScript and Python implementations maintain protocol parity. Resources, Tools, and Prompts clearly defined and versioned. MCP servers follow single-responsibility principle. Transport layer supports both STDIO (local) and HTTP+SSE (remote).
 
-### VII. Observability & Monitoring
+### VIII. Observability & Monitoring
 
 Structured logging mandatory (JSON format with correlation IDs). OpenTelemetry for distributed tracing across services. Metrics exposed via Prometheus endpoints. Health checks at /health (liveness) and /ready (readiness). Error tracking with proper context and stack traces.
 
-### VIII. Security by Design
+### IX. Security by Design
 
 Zero-trust architecture with KeyCloak for authentication/authorization. Secrets managed exclusively through Vault Community - no hardcoded credentials. RBAC enforced at API gateway and service levels. Data encryption at rest (PostgreSQL) and in transit (TLS 1.3+). Regular security scanning in CI/CD pipeline.
 
-### IX. Containerization & Infrastructure as Code
+### X. Containerization & Infrastructure as Code
 
 All services containerized with multi-stage Docker builds. Development/production parity through consistent container usage. Infrastructure definitions in docker-compose for local, Kubernetes manifests for production. Makefile as single source of truth for all operations. No manual infrastructure changes - everything through code.
+
+<!-- !!! IMPORTANT !!!
+- YOU MAY ADD PRINCIPLES BELOW.
+- YOU MAY NOT REMOVE OR CONTRADICT A PRINCIPLE ABOVE WITHOUT GETTING USER APPROVAL
+ -->
+
+### [PRINCIPLE_1_NAME]
+<!-- Example: I. Library-First -->
+[PRINCIPLE_1_DESCRIPTION]
+<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+
+### [PRINCIPLE_2_NAME]
+<!-- Example: II. CLI Interface -->
+[PRINCIPLE_2_DESCRIPTION]
+<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+
+### [PRINCIPLE_3_NAME]
+<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
+[PRINCIPLE_3_DESCRIPTION]
+<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+
+### [PRINCIPLE_4_NAME]
+<!-- Example: IV. Integration Testing -->
+[PRINCIPLE_4_DESCRIPTION]
+<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+
+### [PRINCIPLE_5_NAME]
+<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
+[PRINCIPLE_5_DESCRIPTION]
+<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+
+## [SECTION_2_NAME]
+<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+
+[SECTION_2_CONTENT]
+<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+
+## [SECTION_3_NAME]
+<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+
+[SECTION_3_CONTENT]
+<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+
+
+<!-- !!! IMPORTANT !!!
+- YOU MAY NOT ADD PRINCIPLES BELOW.
+- YOU MAY NOT REMOVE OR CONTRADICT A STATEMENT OR REQUIREMENT BELOW WITHOUT GETTING USER APPROVAL
+ -->
+
 
 ## Technology Standards
 
@@ -279,14 +338,50 @@ Every implementation must include these task types:
 6. **Verification Tasks**: Ensure coverage and quality metrics
 ```
 
+### Task Execution Monitoring
+
+Every development session MUST:
+
+- Start by running bd ready and reviewing output
+- Execute issues in dependency order (no skipping unblocked work)
+- Update bd status immediately after progress (e.g., bd update --status in_progress)
+- Commit bd exports at least every 5 updates
+- Never leave bd out of sync with actual progress
+
 ### Task Progress Tracking (MANDATORY)
 
-```bash
-# After EVERY task completion
-sed -i 's/\[ \] T001/\[x\] T001/' specs/[###-feature]/tasks.md
-git add specs/[###-feature]/tasks.md
-git commit -m "chore: mark T001 as completed"
-```
+- Use **bd** for multi-session/dependency tasks; TodoWrite for single-session linear (per BOUNDARIES.md).
+- **bd Practices** (Reference ISSUE_CREATION.md/RESUMABILITY.md):
+  - Fields: Title (action-oriented), Description (context/why), Design (approach), Acceptance (verifiable outcomes), Notes (resumability: code/samples/formats).
+  - Status: Update to in_progress/done; document blockers.
+  - Dependencies: blocks/related/parent-child/discovered-from (per DEPENDENCIES.md).
+- **Workflows** (Reference WORKFLOWS_CORE.md):
+  - Start: `bd ready/list in_progress`; report to user/agent.
+  - Create: Ask for fuzzy; direct for bugs/debt.
+  - Complete: Close with summary; check ready.
+  - Review: Daily `bd blocked`; prioritize.
+- **Enforcement**: Use code_execution for data validation; integrate with Grok agents for status updates.
+- **bd vs TodoWrite Checklist**:
+
+| Scenario | bd | TodoWrite |
+|----------|----|-----------|
+| Multi-session | Yes | No |
+| Dependencies | Yes | No |
+| Single-session linear | No | Yes |
+| Exploratory | Yes | No |
+
+#### Task Completion Criteria
+
+- Implementation completed (code, tests, config)
+- Tests passing locally and in CI
+- Code reviewed and approved (if required)
+- Documentation updated (README, inline comments)
+- Dependencies updated/completed (dependencies, containers)
+- Performance benchmarks within acceptable range
+- Documentation updated (API, README, CHANGELOG)
+- Database migrations tested and reversible
+- MCP server contracts validated
+- Monitoring dashboards configured
 
 ### Database Migration Points
 
@@ -378,17 +473,19 @@ export class DbAddAccount implements AddAccount {
 
 ### Code Simplicity Guidelines (KISS)
 
-    Function Complexity: Max 20 lines, cyclomatic complexity < 5
-    Class Size: Max 200 lines, single responsibility
-    File Organization: One class/interface per file
-    Naming: Self-documenting, no comments needed
-    Nesting: Max 3 levels of indentation
+- Function Complexity: Max 20 lines, cyclomatic complexity < 5
+- Class Size: Max 200 lines, single responsibility
+- File Organization: One class/interface per file
+- Naming: Self-documenting, no comments needed
+- Nesting: Max 3 levels of indentation
 
 ### Duplication Detection (DRY)
 
-    Check for duplication before commit
+- Check for duplication before commit
 
-npx jscpd src --min-tokens 30
+  ~~~bash
+  npx jscpd src --min-tokens 30
+  ~~~
 
 If duplication > 3%: REFACTOR REQUIRED
 
@@ -396,10 +493,10 @@ If duplication > 3%: REFACTOR REQUIRED
 
 Before adding ANY feature/abstraction, document:
 
-    Current Need: What problem exists TODAY?
-    User Request: Link to issue/ticket
-    Alternative: Simpler solution considered?
-    ROI: Implementation time vs value delivered
+- Current Need: What problem exists TODAY?
+- User Request: Link to issue/ticket
+- Alternative: Simpler solution considered?
+- ROI: Implementation time vs value delivered
 
 ### TDD Git Workflow (MANDATORY)
 
@@ -407,15 +504,17 @@ Each TDD phase requires specific commit patterns for traceability:
 
 #### Commit Message Format
 
+~~~ascii
 <type>(<layer>): <description> [- <TDD phase>]
 
 Types: feat, test, refactor, fix, chore
 Layers: domain, data, infra, presentation, main, integration
 TDD Phases: RED phase, GREEN phase, REFACTOR phase
+~~~
 
 #### Required Commits per Layer
 
-```ascii
+~~~ascii
     Domain Layer: 1 commit per file (no TDD phase)
         feat(domain): add UserModel type
         feat(domain): add AddAccount interface
@@ -433,7 +532,7 @@ TDD Phases: RED phase, GREEN phase, REFACTOR phase
 
     Integration: Final validation
         test(integration): add signup route tests
-```
+~~~
 
 #### Git History Must Show
 
@@ -551,40 +650,34 @@ WRONG:
 
 ### Pre-Deployment Checklist
 
-    TDD sequence followed correctly (Domain → Data → Infra → Presentation → Main)
-    KISS: No over-engineered solutions (complexity justified?)
-    YAGNI: No speculative features (all features requested?)
-    DRY: Code duplication < 3% (jscpd report clean?)
-    All tests passing (unit, integration, e2e)
-    Task progress at 100% in tasks.md
-    Security scan completed (dependencies, containers)
-    Performance benchmarks within acceptable range
-    Documentation updated (API, README, CHANGELOG)
-    Database migrations tested and reversible
-    MCP server contracts validated
-    Monitoring dashboards configured
+- TDD sequence followed correctly (Domain → Data → Infra → Presentation → Main)
+- KISS: No over-engineered solutions (complexity justified?)
+- YAGNI: No speculative features (all features requested?)
+- DRY: Code duplication < 3% (jscpd report clean?)
+- All tests passing (unit, integration, e2e)
+- Security scan completed (dependencies, containers)
 
 ### Performance Standards
 
-    API response time: p95 < 200ms, p99 < 500ms
-    Container startup: < 30 seconds
-    Database queries: Explain plan reviewed for N+1 issues
-    Vector similarity search: < 100ms for 1M embeddings
-    Frontend Core Web Vitals: LCP < 2.5s, FID < 100ms, CLS < 0.1
+- API response time: p95 < 200ms, p99 < 500ms
+- Container startup: < 30 seconds
+- Database queries: Explain plan reviewed for N+1 issues
+- Vector similarity search: < 100ms for 1M embeddings
+- Frontend Core Web Vitals: LCP < 2.5s, FID < 100ms, CLS < 0.1
 
 ### Security Requirements
 
-    Dependency updates within 30 days for critical vulnerabilities
-    Penetration testing quarterly
-    OWASP Top 10 compliance verified
-    Secrets rotation every 90 days
-    Audit logs retained for 1 year
+- Dependency updates within 30 days for critical vulnerabilities
+- Penetration testing quarterly
+- OWASP Top 10 compliance verified
+- Secrets rotation every 90 days
+- Audit logs retained for 1 year
 
 ### CI/CD Task Verification
 
-The CI/CD pipeline MUST verify task progress:
+The CI/CD pipeline MUST verify task progress using bd:
 
-```yaml
+~~~yaml
 # .github/workflows/task-progress.yml
 name: Verify Task Progress
 on: [push, pull_request]
@@ -592,15 +685,18 @@ on: [push, pull_request]
 jobs:
   verify-progress:
     steps:
-      - name: Check task completion
+      - name: Install bd
+        run: curl -sSL https://raw.githubusercontent.com/steveyegge/beads/main/install.sh | bash
+
+      - name: Check bd ready status
         run: |
-          # Count incomplete tasks
-          INCOMPLETE=$(grep -c "^\- \[ \]" specs/*/tasks.md || true)
-          if [ $INCOMPLETE -gt 0 ]; then
-            echo "❌ Found $INCOMPLETE incomplete tasks"
-            echo "All tasks must be marked complete before merge"
+          READY_COUNT=$(bd ready --json | jq 'length')
+          if [ $READY_COUNT -gt 0 ]; then
+            echo "❌ Found $READY_COUNT ready issues - all work must be closed or blocked before merge"
             exit 1
           fi
+          BLOCKED_COUNT=$(bd blocked --json | jq 'length')
+          echo "✅ No ready issues; $BLOCKED_COUNT blocked issues pending"
 
       - name: Verify migration status
         run: |
@@ -609,49 +705,41 @@ jobs:
             echo "❌ Pending migrations detected"
             exit 1
           fi
-```
-
-### Task Execution Monitoring
-
-Every development session MUST:
-
-    Start by reviewing incomplete tasks in tasks.md
-    Execute tasks in order (no skipping)
-    Mark each task complete immediately after execution
-    Commit progress updates at least every 5 tasks
-    Never leave tasks.md out of sync with actual progress
-
-### Progress Verification Commands
-
-# Check incomplete tasks
-grep "^\- \[ \]" specs/*/tasks.md | wc -l
-
-# Find last completed task
-grep "^\- \[x\]" specs/*/tasks.md | tail -1
-
-# Verify migrations are current
-npx prisma migrate status
-
-# Generate progress report
-echo "Progress: $(grep -c "^\- \[x\]" tasks.md) / $(grep -c "^\- \[" tasks.md)"
+~~~
 
 ## Refactoring Triggers
 
 Mandatory refactoring when:
 
-    Same code appears 3 times (DRY violation)
-    Function > 20 lines or complexity > 5 (KISS violation)
-    Unused code exists > 1 sprint (YAGNI violation)
-    Test coverage drops below 80%
-    Performance degrades > 20% from baseline
+- Same code appears 3 times (DRY violation)
+- Function > 20 lines or complexity > 5 (KISS violation)
+- Unused code exists > 1 sprint (YAGNI violation)
+- Test coverage drops below 80%
+- Performance degrades > 20% from baseline
 
 Refactoring Process:
 
-    Document current behavior with tests
-    Refactor in small steps
-    Run tests after each change
-    Commit working state frequently
-    Update documentation
+- Document current behavior with tests
+- Refactor in small steps
+- Run tests after each change
+- Commit working state frequently
+- Update documentation
+
+## Grok Feedback Loops
+
+- Iterate regeneration: Generate via agents; validate via tools and skills; refine until 100% pass.
+- **Loop Checklist**:
+
+| Step | Action | Tool/Agent |
+|------|--------|------------|
+| Clarify | Query ambiguities | User chat |
+| Research | Best practices | Web search |
+| Generate | Code/plans | Agents |
+| Validate | Tests/metrics | code execution Toolss |
+| Refine | Regenerate failures | Loop |
+| Log | Outcomes | Beads update |
+
+- Enforcement: Block deploys on incomplete loops; quarterly review.
 
 ## Architectural Decision Records (ADR)
 
@@ -659,7 +747,7 @@ Refactoring Process:
 
 All significant architectural decisions documented in docs/adr/ following:
 
-```markdown
+~~~markdown
 # ADR-XXX: Title
 
 Status: [Proposed|Accepted|Deprecated|Superseded]
@@ -667,15 +755,15 @@ Date: YYYY-MM-DD
 Context: Why this decision is needed
 Decision: What we're doing
 Consequences: Trade-offs and impacts
-```
+~~~
 
 ### Review Triggers
 
-    Introduction of new technology/framework
-    Significant performance optimization
-    Security architecture changes
-    Integration pattern modifications
-    Breaking API changes
+- Introduction of new technology/framework
+- Significant performance optimization
+- Security architecture changes
+- Integration pattern modifications
+- Breaking API changes
 
 ## Governance
 
@@ -685,76 +773,39 @@ This constitution supersedes all other development practices and guidelines. In 
 
 ### Amendment Process
 
-    Proposed amendments require RFC (Request for Comments) document
-    Minimum 2-week discussion period with team input
-    Requires 2/3 majority approval from technical leads
-    Includes migration plan for existing code
-    Grace period of 30 days for implementation
+- Proposed amendments require RFC (Request for Comments) document
+- Minimum 2-week discussion period with team input
+- Requires 2/3 majority approval from technical leads
+- Includes migration plan for existing code
+- Grace period of 30 days for implementation
 
 ### Compliance Verification
 
-    Automated checks in CI/CD pipeline for constitutional compliance
-    Quarterly architecture review against principles
-    Exception requests require written justification and expire after 90 days
-    Non-compliance blocks production deployment
+- Automated checks in CI/CD pipeline for constitutional compliance
+- Quarterly architecture review against principles
+- Exception requests require written justification and expire after 90 days
+- Non-compliance blocks production deployment
+- Dynamic checks: Code execution Tools for tests; Web Search Tools for practices.
+- Beads Integration: Review open/blocked quarterly; non-compliance creates blockers.
 
 ### Escalation Path
 
-    Team Lead for day-to-day interpretations
-    Architecture Committee for principle clarifications
-    CTO for constitutional amendments
-    External audit annually for compliance verification
+- Team Lead for day-to-day interpretations
+- Architecture Committee for principle clarifications
+- CTO for constitutional amendments
+- External audit annually for compliance verification
 
-## Version: 2.1.0 | Ratified: 2025-01-15 | Last Amended: 2025-01-15
+## Version: 2.2.0 | Ratified: 2025-11-03 | Last Amended: 2025-11-03
 
 ### Changelog
 
-    v2.1.0: Added SOLID, DRY, KISS, YAGNI principles with enforcement rules
-    v2.0.0: Complete rewrite with TDD methodology, task tracking, and migration points
-    v1.3.0: Added mandatory task progress tracking and database migration timing
-    v1.2.0: Added precise TDD workflow with commits and test execution requirements
-    v1.1.0: Corrected TDD order following Manguinho's methodology
-    v1.0.0: Initial constitution
+- v2.2.0: Succinct SDD principles, Beads refs, Grok loops.
+- v2.1.0: Added SOLID, DRY, KISS, YAGNI principles with enforcement rules
+- v2.0.0: Complete rewrite with TDD methodology, task tracking, and migration points
+- v1.3.0: Added mandatory task progress tracking and database migration timing
+- v1.2.0: Added precise TDD workflow with commits and test execution requirements
+- v1.1.0: Corrected TDD order following Manguinho's methodology
+- v1.0.0: Initial constitution
 
-This constitution is a living document. Regular reviews ensure it evolves with our technical needs while maintaining core architectural integrity. For implementation guidance, refer to /docs/guides/constitutional-compliance.md.
+This constitution is a living document. Regular reviews ensure it evolves with our technical needs while maintaining core architectural integrity.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
-
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
-
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
-
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
-
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
-
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
-
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
-
-## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
-
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
-
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->

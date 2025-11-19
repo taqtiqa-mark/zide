@@ -77,8 +77,8 @@ layout {
                 }
                 pane split_direction="horizontal" stacked=true {
                     pane name="Git" {
-                        command "gitu"
-                        args "--keys" "?"
+                        command "bash"
+                        args "-c" "EDITOR='hx --config ~/.config/zide/config/helix/config.toml -v --log ./.zide/helix-gitu.log --working-dir ./' gitu --keys ?"
                         cwd "./" 
                         start_suspended true
                         close_on_exit false
