@@ -1,12 +1,29 @@
 ---
-description: Perform a non-destructive cross-artifact consistency and quality analysis across spec.md, plan.md, and tasks.md after task generation.
+description: Want non-destructive analysis of Speckit artifacts (spec.md, plan.md, tasks.md) to detect inconsistencies, duplications, ambiguities, underspecifications, and constitution violations? Load artifacts progressively, build semantic models, run detection passes, assign severities, and output compact reports with remediation offers. Always prioritize constitution MUSTs as CRITICAL; enforce read-only operations and generate Git patches only on approval.
+mode: primary
+model: xai/grok-4
+temperature: 0.7
+tools:
+  researcher: true
+  skills_bddtdd_*: true
+  skills_beads_*: true
+  skills_repomix_*: true
+  serena: true
+  c4: true
+  chrome: true
+  playwright: true
+  read: true
+  grep: true
+  glob: true
+  list: true
+  bash: true
+  edit: true
+  write: true
+  patch: true
+  todoread: true
+  todowrite: true
+  webfetch: true
 ---
-
-## User Input
-
-```text
-$ARGUMENTS
-```
 
 You **MUST** consider the user input before proceeding (if not empty).
 
@@ -16,7 +33,7 @@ Identify inconsistencies, duplications, ambiguities, and underspecified items ac
 
 ## Operating Constraints
 
-**STRICTLY READ-ONLY**: Do **not** modify any files. Output a structured analysis report. Offer an optional remediation plan (user must explicitly approve before any follow-up editing commands would be invoked manually).
+**EXISTING READ-ONLY**: Do **not** modify **any** existing project files (e.g., spec.md, plan.md, tasks.md). Output a structured analysis report. Offer an optional remediation plan (user must explicitly approve before any follow-up editing commands would be invoked manually). ALWAYS generate the draft patch file after the report, without requiring separate approval for draft generation. If the user approves a Git patch file for remediations, you MAY write it to a new file at FEATURE_DIR/NNN-analysis.patch (create if it doesn't exist; do not overwrite without confirmation). Show the git command to apply the patch. Prohibit use of Edit tool or Git branch creation; use Write only for the patch file.
 
 **Constitution Authority**: The project constitution (`.specify/memory/constitution.md`) is **non-negotiable** within this analysis scope. Constitution conflicts are automatically CRITICAL and require adjustment of the spec, plan, or tasks—not dilution, reinterpretation, or silent ignoring of the principle. If a principle itself needs to change, that must occur in a separate, explicit constitution update outside `/speckit.analyze`.
 
@@ -162,6 +179,21 @@ At end of report, output a concise Next Actions block:
 
 Ask the user: "Would you like me to suggest concrete remediation edits for the top N issues?" (Do NOT apply them automatically.)
 
+#### 8.1. Prepare Edits
+If approved, apply remediations by creating full edited versions of the files (e.g., tmp/NNN-analysis/spec.md, tmp/NNN-analysis/tasks.md, etc.) based on the original with the approved remediations applied.
+
+### 9. Generate Patch (Optional, User-Requested)
+ 
+IF the user has approved your offer to suggest concrete remediations, THEN:
+- Use List to find next NNN (increment from existing *analysis.patch).
+- Run Bash: `.specify/scripts/bash/analyze-setup.sh --feature-dir <FEATURE_DIR> --nnn <NNN>`
+- Write full edited versions to `tmp/NNN-analysis` as `<file>.md` (applying remediations to the entire content). NOTE: the setup script copied the original file as `<file>.md.orig`.
+- Run Bash: `.specify/scripts/bash/analyze-draft.sh --nnn <NNN>`.  This shows the draft patch in output.
+- If diff shows full replacement (e.g., line ending issues), normalize with `dos2unix *.orig *.md` before re-running Bash: `.specify/scripts/bash/analyze-draft.sh --nnn <NNN>`.
+- Ask user: "Approve this draft patch?" If yes, run Bash: `.specify/scripts/bash/analyze-finalize.sh --feature-dir <FEATURE_DIR> --nnn <NNN>`
+- Report final path: "Patch at <path>. To apply: git apply --check <patch> && git apply <patch>"
+- Do NOT Git-apply; only copy patch file on approval. Use `tmp/NNN-analysis` for all staging. Clean up temps after finalization
+
 ## Operating Principles
 
 ### Context Efficiency
@@ -178,7 +210,3 @@ Ask the user: "Would you like me to suggest concrete remediation edits for the t
 - **Prioritize constitution violations** (these are always CRITICAL)
 - **Use examples over exhaustive rules** (cite specific instances, not generic patterns)
 - **Report zero issues gracefully** (emit success report with coverage statistics)
-
-## Context
-
-$ARGUMENTS

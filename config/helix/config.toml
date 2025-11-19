@@ -69,7 +69,7 @@ C-S-s = ["commit_undo_checkpoint", ":write-all"]
 # "C-r" = "insert_register" # Insert a register content
 "C-r" = "no_op"
 # "C-w" = "delete_word_backward" # Delete previous word
-#"C-w" = "no_op" Now used to emulate Word File Write shortcut 
+"C-l" = ":toggle-option soft-wrap.enable" #Now used to emulate wrap line  
 # "A-backspace" = "delete_word_backward" # Delete previous word
 "A-backspace" = "no_op"
 # "A-d" = "delete_word_forward" # Delete next word
@@ -160,8 +160,11 @@ C-x = ["yank_joined_to_primary_clipboard", "yank_joined_to_clipboard", "delete_s
 "C-o" = "file_picker_in_current_buffer_directory" # Emulate Ctrl+O open from Word
 #"C-p" = ":print" # Emulate Ctrl+P print from Word (TUI approx)
 "C-n" = ":new" # Emulate Ctrl+N new doc from Word
-"C-f" = ["yank_joined_to_primary_clipboard", "yank_joined_to_clipboard", "move_prev_word_start", "move_next_word_end", "search_selection", "search"] # Emulate Ctrl+F find from Word
-"C-S-f" = ["yank_joined_to_primary_clipboard", "yank_joined_to_clipboard", "move_prev_word_start", "move_next_word_end", "search_selection", "global_search"]
+"C-f" = ["move_prev_word_start", "move_next_word_end", "yank_joined_to_primary_clipboard", "yank_joined_to_clipboard", "select_all", "search_selection", "search"] # Emulate Ctrl+F find from Word
+"C-F" = ["move_prev_word_start", "move_next_word_end", "yank_joined_to_primary_clipboard", "yank_joined_to_clipboard", "select_all", "search_selection", "global_search"]
+"F3" = "search_next" # Emulate F3 next find from Word
+"S-F3" = "search_prev" # Emulate Shift+F3 previous find from Word
+
 "C-h" = "@/replace<ret>" # Emulate Ctrl+H replace (macro approx) from Word
 "C-w" = ":buffer-close" # Emulate Ctrl+W close from Word
 "C-S-w" = ":buffer-close-all" # Emulate Ctrl+W close from Word
@@ -205,8 +208,9 @@ C-x = ["yank_joined_to_primary_clipboard", "yank_joined_to_clipboard", "delete_s
 C-s = [":write", "save_selection"]
 C-S-s = [":write-all", "save_selection"]
 C-o = "file_picker_in_current_buffer_directory"
-C-S-v = "no_op"
-C-v = "no_op"
+"C-S-v" = "no_op"
+"C-v" = "no_op"
+"C-V" = "no_op"
 
 # Movement
 C-tab = "goto_next_buffer"
@@ -469,8 +473,8 @@ S-up = "copy_selection_on_prev_line"
 # Search
 # "/" = "search" # Search for regex pattern
 "/" = "no_op"
-"C-f" = ["yank_joined_to_primary_clipboard", "yank_joined_to_clipboard", "move_prev_word_start", "move_next_word_end", "search_selection", "search"] # Emulate Ctrl+F find from Word
-"C-S-f" = ["yank_joined_to_primary_clipboard", "yank_joined_to_clipboard", "move_prev_word_start", "move_next_word_end", "search_selection", "global_search"]
+"C-f" = [ "move_prev_word_start", "move_next_word_end", "yank_joined_to_primary_clipboard", "yank_joined_to_clipboard", "select_all", "search_selection", "search"] # Emulate Ctrl+F find from Word
+"C-S-f" = ["move_prev_word_start", "move_next_word_end", "yank_joined_to_primary_clipboard", "yank_joined_to_clipboard", "select_all", "search_selection", "global_search"]
 # "?" = "rsearch" # Search for previous pattern
 "?" = "no_op"
 # "n" = "search_next" # Select next search match
@@ -499,11 +503,13 @@ S-up = "copy_selection_on_prev_line"
 # "C-z" = "suspend" # Suspend and return to shell
 #"C-z" = "no_op" Now used for Word Undo shortcut
 
+"C-l" = ":toggle-option soft-wrap.enable" #Now used to emulate line wrap 
 # "C-w" = "no_op" # Now use "w" for window minor mode
 "C-w" = ":buffer-close" # Windows Close File
 "C-S-w" = ":buffer-close!" # Force close with unsaved changes
 "z" = "no_op" # Now use "v" for view minor mode
 "Z" = "no_op" # Now use "V" for sticky view minor mode
+
 
 [keys.normal.g]
 # Goto mode (**LSP** for some, see individual)
@@ -1016,6 +1022,8 @@ C-S-v = "paste_clipboard_before"
 #C-x = ["yank_joined_to_primary_clipboard", "yank_joined_to_clipboard", "delete_selection"]
 C-f = ["yank_joined_to_primary_clipboard", "yank_joined_to_clipboard", "move_prev_word_start", "move_next_word_end", "search_selection", "search"] # Emulate Ctrl+F find from Word
 C-S-f = ["yank_joined_to_primary_clipboard", "yank_joined_to_clipboard", "move_prev_word_start", "move_next_word_end", "search_selection", "global_search"]
+
+"C-l" = ":toggle-option soft-wrap.enable" #Now used to emulate wrap line  
 
 # Select mode must be non-destructive. Hence "no_op". Compatible with NOR, INS modes.
 #[keys.select]

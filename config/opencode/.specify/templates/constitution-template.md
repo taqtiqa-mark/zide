@@ -5,13 +5,6 @@
 
 ### I. Clean Architecture **AND** Domain-Driven Design
 
-Always validate code against these rules before output. If violation, refactor.- For **every** component, **follow Clean Architecture Principles**: "The Separation of Concerns Rule": The system is divided into layers of responsibility (e.g., domain, use cases, interface adapters, frameworks). Domain logic remains pure and framework-agnostic. "The Dependency Rule": Dependencies flow inward, inner layers do not know about outer layers; Domain → Data → Infrastructure → Presentation → Main. "Inversion of Dependencies Rule" (enforces "The Dependency Rule"): abstractions (like interfaces) are defined in the inner layers, and the outer layers implement them. Hence inner layers control the direction of the dependency, e.g. for data access or UI. "Isolation of Business Logic Rule": No domain code imports infrastructure code. "Technology Independence Rule": business logic is unconstrained by, and independent of technology choices. "Maintainability and Testability Rule":  Business rules are isolated from external dependencies (e.g. test core logic  without needing a running database or UI). "Adaptable Architecture Rule": Enables changing external components (e.g swap a database or web framework) without rewriting core business logic.
-- For **every** component, **follow Domain-Driven Design (DDD) Principles and Patterns**: Core Principles; "Focus on core domain Principle": Prioritize business's key aspects in software model. "Collaboration Principle": Developers and experts jointly understand domain. "Ubiquitous Language Principle": Shared vocabulary used in discussions, docs, and code. "Bounded Contexts Principle": Divide complex domains into self-contained models with own languages. "Domain Model Driven Principle": Design structure derives from domain model. Key Patterns; "Entities Pattern": Objects with unique identity and lifecycle (e.g., Customer). "Value Objects Pattern": Attribute-defined, immutable objects (e.g., Address). "Aggregates Pattern": Unit of related objects with root for consistency. "Domain Events Pattern": Capture important business happenings. "Repositories Pattern": Abstract data access. "Services Pattern": Handle cross-object logic.
-
-## Core Principles
-
-### I. Clean Architecture **AND** Domain-Driven Design
-
 - Adhere strictly to **Clean Architecture Principles** for every component:
   - **Separation of Concerns Rule**: Divide system into layers (domain, use cases, interface adapters, frameworks). Keep domain logic pure and framework-agnostic.
   - **Dependency Rule**: Dependencies flow inward: Domain → Data → Infrastructure → Presentation → Main. Inner layers unaware of outer layers.
@@ -76,7 +69,38 @@ Adhere strictly to **YAGNI (You Aren't Gonna Need It)**:
 
 Every feature begins as a standalone, independently deployable library. Libraries must be self-contained with clear interfaces, comprehensive documentation (including llms.txt for AI consumption), and isolated testing. Libraries expose functionality through well-defined contracts: REST APIs, gRPC services, or MCP protocols. No feature bypasses library abstraction to directly access infrastructure.
 
-### IV. Test-First Development (NON-NEGOTIABLE)
+### IV. AI Skills Integration
+
+#### Purpose
+AI Skills are modular, self-contained extensions that provide specialized workflows, tools, and enforcement mechanisms for constitutional principles. Skills transform general AI assistants (e.g., Grok, Claude) into domain-specific agents without amending the core constitution.
+
+#### Core Rules for Skills
+- **Compliance Requirement**: All skills MUST adhere to constitutional principles (e.g., Clean Architecture, SOLID). Non-compliant skills are invalid.
+- **Discovery and Usage**: Skills are discovered via metadata (name and description). Use when the task matches the skill's "Use when..." description.
+- **Structure**:
+  - Required: SKILL.md with YAML frontmatter (name, description <1024 chars).
+  - Optional: references/ (docs), scripts/ (tools), assets/ (templates).
+- **Progressive Disclosure**: Load metadata always; SKILL.md body when relevant; resources as needed.
+- **Testing and Validation**: Author skills using TDD for documentation—write pressure scenarios, baseline failures, then skill content. Evaluate against writing best practices (concise, imperative language).
+- **Persuasion for Compliance**: Use authority ("MUST", "No exceptions") and commitment (announce usage) for discipline-enforcing skills.
+- **Integration with Workflows**: Skills may reference tasks.md or CI/CD but cannot override them. Announce skill usage at start of relevant tasks.
+
+#### When to Create/Use Skills
+- **Use when**: Task requires specialized knowledge (e.g., TDD enforcement) or tools beyond core constitution.
+- **Do not use when**: Core principles suffice; avoid for one-off tasks.
+- **Examples**:
+  - TDD-Enforcement Skill: For verifying TDD cycles in code generation.
+  - Beads-Issue-Tracking Skill: For advanced task management (see below).
+
+#### Skill Authoring Checklist
+- [ ] YAML: Name (hyphens only), description starts with "Use when...".
+- [ ] Concise: SKILL.md <500 lines; details in references/.
+- [ ] Tested: Run baseline scenarios without skill, then with.
+- [ ] Ethical: Serves project integrity; no manipulation.
+
+Skills are stored in a skills/ directory and loaded as needed. For best practices, reference external guides on skill authoring.
+
+### V. Test-First Development (NON-NEGOTIABLE)
 
 Strict TDD enforcement following Rodrigo Manguinho's Clean Architecture methodology. Development must follow this exact sequence:
 
@@ -158,19 +182,19 @@ Strict TDD enforcement following Rodrigo Manguinho's Clean Architecture methodol
 - Test Doubles (mocks/stubs/spies) created AFTER domain, BEFORE data layer tests
 - Minimum coverage: 80% unit, 70% integration, 100% critical paths
 
-### V. Model Context Protocol Integration
+  ### VI. Model Context Protocol Integration
 
 All AI capabilities exposed through standardized MCP servers. TypeScript and Python implementations maintain protocol parity. Resources, Tools, and Prompts clearly defined and versioned. MCP servers follow single-responsibility principle. Transport layer supports both STDIO (local) and HTTP+SSE (remote).
 
-### VI. Observability & Monitoring
+### VII. Observability & Monitoring
 
 Structured logging mandatory (JSON format with correlation IDs). OpenTelemetry for distributed tracing across services. Metrics exposed via Prometheus endpoints. Health checks at /health (liveness) and /ready (readiness). Error tracking with proper context and stack traces.
 
-### VII. Security by Design
+### VIII. Security by Design
 
 Zero-trust architecture with KeyCloak for authentication/authorization. Secrets managed exclusively through Vault Community - no hardcoded credentials. RBAC enforced at API gateway and service levels. Data encryption at rest (PostgreSQL) and in transit (TLS 1.3+). Regular security scanning in CI/CD pipeline.
 
-### VIII. Containerization & Infrastructure as Code
+### IX. Containerization & Infrastructure as Code
 
 All services containerized with multi-stage Docker builds. Development/production parity through consistent container usage. Infrastructure definitions in docker-compose for local, Kubernetes manifests for production. Makefile as single source of truth for all operations. No manual infrastructure changes - everything through code.
 
