@@ -2,6 +2,26 @@
 
 This document customizes the general AGENTS.md for the project, ensuring strict adherence to constitution.md. It emphasizes SDD integration, error-free assurance, and traceability via Agents, Sub-agents, Tools, and Skills. All usage MUST align with Core Principles (e.g., Agent Integration Mandate, Tool-Enhanced Workflows Rule). Agents here map to the numbered commands (000-700) and enforce the project's constitution.md (e.g., SDD principles, Clean Architecture, TDD). All agents reference constitution.md dynamically and integrate with the workflow (mermaid graph). Project-specific skills are in `.opencode/skills/` (e.g., spec-driven skills like ISSUE_CREATION.md).
 
+## Mandatory File-Editing Policy (Project-Wide – Non-Negotiable)
+
+**All subagents and Skills in this project are strictly forbidden from using the `Edit` or `Write` tools directly.**
+
+The **only** permitted way to modify, create, or delete any file is by delegating to the **`skills_edit` Skill**.
+
+This rule is enforced technically and by policy:
+
+1. Technical enforcement  
+   `Edit` and `Write` have been removed from `allowed-tools` (or the legacy `tools:` field) in every subagent and Skill except `skills_edit` itself. Any attempt to use them elsewhere will fail at runtime.
+
+2. Policy enforcement  
+   - Never use `Edit` or `Write` directly, even if they temporarily appear available.  
+   - Always delegate file changes to the `skills_edit` Skill (apply mode by default, or generate-patch-only when review is required).  
+   - The `skills_edit` Skill is automatically invoked by its strong description triggers, but you may explicitly request it if needed.
+
+Violation of this policy constitutes a critical error and will be treated as a bug.
+
+Rationale: Direct tool use has repeatedly caused hallucinations, untraceable changes, line-ending corruption, multi-match failures, and lost edits. `skills_edit` eliminates these issues with temporary project-local workspaces, automatic CRLF/\\n fixes, mandatory patch validation, and persistent on-disk patch files placed next to the target file.
+
 ## Project-Specific Adaptations
 - **Constitution Integration**: Agents MUST invoke Constitution Enforcer Agent before/after key actions. Reference Core Principles (e.g., Bidirectional Feedback Rule for loops). Enforce Clean Architecture, DDD, SOLID/DRY/KISS/YAGNI via phased gates (e.g., Domain Sub-agents handle Entities/Aggregates before outer layers).
 - **Workflow Enforcement**: At "Satisfied?" gates, use Workflow Manager Agent to prompt users and loop (e.g., back to 150-clarify.md if spec unclear).
