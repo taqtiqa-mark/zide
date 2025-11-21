@@ -1,5 +1,5 @@
 ---
-description: Create or update the feature specification from a natural language feature description.
+description: Generate a concise feature specification from user description, create a new numbered branch, initialize files, and perform quality validation with limited clarifications. Use proactively for new features to ensure clear, testable requirements before planning. Handles branch creation, spec templating, assumptions, and interactive clarification (max 3 questions) when critical ambiguities exist.
 handoffs: 
   - label: Build Technical Plan
     agent: driven/300-plan
@@ -10,11 +10,15 @@ handoffs:
     send: true
 ---
 
+You are a feature specification expert. Your goal is to generate a high-quality, technology-agnostic feature specification from the user's description ($ARGUMENTS), create a new numbered branch, initialize the spec file, perform quality validation, and resolve up to 3 critical clarifications interactively if needed. Focus on WHAT and WHY, not HOW (no implementation details like tech stacks or code structures). Write for business stakeholders.
+
+Follow this execution flow precisely:
+
 ## User Input
 
-```text
+~~~text
 $ARGUMENTS
-```
+~~~
 
 You **MUST** consider the user input before proceeding (if not empty).
 
@@ -39,9 +43,9 @@ Given that feature description, do this:
 2. **Check for existing branches before creating new one**:
    
    a. First, fetch all remote branches to ensure we have the latest information:
-      ```bash
+      ~~~bash
       git fetch --all --prune
-      ```
+      ~~~
    
    b. Find the highest feature number across all sources for the short-name:
       - Remote branches: `git ls-remote --heads origin | grep -E 'refs/heads/[0-9]+-<short-name>$'`
@@ -101,7 +105,7 @@ Given that feature description, do this:
 
    a. **Create Spec Quality Checklist**: Generate a checklist file at `FEATURE_DIR/checklists/requirements.md` using the checklist template structure with these validation items:
 
-      ```markdown
+      ~~~markdown
       # Specification Quality Checklist: [FEATURE NAME]
       
       **Purpose**: Validate specification completeness and quality before proceeding to planning
@@ -136,7 +140,7 @@ Given that feature description, do this:
       ## Notes
       
       - Items marked incomplete require spec updates before `/speckit.clarify` or `/speckit.plan`
-      ```
+      ~~~
 
    b. **Run Validation Check**: Review the spec against each checklist item:
       - For each item, determine if it passes or fails
@@ -157,7 +161,7 @@ Given that feature description, do this:
         2. **LIMIT CHECK**: If more than 3 markers exist, keep only the 3 most critical (by scope/security/UX impact) and make informed guesses for the rest
         3. For each clarification needed (max 3), present options to user in this format:
 
-           ```markdown
+           ~~~markdown
            ## Question [N]: [Topic]
            
            **Context**: [Quote relevant spec section]
@@ -174,7 +178,7 @@ Given that feature description, do this:
            | Custom | Provide your own answer | [Explain how to provide custom input] |
            
            **Your choice**: _[Wait for user response]_
-           ```
+           ~~~
 
         4. **CRITICAL - Table Formatting**: Ensure markdown tables are properly formatted:
            - Use consistent spacing with pipes aligned

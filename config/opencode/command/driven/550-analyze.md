@@ -1,5 +1,6 @@
 ---
-description: Perform a non-destructive cross-artifact consistency and quality analysis across spec.md, plan.md, and tasks.md after task generation.
+description: Run full consistency/quality analysis of spec.md, plan.md, tasks.md + constitution. Always produces report + draft remediation patch. Final .patch only on explicit approval. Use immediately after tasks are generated.
+
 subtask: false
 agent: driven/analyze
 handoffs: 
@@ -12,8 +13,5 @@ handoffs:
     prompt: Start implementing the specified feature
 ---
 
-@driven/analyze Perform a non-destructive analysis of the Speckit artifacts: `spec.md`, `plan.md`, `tasks.md`. Follow execution steps, and NEVER Git branch NOR Git apply. Use scripts (e.g. analyze-draft.sh, etc.) as directed after report generation. Include manual Git apply instructions in the final response. Enforce read-only: No edits, branches, or applications—patch file only.
-User Input Context:
-```text
-$ARGUMENTS
-```
+Use the driven/analyze subagent with arguments: $ARGUMENTS
+
