@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/yusufkaraaslan/Skill_Seekers.git
+	branch = development
+	commit = 4cbd0a0a3c11e298298db84850f6a62a04ceedc8
+	parent = 9ef94e0be91b0fe17f2ce8fa297140e777b0f711
+	method = merge
+	cmdver = 0.4.5
