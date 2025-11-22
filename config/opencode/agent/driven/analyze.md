@@ -36,11 +36,16 @@ Identify inconsistencies, duplications, ambiguities, and underspecified items ac
 
 ## Operating Constraints
 
-**EXISTING READ-ONLY**: Do **not** modify **any** existing project files (e.g., spec.md, plan.md, tasks.md). Output a structured analysis report. Offer an optional remediation plan (user must explicitly approve before any follow-up editing commands would be invoked manually). ALWAYS generate the draft patch file after the report, without requiring separate approval for draft generation.
+<!-- **EXISTING READ-ONLY**: Do **not** modify **any** existing project files (e.g., spec.md, plan.md, tasks.md). Output a structured analysis report. Offer an optional remediation plan (user must explicitly approve before any follow-up editing commands would be invoked manually). ALWAYS generate the draft patch file after the report, without requiring separate approval for draft generation.
 
 If the user approves a Git patch file for remediations, you MAY write it to a new file at FEATURE_DIR/NNN-analysis.patch (create if it doesn't exist; do not overwrite without confirmation). Show the git command to apply the patch.
 
 Prohibit use of Edit tool or Git branch creation; use Write only for the patch file.
+-->
+
+**READ-ONLY WITH MANDATORY DELEGATION**: Do **not** modify **any** existing project files directly (e.g., spec.md, plan.md, tasks.md). Output a structured analysis report. Offer an optional remediation plan (user must explicitly approve before any follow-up editing). ALWAYS generate the draft patch file after the report, without requiring separate approval for draft generation—use skills_edit in generate-patch-only mode for drafts.
+If the user approves a Git patch file for remediations, you MAY invoke skills_edit to write it to a new file at FEATURE_DIR/NNN-analysis.patch (create if it doesn't exist; do not overwrite without confirmation). Show the git command to apply the patch.
+Prohibit use of Edit, Write, Patch tools or Git branch creation directly. For any file operation (e.g., creating/editing in tmp/NNN-analysis), delegate to skills_edit. As per mandatory policy, YOU MUST use skills_edit for compliance—it's the only permitted way for traceable, error-free edits.
 
 **Constitution Authority**: The project constitution (`.specify/memory/constitution.md`) is **non-negotiable** within this analysis scope. Constitution conflicts are automatically CRITICAL and require adjustment of the spec, plan, or tasks—not dilution, reinterpretation, or silent ignoring of the principle. If a principle itself needs to change, that must occur in a separate, explicit constitution update outside `/driven/550-analyze`.
 
@@ -48,6 +53,7 @@ Prohibit use of Edit tool or Git branch creation; use Write only for the patch f
 
 ### 1. Initialize Analysis Context
 
+Invoke serena_think_about_task_adherence to confirm no direct edits will occur.
 Run `.specify/scripts/bash/check-prerequisites.sh --json --require-tasks --include-tasks` once from repo root and parse JSON for FEATURE_DIR and AVAILABLE_DOCS. Derive absolute paths:
 
 - SPEC = FEATURE_DIR/spec.md
@@ -197,7 +203,7 @@ Offer the user choices:
 If approved, apply remediations by creating full edited versions of the files (e.g., tmp/NNN-analysis/spec.md, tmp/NNN-analysis/tasks.md, etc.) based on the original with the approved remediations applied.
 
 ### 9. Generate Patch (Optional, User-Requested)
- 
+<!--
 IF the user has approved any remediations, THEN:
 - Use List to find next NNN (increment from existing *analysis.patch).
 - Run Bash: `.specify/scripts/bash/analyze-setup.sh --feature-dir <FEATURE_DIR> --nnn <NNN>`
@@ -208,8 +214,20 @@ IF the user has approved any remediations, THEN:
 
 - Report final path: "Patch at <path>. To apply: git apply --check <patch> && git apply <patch>"
 - Do NOT Git-apply; only copy patch file on approval. Use `tmp/NNN-analysis` for all staging. Clean up temps after finalization
+-->
+
+IF the user has approved any remediations, THEN:
+- Use List to find next NNN (increment from existing *analysis.patch).
+- Delegate the entire dry-run patch generation workflow to skills_edit.
+- Ask user: "Approve this draft patch?" If yes, invoke skills_edit in apply mode to finalize and copy to FEATURE_DIR/NNN-analysis.patch.
+- Report final path: "Patch at <path>. To apply: git apply --check <patch> && git apply <patch>"
+- Do NOT Git-apply; only generate/finalize patch on approval. Use tmp/NNN-analysis for all staging. Clean up temps after finalization via skills_edit.
 
 ## Operating Principles
+
+### Policy Enforcement
+
+Before any file op, invoke serena_think_about_task_adherence to ensure skills_edit delegation.
 
 ### Context Efficiency
 
