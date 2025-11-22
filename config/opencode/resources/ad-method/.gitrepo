@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/ayoubben18/ab-method.git
+	branch = main
+	commit = aa1327bd59f2399ad4f1e3bd5be5b756a79c5530
+	parent = 828b9c0ca54e1b242a095d787769e06c4478959a
+	method = merge
+	cmdver = 0.4.5
