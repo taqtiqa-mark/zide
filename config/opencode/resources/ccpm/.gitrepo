@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/automazeio/ccpm.git
+	branch = main
+	commit = 3c8e0e7f673c62ac162bb1ce81c19207c440b7f2
+	parent = 374f23f11a48edfffce04eef834dc65c29ce59c4
+	method = merge
+	cmdver = 0.4.5
