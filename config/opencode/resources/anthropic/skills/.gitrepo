@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/anthropics/skills.git
+	branch = main
+	commit = 0f77e501e6506235956d953cd2d7a2a4aa9ba133
+	parent = 9492ca6b6686ea0f23a8d5d41e6a1f1057024399
+	method = merge
+	cmdver = 0.4.5
