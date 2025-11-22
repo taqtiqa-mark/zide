@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/OneRedOak/claude-code-workflows.git
+	branch = main
+	commit = 6a653445125da828f31af473fcdd3cf29f99be82
+	parent = e688765e7bdb6f3d9d73180c37cdc3d4e15fa588
+	method = merge
+	cmdver = 0.4.5
