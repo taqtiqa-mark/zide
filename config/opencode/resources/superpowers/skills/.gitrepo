@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/obra/superpowers.git
+	branch = main
+	commit = 84283dfc058f61b8985e07d20eb6838a6e7388fe
+	parent = 087ec2edc99d41226271c692764e3a10f0ce8159
+	method = merge
+	cmdver = 0.4.5
