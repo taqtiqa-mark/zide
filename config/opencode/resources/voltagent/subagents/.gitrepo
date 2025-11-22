@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/VoltAgent/awesome-claude-code-subagents.git
+	branch = main
+	commit = 0ad4baf67f3bb91b49c9c859f5959f684820558a
+	parent = ac211609c6ecfc01420cd3de144df8098b87d4e1
+	method = merge
+	cmdver = 0.4.5
