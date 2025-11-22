@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/wshobson/agents.git
+	branch = main
+	commit = ddbd034ca35c6e76af6e54891d83a646e7837b1c
+	parent = c68def444764a7d4095cda7a40c315ab581f60d1
+	method = merge
+	cmdver = 0.4.5
