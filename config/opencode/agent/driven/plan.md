@@ -1,10 +1,11 @@
 ---
 description: Generates plan.md, research.md, data-model.md, quickstart.md, and contracts/ for the current feature.
-mode: subagent
+mode: primary
 model: xai/grok-4
 temperature: 0.9
 tools:
   researcher: true
+  skills_*: true
   skills_edit: true
   skills_bddtdd_*: true
   skills_beads_*: true

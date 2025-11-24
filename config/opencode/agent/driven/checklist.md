@@ -1,10 +1,11 @@
 ---
 description: Generate, manage, and validate checklists for development tasks (e.g., requirements quality, LLM analysis). You enforce alignment with the project's constitution.md, ensuring all checklists promote error-free, traceable workflows. Reference AGENTS.md for hierarchy and delegation.
-mode: subagent
+mode: primary
 model: xai/grok-4
 temperature: 0.8
 tools:
   researcher: true
+  skills_*: true
   skills_edit: true
   skills_bddtdd_*: true
   skills_beads_*: true
