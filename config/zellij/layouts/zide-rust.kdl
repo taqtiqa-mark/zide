@@ -56,16 +56,7 @@ layout {
                         focus true 
                         expanded true
                     }
-                    pane name="Aider Watch" {
-                        command "./aider"
-                        args "--watch-files" "\\" "./"
-                        cwd "./"
-                        start_suspended true 
-                        close_on_exit false 
-                        focus false 
-                        size "10%"
-                    }
-                    pane name="OpenCode" {
+                     pane name="OpenCode" {
                         command "bash"
                         args "-c" "mkdir -p ~/.config/zide/share/opencode/${ZELLIJ_SESSION_NAME}; SHARE=~/.config/zide/share/opencode/${ZELLIJ_SESSION_NAME} OPENCODE_CONFIG=~/.config/zide/config/opencode/0000-explore/opencode.jsonc EDITOR='hx --config ~/.config/zide/config/helix/config.toml -v --log ./.zide/helix-opencode-explore.log --working-dir ./' ./opencode"
                         cwd "./" 
@@ -73,26 +64,6 @@ layout {
                         close_on_exit false
                         focus false
                         size "20%"
-                    }
-                }
-                pane split_direction="horizontal" stacked=true {
-                    pane name="Git" {
-                        command "bash"
-                        args "-c" "EDITOR='hx --config ~/.config/zide/config/helix/config.toml -v --log ./.zide/helix-gitu.log --working-dir ./' gitu --keys ?"
-                        cwd "./" 
-                        start_suspended true
-                        close_on_exit false
-                        focus false
-                        size "10%"
-                    }
-                    pane name="Helix" {
-                        command "bash" 
-                        args "-c" "hx --config ~/.config/zide/config/helix/config.toml -v --log ./.zide/helix-ai.log --working-dir ./" 
-                        cwd "./"
-                        start_suspended false
-                        close_on_exit false 
-                        focus true 
-                        expanded true
                     }
                     pane name="Aider Chat" {
                         command "./aider"
@@ -102,6 +73,27 @@ layout {
                         close_on_exit false
                         focus false
                     }
+                }
+                pane split_direction="horizontal" stacked=true {
+                     pane name="Files" {
+                        // Currently do not support sending CWD to plugins.
+                        command "bash"
+                        args "-c" "exec \"~/.config/zide/bin/zide-pick\" \"./\""
+                        cwd "./" 
+                        start_suspended true
+                        focus false
+                        size "15%"
+                        close_on_exit false
+                    }
+                     pane name="Helix" {
+                        command "bash" 
+                        args "-c" "hx --config ~/.config/zide/config/helix/config.toml -v --log ./.zide/helix-ai.log --working-dir ./" 
+                        cwd "./"
+                        start_suspended false
+                        close_on_exit false 
+                        focus true 
+                        expanded true
+                    }
                     pane name="OpenCode" {
                         command "bash"
                         args "-c" "mkdir -p ~/.config/zide/share/opencode/${ZELLIJ_SESSION_NAME}; SHARE=~/.config/zide/share/opencode/${ZELLIJ_SESSION_NAME} OPENCODE_CONFIG=~/.config/zide/config/opencode/0000-explore/opencode.jsonc EDITOR='hx --config ~/.config/zide/config/helix/config.toml -v --log ./.zide/helix-opencode-explore.log --working-dir ./' ./opencode"
@@ -110,6 +102,15 @@ layout {
                         close_on_exit false
                         focus false
                         size "20%"
+                    }
+                    pane name="Git" {
+                        command "bash"
+                        args "-c" "EDITOR='hx --config ~/.config/zide/config/helix/config.toml -v --log ./.zide/helix-gitu.log --working-dir ./' gitu --keys ?"
+                        cwd "./" 
+                        start_suspended true
+                        close_on_exit false
+                        focus false
+                        size "10%"
                     }
                 }
             }

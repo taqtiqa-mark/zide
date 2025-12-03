@@ -1,7 +1,9 @@
 ---
-allowed-tools: Bash(git:*), Read, Edit
-argument-hint: [--no-delete] [--no-tag]
-description: Complete and merge current Git Flow branch (feature/release/hotfix) with proper cleanup and tagging
+description: --no-delete --no-tag. Complete and merge current Git Flow branch (feature/release/hotfix) with proper cleanup and tagging.
+tools:
+  bash: allow
+  read: allow
+  edit: allow
 ---
 
 # Git Flow Finish Branch

@@ -1,7 +1,13 @@
 ---
-allowed-tools: Bash(git add:*), Bash(git status:*), Bash(git commit:*), Bash(git diff:*), Bash(git log:*)
-argument-hint: [message] | --no-verify | --amend
-description: Create well-formatted commits with conventional commit format and emoji
+tools:
+  bash:
+    "git add*": allow
+    "git status*": allow
+    "git commit*": allow
+    "git diff*": allow
+    "git log*": allow
+    "*": ask
+description: message | --no-verify | --amend Create well-formatted commits with conventional commit format and emoji
 ---
 
 # Smart Git Commit

@@ -1,7 +1,17 @@
 ---
-allowed-tools: Bash(git bisect:*), Bash(git log:*), Bash(git show:*), Bash(git checkout:*), Bash(npm:*), Bash(yarn:*), Bash(pnpm:*), Read, Edit, Grep
-argument-hint: [good-commit] [bad-commit] | --auto [test-command] | --reset | --continue
-description: Use PROACTIVELY to guide automated git bisect sessions for finding regression commits with smart test execution
+tools:
+  bash:
+    "git bisect*": allow
+    "git log*": allow
+    "git show*": allow
+    "git checkout*": allow
+    "npm*": allow
+    "yarn*": allow
+    "pnpm*": allow
+  read: allow
+  edit: allow
+  grep: allow
+description: good-commit bad-commit | --auto test-command | --reset | --continue. Use PROACTIVELY to guide automated git bisect sessions for finding regression commits with smart test execution
 ---
 
 # Git Bisect Helper & Automation

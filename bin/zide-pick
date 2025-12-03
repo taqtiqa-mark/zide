@@ -17,6 +17,9 @@ input_dir="${1:-${HOME}}"
 chooser_file=$(mktemp /tmp/yazi-chooser.XXXXXX) || { echo "Error: Failed to create temp chooser file." >&2; exit 1; }
 cwd_file=$(mktemp /tmp/yazi-cwd.XXXXXX) || { echo "Error: Failed to create temp cwd file." >&2; exit 1; }
 
+# Deceive Yazi into thinking you're running in kitty,
+# forcing it fallback to Überzug++ or Chafa
+export TERM=xterm-kitty
 # Run Yazi, capturing selected paths and final CWD separately.
 yazi "$input_dir" --chooser-file="$chooser_file" --cwd-file="$cwd_file"
 yazi_exit_code=$?

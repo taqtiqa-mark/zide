@@ -1,6 +1,8 @@
 // If you'd like to override the default keybindings completely, be sure to change "keybinds" to "keybinds clear-defaults=true"
 keybinds clear-defaults=true {
     unbind "Ctrl Shift f"
+    unbind "Shift Enter"
+    unbind "Shift Return"
     // Normal mode: Unbind keys that could allow unlocking or manipulation.
     normal {
         // uncomment this and adjust key if using copy_on_select=false

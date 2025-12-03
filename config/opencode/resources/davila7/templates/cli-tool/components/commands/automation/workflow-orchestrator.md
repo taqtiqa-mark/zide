@@ -1,7 +1,10 @@
 ---
-allowed-tools: Read, Write, Edit, Bash
-argument-hint: [workflow-name] | create | run | schedule | monitor
-description: Orchestrate complex automation workflows with task dependencies, scheduling, and cross-platform execution
+tools:
+  read: allow
+  write: allow
+  edit: allow
+  bash : allow
+description: workflow-name | create | run | schedule | monitor. Orchestrate complex automation workflows with task dependencies, scheduling, and cross-platform execution
 ---
 
 # Workflow Orchestrator

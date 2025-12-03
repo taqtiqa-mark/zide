@@ -1,7 +1,14 @@
 ---
-allowed-tools: Bash(git branch:*), Bash(git checkout:*), Bash(git push:*), Bash(git merge:*), Bash(gh:*), Read, Grep
-argument-hint: [--dry-run] | [--force] | [--remote-only] | [--local-only]
-description: Use PROACTIVELY to clean up merged branches, stale remotes, and organize branch structure
+tools:
+  bash:
+    "git branch*": allow
+    "git checkout*": allow
+    "git push*": allow
+    "git merge*": allow
+    "gh*": allow
+  read: allow
+  grep: allow
+description: --dry-run | --force | --remote-only | --local-only. Use PROACTIVELY to clean up merged branches, stale remotes, and organize branch structure
 ---
 
 # Git Branch Cleanup & Organization

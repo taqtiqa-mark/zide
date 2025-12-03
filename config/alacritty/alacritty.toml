@@ -334,14 +334,17 @@ alphabet = "jfkdls;ahgurieowpq"  # Default: "jfkdls;ahgurieowpq"
 # \x1btion = "..06mand =action = "ReceiveChariey = "...", mods = "...", mode ="...", enabled = t06 KEYBOARD section of Aaction = "ReceiveChari
 
 [keyboard]
-kitty_keyboard=true
+#kitty_keyboard=true
 # Defidings here
 # Example placeholder (actual bindings need to be defined based on user preference)
 bindings = [
     # { key = "Key", mods = "Modifiers", action = "Action" },
     # { key = "Key", mods = "Modifiers", chars = "Characters to send" },
     # ...
-    { key = "F",      mods = "Control|Shift", chars = "\u001b[70;5;2u"}
+    { key = "F",      mods = "Control|Shift", chars = "\u001b[70;5;2u"},
+    #{ key = "Enter", mods = "Shift", chars = "\n" },
+    #{ key = "Return", mods = "Shift", chars = "\r" }
+    
 ]
 # Key
 # enhanced=truebbindings are specified as a list of objects. For Zexample, this is the

@@ -4,6 +4,7 @@ mode: primary
 model: xai/grok-4
 temperature: 0.9
 tools:
+  skills_*: true
   skills_bddtdd_*: true
   skills_beads_*: true
   skills_repomix_*: true
