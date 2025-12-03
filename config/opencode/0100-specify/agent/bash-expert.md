@@ -1,0 +1,1 @@
+../../resources/0xfurai/subagents/agents/bash-expert.md

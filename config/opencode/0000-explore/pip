@@ -1,0 +1,82 @@
+#!/bin/bash
+
+# Define variables
+PYTHON_IMAGE="localhost/python-runner:latest"
+HUID=$(id -u)
+HGID=$(id -g)
+CUID=$(podman run --rm $PYTHON_IMAGE id -u)
+CGID=$(podman run --rm $PYTHON_IMAGE id -g)
+
+# Error handling
+set -e
+
+# Function to display error messages
+error_exit() {
+    echo "Error: $1" >&2
+    exit 1
+}
+
+# Check if the container image exists
+if ! podman image exists "$PYTHON_IMAGE"; then
+    error_exit "Python container image not found. Please run the installation script again."
+fi
+
+# Create required directories if they don't exist
+mkdir -p "$PWD/.python_cache"
+mkdir -p "$PWD/.python_venv"
+mkdir -p "$PWD/.python_local"
+
+# Check if stdin is a TTY and set flags accordingly
+TTY_FLAG=""
+if [ -t 0 ] && [ -t 1 ]; then
+    TTY_FLAG="-it"
+else
+    TTY_FLAG="-i"
+fi
+
+# Detect if jupyter is being used with notebook/lab
+PORT_FLAG=""
+if [[ "pip" == "jupyter" && ("$*" == *"notebook"* || "$*" == *"lab"*) ]]; then
+    PORT_FLAG="-p 8888:8888"
+fi
+
+# Prepare volume mounts
+declare -a MOUNTS
+MOUNTS+=("-v" "$PWD:/scripts:Z")
+MOUNTS+=("-v" "$PWD/.python_cache:/home/python/.cache:Z")
+MOUNTS+=("-v" "$PWD/.python_venv:/home/python/.venv:Z")
+MOUNTS+=("-v" "$PWD/.python_local:/home/python/.local:Z")
+
+# Add requirements.txt if it exists
+if [ -f "$PWD/requirements.txt" ]; then
+    MOUNTS+=("-v" "$PWD/requirements.txt:/workspace/requirements.txt:ro,Z")
+fi
+
+# Prepare env file flag
+ENV_FILE_FLAG=""
+if [ -f "$PWD/.env" ]; then
+  ENV_FILE_FLAG="--env-file=$PWD/.env"
+fi
+
+# Prepare flags array
+declare -a FLAGS
+if [ -n "$ENV_FILE_FLAG" ]; then
+  FLAGS+=("$ENV_FILE_FLAG")
+fi
+FLAGS+=("$TTY_FLAG")
+if [ -n "$PORT_FLAG" ]; then
+  FLAGS+=("$PORT_FLAG")
+fi
+
+# Execute pip command in container
+podman run --rm "${FLAGS[@]}" \
+    --uidmap +${CUID}:@${HUID}:1 \
+    --gidmap +${CGID}:@${HGID}:1 \
+    "${MOUNTS[@]}" \
+    -e HOME=/home/python \
+    -e USER="$USER" \
+    -e PYTHONPATH="/scripts:$PYTHONPATH" \
+    -e PYTHONUSERBASE="/home/python/.local" \
+    -e TERM \
+    -w /scripts \
+    "$PYTHON_IMAGE" pip "$@"

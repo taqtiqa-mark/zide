@@ -1,0 +1,1 @@
+../../resources/wshobson/agents/plugins/shell-scripting/agents/bash-pro.md

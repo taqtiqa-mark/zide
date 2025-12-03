@@ -1,0 +1,1 @@
+../../resources/davila7/templates/cli-tool/components/agents/ai-specialists/hackathon-ai-strategist.md

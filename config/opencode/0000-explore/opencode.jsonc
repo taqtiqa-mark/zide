@@ -1,0 +1,415 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  // Theme name to use for the interface
+  "theme": "opencode",
+
+  // Enable snapshot mode
+  "snapshot": false,
+
+  // Control sharing behavior: 'manual' allows manual sharing via commands, 'auto' enables automatic sharing, 'disabled' disables all sharing
+  // Enum: "manual", "auto", "disabled"
+  "share": "disabled",
+
+  // Automatically update to the latest version
+  "autoupdate": false,
+
+  // Disable providers that are loaded automatically
+  "disabled_providers": [], // e.g., ["openai", "gemini"]
+
+  // Model to use in the format of provider/model, eg anthropic/claude-2
+  "model": "xai/grok-4",
+
+  // Small model to use for tasks like title generation in the format of provider/model
+  "small_model": "xai/grok-3-mini",
+
+  // TUI specific settings
+  "tui": {
+    // TUI scroll speed. Default: 2, minimum: 1
+    "scroll_speed": 2
+  },
+
+  // @deprecated Use 'share' field instead. Share newly created sessions automatically
+  //"autoshare": false,
+  // @deprecated Always uses stretch layout.
+  //"layout": "stretch", // Enum: "auto", "stretch"
+  "command": {
+    // This becomes the name of the command
+    "driven/000-constitution": {
+      "template": "command/driven/000-constitution.md",
+      "model": "xai/grok-4"
+    }
+  },
+  // Agent configuration, see https://opencode.ai/docs/agent
+  "agent": {
+    // Example agent:
+    "driven": {
+      "disable": false
+    },
+    "research": {
+      "disable": false
+    },
+    "knowledge-synthesizer": {
+      "disable": false
+    },
+     "plan": {
+      "disable": true
+    },
+    "build": {
+      "disable": true
+    },
+     "general": {
+      "disable": true
+    }
+  },  
+  // Additional instruction files or patterns to include. Relative to the config file directory, or /, or ~
+  // e.g., ["./instructions.md", ".opencode/rules/*.md"]
+  "instructions": ["./instructions/explore/*.md", "./rules/explore/*.md"],
+
+  // Array of plugin paths or names
+  "plugin": ["opencode-skills@latest"],
+  
+  // Custom provider configurations and model overrides
+  "provider": {
+  // Provider for x.ai (Grok)
+    "xai": {
+      // Provider options
+      "options": {
+        "apiKey": "{env:XAI_API_KEY}",
+        // Timeout in milliseconds for requests to this provider.
+        // Default is 300000 (5 minutes). Set to false to disable timeout.
+        "timeout": 600000
+      },
+      // Model configurations
+      "models": {
+      
+        // Stanza for grok-4-fast-non-reasoning.toml
+        "grok-4-fast-non-reasoning": {
+          // Model ID
+          "id": "grok-4-fast-non-reasoning",
+          // Model name
+          "name": "Grok 4 Fast (Non-Reasoning)",
+          // Release date
+          "release_date": "2025-09-19",
+          // Supports attachments
+          "attachment": true,
+          // Supports reasoning
+          "reasoning": false,
+          // Supports temperature
+          "temperature": true,
+          // Tool call support
+          "tool_call": true,
+          // Cost structure
+          "cost": {
+            "input": 0.20,
+            "output": 0.50,
+            "cache_read": 0.05
+          },
+          // Limits
+          "limit": {
+            "context": 2000000,
+            "output": 30000
+          },
+          // Modalities
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          }
+        },
+
+        // Stanza for grok-4-fast.toml
+        "grok-4-fast": {
+          // Model ID
+          "id": "grok-4-fast",
+          // Model name
+          "name": "Grok 4 Fast",
+          // Release date
+          "release_date": "2025-09-19",
+          // Supports attachments
+          "attachment": true,
+          // Supports reasoning
+          "reasoning": true,
+          // Supports temperature
+          "temperature": true,
+          // Tool call support
+          "tool_call": true,
+          // Cost structure
+          "cost": {
+            "input": 0.20,
+            "output": 0.50,
+            "cache_read": 0.05
+          },
+          // Limits
+          "limit": {
+            "context": 2000000,
+            "output": 30000
+          },
+          // Modalities
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          }
+        },
+
+        // Stanza for grok-4.toml
+        "grok-4": {
+          // Model ID
+          "id": "grok-4",
+          // Model name
+          "name": "Grok 4",
+          // Release date
+          "release_date": "2025-07-09",
+          // Supports attachments
+          "attachment": false,
+          // Supports reasoning
+          "reasoning": true,
+          // Supports temperature
+          "temperature": true,
+          // Tool call support
+          "tool_call": true,
+          // Cost structure
+          "cost": {
+            "input": 3.00,
+            "output": 15.00,
+            "reasoning": 15.00,
+            "cache_read": 0.75
+          },
+          // Limits
+          "limit": {
+            "context": 256000,
+            "output": 64000
+          },
+          // Modalities
+          "modalities": {
+            "input": ["text"],
+            "output": ["text"]
+          }
+        },
+        
+        // Stanza for grok-beta.toml
+        "grok-beta": {
+          // Model ID
+          "id": "grok-beta",
+          // Model name
+          "name": "Grok Beta",
+          // Release date
+          "release_date": "2024-11-01",
+          // Supports attachments
+          "attachment": false,
+          // Supports reasoning
+          "reasoning": false,
+          // Supports temperature
+          "temperature": true,
+          // Tool call support
+          "tool_call": true,
+          // Cost structure
+          "cost": {
+            "input": 5.00,
+            "output": 15.00,
+            "cache_read": 5.00
+          },
+          // Limits
+          "limit": {
+            "context": 131072,
+            "output": 4096
+          },
+          // Modalities
+          "modalities": {
+            "input": ["text"],
+            "output": ["text"]
+          }
+        },
+
+        // Stanza for grok-code-fast-1.toml
+        "grok-code-fast-1": {
+          // Model ID
+          "id": "grok-code-fast-1",
+          // Model name
+          "name": "Grok Code Fast 1",
+          // Release date
+          "release_date": "2025-08-28",
+          // Supports attachments
+          "attachment": false,
+          // Supports reasoning
+          "reasoning": true,
+          // Supports temperature
+          "temperature": true,
+          // Tool call support
+          "tool_call": true,
+          // Cost structure
+          "cost": {
+            "input": 0.20,
+            "output": 1.50,
+            "cache_read": 0.02
+          },
+          // Limits
+          "limit": {
+            "context": 256000,
+            "output": 10000
+          },
+          // Modalities
+          "modalities": {
+            "input": ["text"],
+            "output": ["text"]
+          }
+        },
+        
+          // Stanza for grok-3-mini.toml
+        "grok-3-mini": {
+          // Model ID (derived from file name)
+          "id": "grok-3-mini",
+          // Model name
+          "name": "Grok 3 Mini",
+          // Release date
+          "release_date": "2025-02-17",
+          // Supports attachments
+          "attachment": false,
+          // Supports reasoning
+          "reasoning": true,
+          // Supports temperature
+          "temperature": true,
+          // Tool call support
+          "tool_call": true,
+          // Cost structure
+          "cost": {
+            "input": 0.30,
+            "output": 0.50,
+            "reasoning": 0.50,
+            "cache_read": 0.075,
+            "cache_write": 0 // Assumed default since not specified
+          },
+          // Limits
+          "limit": {
+            "context": 131072,
+            "output": 8192
+          },
+          // Modalities
+          "modalities": {
+            "input": ["text"],
+            "output": ["text"]
+          }
+        }
+      }
+    }
+  },
+
+  // MCP (Model Context Protocol) server configurations
+  "mcp": {
+    // Local MCP
+    "bead": {
+      "type": "local",
+      "command": [
+        "bead-mcp"
+        ],
+      // Prefer the CLI skill (instructions/bead/SKILL.md) for agent. For why see instructions/bead/README.md
+      "enabled": false
+    },
+    "c4": {
+      // Type of MCP server connection
+      "type": "local",
+      "command": ["npx", "-y", "@likec4/mcp"],
+      "environment": {
+        "LIKEC4_WORKSPACE": "/home/node/project"
+      },
+      // Enable or disable the MCP server on startup
+      "enabled": false
+    },
+    "chrome": {
+      "type": "local",
+      "command": [
+        "npx",
+        "chrome-devtools-mcp@latest",
+        "--channel=stable",
+        "--headless=true",
+        "--isolated=true"
+      ],
+      "enabled": false
+    },
+    "cipher": {
+      "type": "local",
+      "command": ["cipher", "--mode", "mcp"],
+      "environment": {
+        "MCP_SERVER_MODE": "aggregator",
+      },
+      "enabled": false
+    },
+    "playwright": {
+      "type": "local",
+      "command": [
+        "npx",
+        "@playwright/mcp@latest"
+      ],
+      "enabled": false
+    },
+    "serena": {
+      "type": "local",
+      "command": [
+        "serena",
+        "start-mcp-server",
+        "--context",
+        "ide-assistant",
+        "--mode",
+        "planning",
+        "--mode",
+        "editing",
+        "--mode",
+        "interactive",
+        "--mode",
+        "onboarding",
+        "--project",
+        "/home/node/project"
+      ],
+      "enabled": true
+    },
+    "treesitter": {
+      "type": "local",
+      "command": ["uvx",
+                "--directory", "/home/node/project",
+                "mcp-server-tree-sitter"
+       ],
+       "enabled": false
+    }
+    // Remote MCP
+  },
+  "keybinds": {
+    "leader": "ctrl+x",
+    //"app_help": "<leader>h",
+    "app_exit": "<leader>q",
+    "editor_open": "<leader>e",
+    "theme_list": "<leader>t",
+    //"project_init": "<leader>i",
+    //"tool_details": "<leader>d",
+    //"thinking_blocks": "<leader>b",
+    "status_view": "none",
+    "session_export": "<leader>x",
+    "session_new": "<leader>n",
+    "session_list": "<leader>l",
+    "session_share": "none",
+    "session_unshare": "none",
+    "session_interrupt": "esc",
+    "session_compact": "<leader>z",
+    "session_child_cycle": "<leader>right",
+    "session_child_cycle_reverse": "<leader>left",
+    "messages_page_up": "pgup",
+    "messages_page_down": "pgdown",
+    "messages_half_page_up": "none",
+    "messages_half_page_down": "none",
+    "messages_first": "home",
+    "messages_last": "end",
+    "messages_copy": "<leader>c",
+    "messages_undo": "<leader>u",
+    "messages_redo": "<leader>r",
+    "messages_toggle_conceal": "<leader>h",
+    "model_list": "<leader>m",
+    "model_cycle_recent": "<leader>up",
+    "model_cycle_recent_reverse": "<leader>down",
+    "agent_list": "<leader>a",
+    "agent_cycle": "tab",
+    "agent_cycle_reverse": "shift+tab",
+    "input_clear": "<leader>del",
+    "input_paste": "ctrl+v",
+    "input_submit": "<leader>enter",
+    "input_newline": "enter",
+    "history_previous": "up",
+    "history_next": "down"
+  }
+}

@@ -1,0 +1,1 @@
+../../resources/wshobson/agents/plugins/shell-scripting/skills/bats-testing-patterns/SKILL.md

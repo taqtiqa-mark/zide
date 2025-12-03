@@ -1,0 +1,1 @@
+/home/hedge/.config/zide/config/opencode/agent/driven.md

@@ -1,0 +1,1 @@
+../../resources/voltagent/subagents/categories/10-research-analysis/research-analyst.md

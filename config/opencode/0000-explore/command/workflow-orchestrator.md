@@ -1,0 +1,1 @@
+../../resources/davila7/templates/cli-tool/components/commands/automation/workflow-orchestrator.md

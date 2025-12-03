@@ -1,0 +1,1 @@
+../../resources/voltagent/subagents/categories/09-meta-orchestration/multi-agent-coordinator.md
