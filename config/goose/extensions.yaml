@@ -1,0 +1,574 @@
+GOOSE_RECIPE_GITHUB_REPO: block/goose-recipes
+ALPHA_FEATURES: true
+GOOSE_PROVIDER: xai
+extensions:
+  developer:
+    available_tools: []
+    bundled: true
+    description: null
+    display_name: null
+    enabled: true
+    name: developer
+    timeout: 300
+    type: builtin
+  memory:
+    available_tools: []
+    bundled: true
+    description: null
+    display_name: null
+    enabled: true
+    name: memory
+    timeout: 300
+    type: builtin
+  tutorial:
+    available_tools: []
+    bundled: true
+    description: null
+    display_name: Tutorial
+    enabled: true
+    name: tutorial
+    timeout: 300
+    type: builtin
+  aws-api:
+    available_tools: []
+    bundled: true
+    command: podman
+    args:
+      - "run"
+      - "--rm"
+      - "--interactive"
+      - "--env"
+      - "AWS_REGION=us-east-1"
+      - "--volume"
+      - "/full/path/to/.aws:/app/.aws"
+      - "public.ecr.aws/awslabs-mcp/awslabs/aws-api-mcp-server:latest"
+    description: null
+    display_name: AWS API MCP Server
+    enabled: true
+    env: {}
+    name: aws-api-mcp-server
+    timeout: 300
+    type: builtin
+  git:
+    available_tools: []
+    bundled: true
+    command: "podman"
+    args:
+      - "run"
+      - "--rm"
+      - "-i"
+      - "--mount"
+      - "type=bind,src=/Users/username,dst=/Users/username"
+      - "mcp/git"
+    description: null
+    display_name: Git
+    enabled: true
+    name: git
+    timeout: 300
+    type: builtin
+  github:
+    available_tools: []
+    bundled: true
+    type: "stdio"
+    command: "podman"
+    args:
+      - "run"
+      - "-i"
+      - "--rm"
+      - "-e"
+      - "GITHUB_PERSONAL_ACCESS_TOKEN"
+      - "ghcr.io/github/github-mcp-server"
+    description: null
+    display_name: GitHub
+    enabled: true
+    env:
+      GITHUB_PERSONAL_ACCESS_TOKEN: "${input:github_pat}"
+    name: github
+    timeout: 300
+  filesystem:
+    available_tools: []
+    bundled: true
+    command: "podman"
+    args:
+      - "run"
+      - "-i"
+      - "--rm"
+      - "--mount"
+      - "type=bind,src="~/,dst=/projects/home/"
+      - "--mount"
+      - "type=bind,src=~/src,dst=/projects/,ro"
+      - "mcp/filesystem"
+      - "/projects"
+    description: null
+    display_name: Filesystem
+    enabled: true
+    name: filesystem
+    timeout: 300
+    type: builtin
+  fetch:
+    available_tools: []
+    bundled: true
+    command: "podman"
+    args:
+      - "run"
+      - "-i"
+      - "--rm"
+      - "mcp/fetch"
+    description: null
+    display_name: Fetch
+    enabled: true
+    name: fetch
+    timeout: 300
+    type: builtin
+  memory:
+    available_tools: []
+    bundled: true
+    command: "podman"
+    args:
+      - "run"
+      - "-i"
+      - "-v"
+      - "claude-memory:/app/dist"
+      - "--rm"
+      - "mcp/memory"
+    description: null
+    display_name: Memory
+    enabled: true
+    name: memory
+    timeout: 300
+    type: builtin
+  sequentialthinking:
+    available_tools: []
+    bundled: true
+    command: "podman"
+    args:
+      - "run"
+      - "--rm"
+      - "-i"
+      - "mcp/sequentialthinking"
+    description: null
+    display_name: Sequential Thinking
+    enabled: true
+    name: sequentialthinking
+    timeout: 300
+    type: builtin
+  time:
+    available_tools: []
+    bundled: true
+    command: "podman"
+    args:
+      - "run"
+      - "-i"
+      - "--rm"
+      - "-e"
+      - "LOCAL_TIMEZONE"
+      - "mcp/time"
+    description: null
+    display_name: Time
+    enabled: true
+    name: time
+    timeout: 300
+    type: builtin
+  serena:
+    available_tools: []
+    bundled: true
+    command: "podman"
+    args:
+      - "run"
+      - "--rm"
+      - "-i"
+      - "--network"
+      - "host"
+      - "-v"
+      - "~/src:/workspaces/projects"
+      - "ghcr.io/oraios/serena:latest"
+      - "serena"
+      - "start-mcp-server"
+      - "--transport"
+      - "stdio"
+    description: null
+    display_name: Serena
+    enabled: true
+    name: serena
+    timeout: 300
+    type: builtin
+  supermemory:
+    available_tools: []
+    bundled: true
+    command: "npx"
+    args:
+      - "-y"
+      - "supermemory"
+    description: null
+    display_name: Supermemory
+    enabled: true
+    name: supermemory
+    timeout: 300
+    type: builtin
+  playwright:
+    available_tools: []
+    bundled: true
+    command: "npx"
+    args:
+      - "@playwright/mcp@latest"
+    description: null
+    display_name: Playwright
+    enabled: true
+    name: playwright
+    timeout: 300
+    type: builtin
+  context7:
+    available_tools: []
+    bundled: true
+    command: "npx"
+    args:
+      - "-y"
+      - "@upstash/context7-mcp"
+    description: null
+    display_name: Context7
+    enabled: true
+    name: context7
+    timeout: 300
+    type: builtin
+  sqlite:
+    available_tools: []
+    bundled: true
+    command: "docker"
+    args:
+      - "run"
+      - "-i"
+      - "--rm"
+      - "-v"
+      - "mcp-sqlite:/mcp"
+      - "mcp/sqlite"
+      - "--db-path"
+      - "${input:db_path}"
+    description: null
+    display_name: Sqlite
+    enabled: true
+    name: sqlite
+    timeout: 300
+    type: builtin
+  docker-hub:
+    available_tools: []
+    bundled: true
+    command: "node"
+    args:
+      - "/FULL/PATH/TO/YOUR/docker-hub-mcp-server/dist/index.js"
+      - "--transport=stdio"
+      - "--username=YOUR_DOCKER_HUB_USERNAME"
+    description: null
+    display_name: Docker Hub
+    enabled: true
+    env:
+      HUB_PAT_TOKEN: "YOUR_DOCKER_HUB_PERSONAL_ACCESS_TOKEN"
+    name: docker-hub
+    timeout: 300
+    type: builtin
+  github:
+    available_tools: []
+    bundled: true
+    command: "docker"
+    args:
+      - "run"
+      - "-i"
+      - "--rm"
+      - "-e"
+      - "GITHUB_PERSONAL_ACCESS_TOKEN"
+      - "mcp/github"
+    description: null
+    display_name: Github
+    enabled: true
+    env:
+      GITHUB_PERSONAL_ACCESS_TOKEN: "<YOUR_TOKEN>"
+    name: github
+    timeout: 300
+    type: builtin
+  sourcebot:
+    available_tools: []
+    bundled: true
+    command: "docker"
+    args:
+      - "run"
+      - "-p"
+      - "3000:3000"
+      - "--pull=always"
+      - "--rm"
+      - "-v"
+      - "${workspaceFolder}:/data"
+      - "-e"
+      - "CONFIG_PATH=/data/config.json"
+      - "--name"
+      - "sourcebot"
+      - "ghcr.io/sourcebot-dev/sourcebot:latest"
+    description: null
+    display_name: Sourcebot
+    enabled: true
+    name: sourcebot
+    timeout: 300
+    type: builtin
+  playwright:
+    available_tools: []
+    bundled: true
+    command: "npx"
+    args:
+      - "-y"
+      - "@executeautomation/playwright-mcp-server"
+    description: null
+    display_name: Playwright
+    enabled: true
+    name: playwright
+    timeout: 300
+    type: builtin
+  vibetest:
+    available_tools: []
+    bundled: true
+    command: "/full/path/to/vibetest-use/.venv/bin/vibetest-mcp"
+    description: null
+    display_name: Vibetest
+    enabled: true
+    env:
+      GOOGLE_API_KEY: "your_api_key"
+    name: vibetest
+    timeout: 300
+    type: builtin
+  browser-use:
+    available_tools: []
+    bundled: true
+    command: "uvx"
+    args:
+      - "browser-use[cli]"
+      - "--mcp"
+    description: null
+    display_name: Browser Use
+    enabled: true
+    env:
+      OPENAI_API_KEY: "sk-..."
+    name: browser-use
+    timeout: 300
+    type: builtin
+  mcpServers:
+    sqlite:
+      available_tools: []
+      bundled: true
+      command: "docker"
+      args:
+        - "run"
+        - "--rm"
+        - "-i"
+        - "-v"
+        - "mcp-test:/mcp"
+        - "mcp/sqlite"
+        - "--db-path"
+        - "/mcp/test.db"
+      description: null
+      display_name: Sqlite
+      enabled: true
+      name: sqlite
+      timeout: 300
+      type: builtin
+    memory:
+      available_tools: []
+      bundled: true
+      command: "docker"
+      args:
+        - "run"
+        - "-i"
+        - "-v"
+        - "claude-memory:/app/dist"
+        - "--rm"
+        - "mcp/memory"
+      description: null
+      display_name: Memory
+      enabled: true
+      name: memory
+      timeout: 300
+      type: builtin
+  TalkToFigma:
+    available_tools: []
+    bundled: true
+    command: "bunx"
+    args:
+      - "cursor-talk-to-figma-mcp@latest"
+    description: null
+    display_name: TalkToFigma
+    enabled: true
+    name: TalkToFigma
+    timeout: 300
+    type: builtin
+  playwright:
+    available_tools: []
+    bundled: true
+    command: "npx"
+    args:
+      - "-y"
+      - "@executeautomation/playwright-mcp-server"
+    description: null
+    display_name: Playwright
+    enabled: true
+    name: playwright
+    timeout: 300
+    type: builtin
+  ghidra:
+    available_tools: []
+    bundled: true
+    command: "python"
+    args:
+      - "bridge_mcp_ghidra.py"
+      - "--ghidra-server"
+      - "http://127.0.0.1:8080/"
+    description: null
+    display_name: Ghidra
+    enabled: true
+    name: ghidra
+    timeout: 300
+    type: builtin
+  gitmcp:
+    available_tools: []
+    bundled: true
+    command: "npx"
+    args:
+      - "mcp-remote"
+      - "https://gitmcp.io/{owner}/{repo}"
+    description: null
+    display_name: Gitmcp
+    enabled: true
+    name: gitmcp
+    timeout: 300
+    type: builtin
+  aws-kb-retrieval:
+    available_tools: []
+    bundled: true
+    command: "docker"
+    args:
+      - "run"
+      - "-i"
+      - "--rm"
+      - "-e"
+      - "AWS_ACCESS_KEY_ID"
+      - "-e"
+      - "AWS_SECRET_ACCESS_KEY"
+      - "-e"
+      - "AWS_REGION"
+      - "mcp/aws-kb-retrieval-server"
+    description: null
+    display_name: AWS KB Retrieval
+    enabled: true
+    env:
+      AWS_ACCESS_KEY_ID: "YOUR_ACCESS_KEY_HERE"
+      AWS_SECRET_ACCESS_KEY: "YOUR_SECRET_ACCESS_KEY_HERE"
+      AWS_REGION: "YOUR_AWS_REGION_HERE"
+    name: aws-kb-retrieval
+    timeout: 300
+    type: builtin
+  awslabs.core-mcp-server:
+    available_tools: []
+    bundled: true
+    command: "uvx"
+    args:
+      - "awslabs.core-mcp-server@latest"
+    description: null
+    display_name: AWSLabs Core MCP Server
+    enabled: true
+    env:
+      FASTMCP_LOG_LEVEL: "ERROR"
+    name: awslabs.core-mcp-server
+    timeout: 300
+    type: builtin
+  awslabs.nova-canvas-mcp-server:
+    available_tools: []
+    bundled: true
+    command: "uvx"
+    args:
+      - "awslabs.nova-canvas-mcp-server@latest"
+    description: null
+    display_name: AWSLabs Nova Canvas MCP Server
+    enabled: true
+    env:
+      AWS_PROFILE: "your-aws-profile"
+      AWS_REGION: "us-east-1"
+      FASTMCP_LOG_LEVEL: "ERROR"
+    name: awslabs.nova-canvas-mcp-server
+    timeout: 300
+    type: builtin
+  awslabs.bedrock-kb-retrieval-mcp-server:
+    available_tools: []
+    bundled: true
+    command: "uvx"
+    args:
+      - "awslabs.bedrock-kb-retrieval-mcp-server@latest"
+    description: null
+    display_name: AWSLabs Bedrock KB Retrieval MCP Server
+    enabled: true
+    env:
+      AWS_PROFILE: "your-aws-profile"
+      AWS_REGION: "us-east-1"
+      FASTMCP_LOG_LEVEL: "ERROR"
+    name: awslabs.bedrock-kb-retrieval-mcp-server
+    timeout: 300
+    type: builtin
+  awslabs.cost-analysis-mcp-server:
+    available_tools: []
+    bundled: true
+    command: "uvx"
+    args:
+      - "awslabs.cost-analysis-mcp-server@latest"
+    description: null
+    display_name: AWSLabs Cost Analysis MCP Server
+    enabled: true
+    env:
+      AWS_PROFILE: "your-aws-profile"
+      FASTMCP_LOG_LEVEL: "ERROR"
+    name: awslabs.cost-analysis-mcp-server
+    timeout: 300
+    type: builtin
+  awslabs.cdk-mcp-server:
+    available_tools: []
+    autoApprove: []
+    bundled: true
+    command: "docker"
+    args:
+      - "run"
+      - "--rm"
+      - "--interactive"
+      - "--env"
+      - "FASTMCP_LOG_LEVEL=ERROR"
+      - "awslabs/cdk-mcp-server:latest"
+    description: null
+    disabled: false
+    display_name: AWSLabs CDK MCP Server
+    enabled: true
+    env: {}
+    name: awslabs.cdk-mcp-server
+    timeout: 300
+    type: builtin
+  awslabs.aws-documentation-mcp-server:
+    available_tools: []
+    autoApprove: []
+    bundled: true
+    command: "docker"
+    args:
+      - "run"
+      - "--rm"
+      - "--interactive"
+      - "--env"
+      - "FASTMCP_LOG_LEVEL=ERROR"
+      - "--env"
+      - "AWS_DOCUMENTATION_PARTITION=aws"
+      - "mcp/aws-documentation:latest"
+    description: null
+    disabled: false
+    display_name: AWSLabs AWS Documentation MCP Server
+    enabled: true
+    env: {}
+    name: awslabs.aws-documentation-mcp-server
+    timeout: 300
+    type: builtin
+GOOSE_PLANNER_PROVIDER: xai
+GOOSE_MODE: smart_approve
+GOOSE_PLANNER_MODEL: grok-4-latest
+GOOSE_MODEL: grok-4-latest
+GOOSE_TOOLSHIM: true
+GOOSE_TEMPERATURE: 0.7
+GOOSE_CLI_MIN_PRIORITY: 0.2
+GOOSE_CLI_SHOW_COST: true

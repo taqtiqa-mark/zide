@@ -39,6 +39,9 @@
       "model": "xai/grok-4"
     }
   },
+  "tools": {
+    "skills*": true
+  },
   // Agent configuration, see https://opencode.ai/docs/agent
   "agent": {
     // Example agent:
@@ -66,7 +69,7 @@
   "instructions": ["./instructions/explore/*.md", "./rules/explore/*.md"],
 
   // Array of plugin paths or names
-  "plugin": ["opencode-skills@latest"],
+  "plugin": ["opencode-skills@0.1.1"],
   
   // Custom provider configurations and model overrides
   "provider": {

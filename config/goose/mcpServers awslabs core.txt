@@ -1,0 +1,254 @@
+  container-use:
+    name: container-use
+    type: stdio
+    enabled: true
+    cmd: container-use
+    args:
+      - stdio
+    envs: {}
+
+awslabs.core-mcp-server
+awslabs.nova-canvas-mcp-server
+awslabs.bedrock-kb-retrieval-mcp-server
+awslabs.cost-analysis-mcp-server
+       "supermemory": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "supermemory"
+            ]
+        },
+       "playwright": {
+            "command": "npx",
+            "args": [
+                "@playwright/mcp@latest"
+            ]
+        },
+       "context7": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@upstash/context7-mcp"
+            ]
+        },
+      "sqlite": {
+        "command": "docker",
+        "args": [
+          "run",
+          "-i",
+          "--rm",
+          "-v",
+          "mcp-sqlite:/mcp",
+          "mcp/sqlite",
+          "--db-path",
+          "${input:db_path}"
+        ]
+      }
+    },
+    "docker-hub": {
+            "command": "node",
+            "args": [
+                "/FULL/PATH/TO/YOUR/docker-hub-mcp-server/dist/index.js",
+                "--transport=stdio",
+                "--username=YOUR_DOCKER_HUB_USERNAME"
+            ],
+            "env": {
+                "HUB_PAT_TOKEN": "YOUR_DOCKER_HUB_PERSONAL_ACCESS_TOKEN"
+            }
+        },
+"github": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "GITHUB_PERSONAL_ACCESS_TOKEN",
+        "mcp/github"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "<YOUR_TOKEN>"
+      }
+    },
+        "sourcebot": {
+            "command": "docker",
+            "args": [
+                "run",
+                "-p",
+                "3000:3000",
+                "--pull=always",
+                "--rm",
+                "-v",
+                "${workspaceFolder}:/data",
+                "-e",
+                "CONFIG_PATH=/data/config.json",
+                "--name",
+                "sourcebot",
+                "ghcr.io/sourcebot-dev/sourcebot:latest"
+            ]
+        },
+"playwright": {
+      "command": "npx",
+      "args": ["-y", "@executeautomation/playwright-mcp-server"]
+    },
+"vibetest": {
+      "command": "/full/path/to/vibetest-use/.venv/bin/vibetest-mcp",
+      "env": {
+        "GOOGLE_API_KEY": "your_api_key"
+      }
+    },
+    #https://github.com/browser-use/awesome-prompts
+    "browser-use": {
+      "command": "uvx",
+      "args": ["browser-use[cli]", "--mcp"],
+      "env": {
+        "OPENAI_API_KEY": "sk-..."
+      }
+    },
+    {
+    "mcpServers": {
+    "sqlite": {
+    "command": "docker",
+    "args": [
+      "run",
+      "--rm",
+      "-i",
+      "-v",
+      "mcp-test:/mcp",
+      "mcp/sqlite",
+      "--db-path",
+      "/mcp/test.db"
+    ]
+},
+       "memory": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "-v",
+        "claude-memory:/app/dist",
+        "--rm",
+        "mcp/memory"
+      ]
+    },
+            "TalkToFigma": {
+            "command": "bunx",
+            "args": [
+                "cursor-talk-to-figma-mcp@latest"
+            ]
+        },
+        "playwright": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@executeautomation/playwright-mcp-server"
+            ]
+        },
+        "ghidra": {
+            "command": "python",
+            "args": [
+                "bridge_mcp_ghidra.py",
+                "--ghidra-server",
+                "http://127.0.0.1:8080/"
+            ]
+        },
+    "gitmcp": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://gitmcp.io/{owner}/{repo}"
+      ]
+    },
+    "aws-kb-retrieval": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "AWS_ACCESS_KEY_ID",
+        "-e",
+        "AWS_SECRET_ACCESS_KEY",
+        "-e",
+        "AWS_REGION",
+        "mcp/aws-kb-retrieval-server"
+      ],
+      "env": {
+        "AWS_ACCESS_KEY_ID": "YOUR_ACCESS_KEY_HERE",
+        "AWS_SECRET_ACCESS_KEY": "YOUR_SECRET_ACCESS_KEY_HERE",
+        "AWS_REGION": "YOUR_AWS_REGION_HERE"
+      }
+    },
+        "awslabs.core-mcp-server": {
+            "command": "uvx",
+            "args": [
+                "awslabs.core-mcp-server@latest"
+            ],
+            "env": {
+                "FASTMCP_LOG_LEVEL": "ERROR"
+            }
+        },
+        "awslabs.nova-canvas-mcp-server": {
+            "command": "uvx",
+            "args": [
+                "awslabs.nova-canvas-mcp-server@latest"
+            ],
+            "env": {
+                "AWS_PROFILE": "your-aws-profile",
+                "AWS_REGION": "us-east-1",
+                "FASTMCP_LOG_LEVEL": "ERROR"
+            }
+        },
+        "awslabs.bedrock-kb-retrieval-mcp-server": {
+            "command": "uvx",
+            "args": [
+                "awslabs.bedrock-kb-retrieval-mcp-server@latest"
+            ],
+            "env": {
+                "AWS_PROFILE": "your-aws-profile",
+                "AWS_REGION": "us-east-1",
+                "FASTMCP_LOG_LEVEL": "ERROR"
+            }
+        },
+        "awslabs.cost-analysis-mcp-server": {
+            "command": "uvx",
+            "args": [
+                "awslabs.cost-analysis-mcp-server@latest"
+            ],
+            "env": {
+                "AWS_PROFILE": "your-aws-profile",
+                "FASTMCP_LOG_LEVEL": "ERROR"
+            }
+        },
+    "awslabs.cdk-mcp-server": {
+      "command": "docker",
+      "args": [
+        "run",
+        "--rm",
+        "--interactive",
+        "--env",
+        "FASTMCP_LOG_LEVEL=ERROR",
+        "awslabs/cdk-mcp-server:latest"
+      ],
+      "env": {},
+      "disabled": false,
+      "autoApprove": []
+    },
+    "awslabs.aws-documentation-mcp-server": {
+      "command": "docker",
+      "args": [
+        "run",
+        "--rm",
+        "--interactive",
+        "--env",
+        "FASTMCP_LOG_LEVEL=ERROR",
+        "--env",
+        "AWS_DOCUMENTATION_PARTITION=aws",
+        "mcp/aws-documentation:latest"
+      ],
+      "env": {},
+      "disabled": false,
+      "autoApprove": []
+    }
+    }
+}

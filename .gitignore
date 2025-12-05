@@ -22,6 +22,7 @@ log/serena
 *.bak
 **/*.log
 **/**/*.log
+scratch
 
 .serena/
 
