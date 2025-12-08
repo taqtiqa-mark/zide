@@ -28,3 +28,4 @@ scratch
 
 tmp/
 .aider*
+.opencode/cache
