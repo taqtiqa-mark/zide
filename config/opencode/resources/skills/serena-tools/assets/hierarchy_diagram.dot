@@ -1,0 +1,10 @@
+digraph G {
+    node [shape=box];
+    Meta -> Search;
+    Search -> Edit;
+    Edit -> Memory;
+    Meta [label="Meta Tools\n(thinking, onboarding)"];
+    Search [label="Search Tools\n(find_symbol, search_pattern)"];
+    Edit [label="Edit Tools\n(replace, insert, rename)"];
+    Memory [label="Memory Tools\n(write, read, edit)"];
+}
