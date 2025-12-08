@@ -17,10 +17,10 @@
   "disabled_providers": [], // e.g., ["openai", "gemini"]
 
   // Model to use in the format of provider/model, eg anthropic/claude-2
-  "model": "xai/grok-4",
+  "model": "xai/grok-4-1-fast-reasoning",
 
   // Small model to use for tasks like title generation in the format of provider/model
-  "small_model": "xai/grok-3-mini",
+  "small_model": "xai/grok-4-1-fast-non-reasoning",
 
   // TUI specific settings
   "tui": {
@@ -36,7 +36,7 @@
     // This becomes the name of the command
     "driven/000-constitution": {
       "template": "command/driven/000-constitution.md",
-      "model": "xai/grok-4"
+      "model": "xai/grok-4-1-fast-reasoning"
     }
   },
   "tools": {
@@ -86,11 +86,11 @@
       "models": {
       
         // Stanza for grok-4-fast-non-reasoning.toml
-        "grok-4-fast-non-reasoning": {
+        "grok-4-1-fast-non-reasoning": {
           // Model ID
-          "id": "grok-4-fast-non-reasoning",
+          "id": "grok-4-1-fast-non-reasoning",
           // Model name
-          "name": "Grok 4 Fast (Non-Reasoning)",
+          "name": "Grok 4.1 Fast (NR)",
           // Release date
           "release_date": "2025-09-19",
           // Supports attachments
@@ -119,12 +119,81 @@
           }
         },
 
-        // Stanza for grok-4-fast.toml
-        "grok-4-fast": {
+        // Stanza for grok-4-1-fast-reasoning.toml
+        "grok-4-1-fast-reasoning": {
           // Model ID
-          "id": "grok-4-fast",
+          "id": "grok-4-1-fast-reasoning",
           // Model name
-          "name": "Grok 4 Fast",
+          "name": "Grok 4.1 Fast (R)",
+          // Release date
+          "release_date": "2025-11-20",
+          // Supports attachments
+          "attachment": true,
+          // Supports reasoning
+          "reasoning": true,
+          // Supports temperature
+          "temperature": true,
+          // Tool call support
+          "tool_call": true,
+          // Cost structure
+          "cost": {
+            "input": 0.20,
+            "output": 0.50,
+            "cache_read": 0.05
+          },
+          // Limits
+          "limit": {
+            "context": 2000000,
+            "output": 30000
+          },
+          // Modalities
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          }
+        },
+
+
+        // Stanza for grok-4-fast-non-reasoning.toml
+        "grok-4-fast-non-reasoning": {
+          // Model ID
+          "id": "grok-4-fast-non-reasoning",
+          // Model name
+          "name": "Grok 4 Fast (NR)",
+          // Release date
+          "release_date": "2025-09-19",
+          // Supports attachments
+          "attachment": true,
+          // Supports reasoning
+          "reasoning": false,
+          // Supports temperature
+          "temperature": true,
+          // Tool call support
+          "tool_call": true,
+          // Cost structure
+          "cost": {
+            "input": 0.20,
+            "output": 0.50,
+            "cache_read": 0.05
+          },
+          // Limits
+          "limit": {
+            "context": 2000000,
+            "output": 30000
+          },
+          // Modalities
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          }
+        },
+
+        // Stanza for grok-4-fast-reasoning.toml
+        "grok-4-fast-reasoning": {
+          // Model ID
+          "id": "grok-4-fast-reasoning",
+          // Model name
+          "name": "Grok 4 Fast (R)",
           // Release date
           "release_date": "2025-09-19",
           // Supports attachments

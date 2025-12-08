@@ -349,7 +349,8 @@ else
       --userns=keep-id --security-opt=label=disable \
       $MOUNTS $CONFIG_MOUNT $CONFIG_ENV \
       $SECRETS -e USER="$USER" \
-      "$IMAGE" attach "http://$SERVER_IP:$PORT"
+      "$IMAGE"
+      # "$IMAGE" attach "http://$SERVER_IP:$PORT"
   else
     eval podman run --rm $TTY_FLAG \
       --network "$NETWORK_NAME" \
