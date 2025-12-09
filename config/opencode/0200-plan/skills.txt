@@ -1,0 +1,2 @@
+./skill1
+skill2/
