@@ -105,7 +105,7 @@ layout {
                     }
                     pane name="Git" {
                         command "bash"
-                        args "-c" "EDITOR='hx --config ~/.config/zide/config/helix/config.toml -v --log ./.zide/helix-gitui.log --working-dir ./' gitui --keys ?"
+                        args "-c" "EDITOR='hx --config ~/.config/zide/config/helix/config.toml -v --log ./.zide/helix-gitui.log --working-dir ./' VISUAL=$EDITOR GIT_EDITOR=$EDITOR gitui"
                         cwd "./" 
                         start_suspended true
                         close_on_exit false
@@ -165,7 +165,7 @@ layout {
                 pane split_direction="horizontal" stacked=true {
                     pane name="Git" {
                         command "bash"
-                        args "-c" "EDITOR='hx --config ~/.config/zide/config/helix/config.toml -v --log ./.zide/helix-gitu.log --working-dir ./' gitu --keys ?"
+                        args "-c" "EDITOR='hx --config ~/.config/zide/config/helix/config.toml -v --log ./.zide/helix-gitu.log --working-dir ./' VISUAL=$EDITOR GIT_EDITOR=$EDITOR gitui"
                         cwd "./" 
                         start_suspended true
                         close_on_exit false
@@ -220,7 +220,7 @@ layout {
             }
             pane name="GitUI" {
                 command "gitui" 
-                args "--watcher" "--directory" "./" 
+                args "--directory" "./" 
                 cwd "./" 
                 start_suspended true
                 close_on_exit false 
@@ -229,7 +229,7 @@ layout {
             }
         }
     }
-    tab name="Tasks" cwd="./" {
+    tab name= VISUAL=$EDITOR GIT_EDITOR=$EDITOR Tasks" cwd="./" {
         chat_under_files split_direction="vertical" {
             pane edit="./src/lib.rs"
             pane edit="./src/input_handler.rs"
@@ -247,8 +247,7 @@ layout {
     tab name="Deploy" split_direction="horizontal" cwd="./src" {
         pane split_direction="vertical" {
             pane edit="./terminal_pane.rs" name="TERMINAL PANE"
-            pane edit="./grid.rs" name="GRID (ANSI PARSER)"
-        }
+            pane edit="./grid.rs" name="GRID (ANS     }
         pane split_direction="vertical" {
             pane edit="./terminal_character.rs" name="TERMINAL CHARACTER"
             pane edit="./sixel.rs" name="SIXEL"
@@ -266,4 +265,4 @@ layout {
         }
     }
 }
-
+ VISUAL=$EDITOR GIT_EDITOR=$EDITOR 
