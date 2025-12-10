@@ -1,10 +1,13 @@
-../../resources/anthropic/skills/skill-creator
+../resources/skills/bddtdd
+../resources/skills/beads
+../resources/skills/repomix
 ../resources/skills/serena-tools
+../resources/anthropic/skills/skill-creator
 ../resources/superpowers/skills/skills/brainstorming
 ../resources/superpowers/skills/skills/dispatching-parallel-agents
 ../resources/superpowers/skills/skills/subagent-driven-development
 ../resources/superpowers/skills/skills/verification-before-completion
-../../resources/superpowers/skills/skills/writing-skills
+../resources/superpowers/skills/skills/writing-skills
 ../resources/wshobson/agents/plugins/developer-essentials/skills/git-advanced-workflows
 ../resources/wshobson/agents/plugins/developer-essentials/skills/monorepo-management
 ../resources/wshobson/agents/plugins/shell-scripting/skills/bash-defensive-patterns
