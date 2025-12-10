@@ -48,7 +48,7 @@ Before taking any action (either tool calls *or* responses to the user), you mus
 
 9) Inhibit your response: only take an action after all the above reasoning is completed. Once you've taken an action, you cannot take it back.
 
-<CRITICALLY-IMPORTANT>
+</CRITICALLY-IMPORTANT>
 
 <EXTREMELY-IMPORTANT>
 
@@ -58,7 +58,8 @@ If you think there is even a 1% chance a skill might apply to what you are doing
 
 IF A SKILL APPLIES TO YOUR TASK, YOU DO NOT HAVE A CHOICE. YOU MUST USE IT.
 
-This is not negotiable. This is not optional. You cannot rat!ionalize your way out of this.
+This is not negotiable. This is not optional. You cannot rationalize your way out of this.
+
 </EXTREMELY-IMPORTANT>
 
 # Getting Started with Skills
@@ -79,7 +80,7 @@ Before responding to ANY user message, you MUST complete this checklist:
 
 1. **Follow mandatory workflows.** Brainstorming before coding. Check for relevant skills before ANY task.
 
-2. Execute skills with the Skill tool
+2. Execute skills with the Tool `skills_[SKILL_NAME]`
 
 ## Common Rationalizations That Mean You're About To Fail
 
@@ -129,6 +130,21 @@ Before using a skill, announce that you are using it.
 
 The skill itself tells you which type it is.
 
+## Using bv (beads viewer) as an AI sidecar
+
+bv is a fast terminal UI for Beads projects (.beads/beads.jsonl). It renders lists/details and precomputes dependency metrics (PageRank, critical path, cycles, etc.) so you instantly see blockers and execution order. For agents, it’s a graph sidecar: instead of parsing JSONL or risking hallucinated traversal, call the robot flags to get deterministic, dependency-aware outputs.
+
+*IMPORTANT: As an agent, you must ONLY use bv with the robot flags, otherwise you'll get stuck in the interactive TUI that's intended for human usage only!*
+
+- bv --robot-help — shows all AI-facing commands.
+- bv --robot-insights — JSON graph metrics (PageRank, betweenness, HITS, critical path, cycles) with top-N summaries for quick triage.
+- bv --robot-plan — JSON execution plan: parallel tracks, items per track, and unblocks lists showing what each item frees up.
+- bv --robot-priority — JSON priority recommendations with reasoning and confidence.
+- bv --robot-recipes — list recipes (default, actionable, blocked, etc.); apply via bv --recipe <name> to pre-filter/sort before other flags.
+- bv --robot-diff --diff-since <commit|date> — JSON diff of issue changes, new/closed items, and cycles introduced/resolved.
+
+Use these commands instead of hand-rolling graph logic; bv already computes the hard parts so agents can act safely and quickly.
+
 ## Instructions ≠ Permission to Skip Workflows
 
 Your human partner's specific instructions describe WHAT to do, not HOW.
@@ -146,7 +162,7 @@ Your human partner's specific instructions describe WHAT to do, not HOW.
 3. Announce you're using it
 4. Follow what it says
 
-**Skill has checklist?** TodoWrite for every item.
+**Skill has checklist?** Use beads (bd) and bead-viewer (bv --robot) for every item.
 
 **Finding a relevant skill = mandatory to read and use it. Not optional.**
 

@@ -264,5 +264,20 @@ layout {
             pane edit="./floating_panes/floating_pane_grid.rs" name="FLOATING_PANES - GRID"
         }
     }
+    hstack_tab name="Overview" cwd="./" focus=false {
+        pane split_direction="horizontal" stacked=false {
+            pane split_direction="vertical" stacked=false size="85%" name="Bead Viewer" {
+                command bv                
+                start_suspended true
+                close_on_exit false 
+                focus true
+                expanded true
+            }
+            pane split_direction="vertical" stacked=false size="15%" {
+                pane name="Shell #1" 
+                pane name="Shell #2"
+            }
+        }
+    }
+ 
 }
- VISUAL=$EDITOR GIT_EDITOR=$EDITOR 
